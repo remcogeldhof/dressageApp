@@ -1,0 +1,47 @@
+page-home {
+
+  #wrapper {
+    width: 100%;
+    text-align: center
+  }
+
+  #myContainer {
+    margin: auto;
+    width: 50%;
+    position: relative;
+    border-color: black;
+    border: solid;
+    padding-top: 150%;
+  }
+
+  #myAnimation {
+    margin-top: 15%;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    background-color: #4CAF50;
+    border-radius: 40px;
+  }
+  //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
+  button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  @media only screen and (min-height: 1000px) {
+    #myContainer {
+      width: 40%;
+      padding-top: 120%
+    }
+  }
+}
