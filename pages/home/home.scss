@@ -23,6 +23,10 @@ page-home {
     background-color: #4CAF50;
     border-radius: 40px;
     padding: 1%;
+    -webkit-animation: mymove1 10s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+    animation: mymove1 10s;
+    animation-timing-function: linear;
   }
   //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
   button {
@@ -39,11 +43,7 @@ page-home {
   p {
     text-align: center;
   }
-
-
-
   //move
-
   @keyframes mymove1 {
     0% {
       left: 65.5px;
@@ -54,9 +54,7 @@ page-home {
       left: 65.5px;
       top: 429px;
     }
-
-    //move2 0 50 100 . 
-
+    //move2 0 50 100 .
     25% {
       left: 65.5px;
       top: 429px;
@@ -76,14 +74,17 @@ page-home {
       left: 129px;
       top: 0px;
     }
+
     75% {
       left: 129px;
       top: 10px;
     }
-   95% {
+
+    95% {
       left: 0px;
       top: 419px;
     }
+
     100% {
       left: 0px;
       top: 429px;
@@ -97,7 +98,7 @@ page-home {
     }
 
     50% {
-      left:0px;
+      left: 0px;
       top: 429px;
     }
 
@@ -106,14 +107,7 @@ page-home {
       top: 0px;
     }
   }
-
-
-
-
-
   //test
-
-
   @keyframes mymove {
     from {
       left: 0px;
@@ -123,8 +117,6 @@ page-home {
       left: 129px;
     }
   }
-
-
   /*
   @media only screen and (min-height: 1000px) {
     #myContainer {

@@ -9,9 +9,10 @@ import { ListPage } from '../list/list';
 	templateUrl: 'home.html'
 })
 export class HomePage {
+  $element = document.getElementById("myAnimation");
 
-	constructor(public navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController) {
+    
 	}
 
     load() {
@@ -22,18 +23,26 @@ export class HomePage {
 
   
 
-	play() {
-		this.verticaal();
+    play() {
+
+      document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
+
+		//this.verticaal();
 		
 		//this.horizontaal();
 	}
 
 
-  myFunction() {
-    document.getElementById("myAnimation").style.animation = "mymove1 8s";
-   // document.getElementById("myAnimation").style.animation = "mymove2 3s";
-}
+    myFunction() {
+      if (document.getElementById("myAnimation").style.webkitAnimationPlayState == "paused") {
+        document.getElementById("myAnimation").style.webkitAnimationPlayState = "running";
+      } else {
+        document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
+      }
 
+   // document.getElementById("myAnimation").style.animation = "mymove1 8s";
+   // document.getElementById("myAnimation").style.animation = "mymove2 3s";
+    }
 
 	verticaal() {	
 		var speed = 0;
