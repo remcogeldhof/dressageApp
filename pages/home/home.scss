@@ -1,0 +1,135 @@
+page-home {
+
+  #wrapper {
+    width: 100%;
+    text-align: center
+  }
+
+  #myContainer {
+    margin: auto;
+    width: 150px;
+    height: 450px;
+    position: relative;
+    border-color: black;
+    border: solid;
+    //  padding-top: 150%;
+  }
+
+  #myAnimation {
+    //  margin-top: 15%;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    background-color: #4CAF50;
+    border-radius: 40px;
+    padding: 1%;
+  }
+  //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
+  button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  p {
+    text-align: center;
+  }
+
+
+
+  //move
+
+  @keyframes mymove1 {
+    0% {
+      left: 65.5px;
+      top: 0px;
+    }
+
+    20% {
+      left: 65.5px;
+      top: 429px;
+    }
+
+    //move2 0 50 100 . 
+
+    25% {
+      left: 65.5px;
+      top: 429px;
+    }
+
+    40% {
+      left: 0px;
+      top: 429px;
+    }
+
+    60% {
+      left: 0px;
+      top: 0px;
+    }
+
+    70% {
+      left: 129px;
+      top: 0px;
+    }
+    75% {
+      left: 129px;
+      top: 10px;
+    }
+   95% {
+      left: 0px;
+      top: 419px;
+    }
+    100% {
+      left: 0px;
+      top: 429px;
+    }
+  }
+
+  @keyframes mymove2 {
+    0% {
+      left: 65.5px;
+      top: 429px;
+    }
+
+    50% {
+      left:0px;
+      top: 429px;
+    }
+
+    100% {
+      left: 0px;
+      top: 0px;
+    }
+  }
+
+
+
+
+
+  //test
+
+
+  @keyframes mymove {
+    from {
+      left: 0px;
+    }
+
+    to {
+      left: 129px;
+    }
+  }
+
+
+  /*
+  @media only screen and (min-height: 1000px) {
+    #myContainer {
+      width: 40%;
+      padding-top: 120%
+    }
+  }*/
+}
