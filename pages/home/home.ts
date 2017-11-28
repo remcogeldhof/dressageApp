@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ListPage } from '../list/list';
 
-//import * as $ from 'jquery'
+import * as $ from 'jquery'
 
 @Component({
 	selector: 'page-home',
@@ -21,11 +21,23 @@ export class HomePage {
 
 	//bron: https://www.w3schools.com/howto/howto_js_animate.asp
 
-  
 
     play() {
+/*
+      $(document).ready(function () {
+        $("button").click(function () {
+          $("#myAnimation").toggleClass('.animation');
+        });
+      });*/
 
-      document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
+      /*
+     $(document).ready(function () {
+        $("button").click(function () {
+          $("#myAnimation").css("animation", " mymove2 6s");
+        });
+      });*/
+
+     // document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
 
 		//this.verticaal();
 		

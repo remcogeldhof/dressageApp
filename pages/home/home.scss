@@ -28,6 +28,9 @@ page-home {
     animation: mymove1 10s;
     animation-timing-function: linear;
   }
+
+  .animation {
+  }
   //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
   button {
     background-color: #4CAF50; /* Green */
@@ -56,55 +59,56 @@ page-home {
     }
     //move2 0 50 100 .
     25% {
-      left: 65.5px;
-      top: 429px;
-    }
-
-    40% {
       left: 0px;
       top: 429px;
     }
 
-    60% {
+    45% {
       left: 0px;
       top: 0px;
     }
 
-    70% {
+    55% {
       left: 129px;
       top: 0px;
     }
 
-    75% {
+    57% {
       left: 129px;
       top: 10px;
     }
 
-    95% {
+    77% {
       left: 0px;
       top: 419px;
     }
 
-    100% {
+    79% {
       left: 0px;
       top: 429px;
+      animation-fill-mode: forwards;
     }
   }
 
   @keyframes mymove2 {
     0% {
       left: 65.5px;
-      top: 429px;
-    }
-
-    50% {
-      left: 0px;
-      top: 429px;
-    }
-
-    100% {
-      left: 0px;
       top: 0px;
+    }
+
+    2% {
+      left: 65.5px;
+      top: 5px;
+    }
+
+    17% {
+      left: 0px;
+      top: 214.5px;
+    }
+
+    32% {
+      left: 0px;
+      top: 429px;
     }
   }
   //test
