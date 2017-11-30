@@ -9,10 +9,12 @@ import * as $ from 'jquery'
 	templateUrl: 'home.html'
 })
 export class HomePage {
-  $element = document.getElementById("myAnimation");
+  element: HTMLElement;
+  i: number;
 
   constructor(public navCtrl: NavController) {
-    
+    this.i = 0;
+    this.element = document.getElementById("myAnimation");
 	}
 
     load() {
@@ -22,7 +24,27 @@ export class HomePage {
 	//bron: https://www.w3schools.com/howto/howto_js_animate.asp
 
 
-    play() {
+    
+
+
+
+
+   
+    restart() {
+
+      
+        // restart animation
+        document.getElementById("myAnimation").style.webkitAnimation = 'none';
+        setTimeout(function () {
+          document.getElementById("myAnimation").style.webkitAnimation = '';
+        },10);
+     
+      
+
+
+
+    //document.getElementById("myAnimation").style.animation = "mymove1 8s linear";
+
 /*
       $(document).ready(function () {
         $("button").click(function () {
@@ -45,17 +67,39 @@ export class HomePage {
 	}
 
 
-    myFunction() {
-      if (document.getElementById("myAnimation").style.webkitAnimationPlayState == "paused") {
-        document.getElementById("myAnimation").style.webkitAnimationPlayState = "running";
-      } else {
-        document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
-      }
+    start() {
+    /*  if (this.i == 0) {
+        document.getElementById("myAnimation").style.animation = "frame1 2s linear";
+
+      }*/
+        if (document.getElementById("myAnimation").style.webkitAnimationPlayState == "paused") {
+          document.getElementById("myAnimation").style.webkitAnimationPlayState = "running";
+        } else {
+          document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
+        }
+      
+   //   this.i++;
+
+      
 
    // document.getElementById("myAnimation").style.animation = "mymove1 8s";
    // document.getElementById("myAnimation").style.animation = "mymove2 3s";
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // JS animations
 	verticaal() {	
 		var speed = 0;
 
@@ -115,20 +159,5 @@ export class HomePage {
 		}
 	}
 
-	test() {
-		const maxXPosition = 100;
-		let rect = document.getElementById('myAnimation');
-		let speedX = 2;
-		let positionX = 0;
-		function step() {
-			positionX = positionX + speedX;
-			if (positionX > maxXPosition || positionX < 0) {
-				speedX = speedX * (-1);
-			}
-			rect.style.left = positionX + 'px';
-			window.requestAnimationFrame(step);
-		}
-		window.requestAnimationFrame(step);
-	}  
 
 }
