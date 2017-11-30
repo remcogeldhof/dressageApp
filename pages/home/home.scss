@@ -8,7 +8,6 @@ page-home {
     background-position-y: 75px;
     text-align: center;
     background-attachment: fixed;
-    
   }
 
   #myContainer {
@@ -29,16 +28,14 @@ page-home {
     background-color: #4CAF50;
     border-radius: 40px;
     padding: 1%;
-   -webkit-animation: mymove1 10s; /* Safari 4.0 - 8.0 */
+    -webkit-animation: mymove1 10s; /* Safari 4.0 - 8.0 */
     -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
     -webkit-animation-delay: 2s; /* Safari 4.0 - 8.0 */
-     animation: mymove1 10s;
+    animation: mymove1 10s;
     animation-timing-function: linear;
   }
 
-  #myContainer:hover {
-    animation-name: mymove1;
-  }
+  
 
 
   .animation {
@@ -61,12 +58,12 @@ page-home {
   //move
   @keyframes mymove1 {
     0% {
-      left: 65.5px;
+      left: 64.5px;
       top: 0px;
     }
 
     20% {
-      left: 65.5px;
+      left: 64.5px;
       top: 429px;
     }
     //move2 0 50 100 .
@@ -90,16 +87,37 @@ page-home {
       top: 42.9px;
     }
 
-    77% {
-      left: 0px;
-      top: 386.1px;
-    }
-
     79% {
       left: 0px;
       top: 429px;
     }
-  }
+
+    83% {
+      left: 129px;
+      top: 429px;
+    }
+
+    91% {
+      left: 0px;
+      top: 0px;
+    }
+
+    93% {
+      left: 64.5px;
+      top: 0px;
+    }
+
+    100% {
+      #myContainer > #myAnimation {
+        left: 64.5px;
+        top: 0px;
+        animation: circle 5s linear;
+        transform-origin: 50% 73px;
+      }
+   }
+
+      
+    }
 
   @keyframes mymove2 {
     0% {
@@ -144,6 +162,16 @@ page-home {
     to {
       left: 129px;
       top: 429px;
+    }
+  }
+
+  @keyframes circle {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
     }
   }
   /*
