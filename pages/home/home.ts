@@ -3,6 +3,11 @@ import { NavController } from 'ionic-angular';
 import { ListPage } from '../list/list';
 
 import * as $ from 'jquery'
+import gsap from "gsap";
+import { Linear } from "gsap";
+import { TweenLite } from "gsap";
+ 
+
 
 @Component({
 	selector: 'page-home',
@@ -10,154 +15,46 @@ import * as $ from 'jquery'
 })
 export class HomePage {
   element: HTMLElement;
-  i: number;
+  toolTimeline = new gsap.TimelineLite({ paused: true });
+
 
   constructor(public navCtrl: NavController) {
-    this.i = 0;
-    this.element = document.getElementById("myAnimation");
-	}
 
-    load() {
-      this.navCtrl.push(ListPage);
+ 	}
+
+    ionViewDidLoad() {
+      var duration = .5;
+      this.toolTimeline.add(TweenLite.from('.myAnimation', 0.645, { left: 64.5, ease: Linear.easeNone }));
+      this.toolTimeline.add(TweenLite.to('.myAnimation', 1.29, { left: 129, ease: Linear.easeNone }));
+      this.toolTimeline.add(TweenLite.to('.myAnimation', 0.429, { top: 42.9, ease: Linear.easeNone }));
+      this.toolTimeline.add(TweenLite.to('.myAnimation', 3.861, { top: 386.1, left: 0, ease: Linear.easeNone }));
+      this.toolTimeline.add(TweenLite.to('.myAnimation', 0.429, { top: 429, left: 0, ease: Linear.easeNone }));
+
+      
+     }
+    
+    start() {
+      this.element = document.getElementById("btnStart");
+      if ($("#btnStart span").text() == "Start") {
+        $("#btnStart span").text("Stop")
+        this.toolTimeline.play();
+      } else {
+        $("#btnStart span").text("Start")
+        this.toolTimeline.pause();
+      }
+    }
+ 
+    reverse() {
+      this.toolTimeline.restart();
     }
 
-	//bron: https://www.w3schools.com/howto/howto_js_animate.asp
 
 
     
 
 
-
-
+    
    
-    restart() {
-
-      
-        // restart animation
-        document.getElementById("myAnimation").style.webkitAnimation = 'none';
-        setTimeout(function () {
-          document.getElementById("myAnimation").style.webkitAnimation = '';
-        },10);
-     
-      
-
-
-
-    //document.getElementById("myAnimation").style.animation = "mymove1 8s linear";
-
-/*
-      $(document).ready(function () {
-        $("button").click(function () {
-          $("#myAnimation").toggleClass('.animation');
-        });
-      });*/
-
-      /*
-     $(document).ready(function () {
-        $("button").click(function () {
-          $("#myAnimation").css("animation", " mymove2 6s");
-        });
-      });*/
-
-     // document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
-
-		//this.verticaal();
-		
-		//this.horizontaal();
-	}
-
-
-    start() {
-    /*  if (this.i == 0) {
-        document.getElementById("myAnimation").style.animation = "frame1 2s linear";
-
-      }*/
-        if (document.getElementById("myAnimation").style.webkitAnimationPlayState == "paused") {
-          document.getElementById("myAnimation").style.webkitAnimationPlayState = "running";
-        } else {
-          document.getElementById("myAnimation").style.webkitAnimationPlayState = "paused";
-        }
-      
-   //   this.i++;
-
-      
-
-   // document.getElementById("myAnimation").style.animation = "mymove1 8s";
-   // document.getElementById("myAnimation").style.animation = "mymove2 3s";
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // JS animations
-	verticaal() {	
-		var speed = 0;
-
-		var elem = document.getElementById("myAnimation");
-		var pos = 0; 
-		var id = setInterval(frame, speed);
-		function frame() {
-			if (pos == 429) {
-				clearInterval(id);
-			} else {
-				pos++;
-				elem.style.top = pos + 'px';
-				elem.style.left = 0 + 'px';
-			}
-
-		}
-	}
-
-	horizontaal() {
-		var speed = 0;
-
-
-		var elem = document.getElementById("myAnimation");
-		var pos = 0;
-		var id = setInterval(frame, speed);
-		function frame() {
-			if (pos == 129) {
-				clearInterval(id);
-			} else {
-				pos++;
-				elem.style.left = pos + 'px';
-			}
-
-		}
-	}
-
-
-	diagonaal() {
-
-
-
-		var speed = 0; //lengte animatie
-
-		var elem = document.getElementById("myAnimation");
-		var pos = 0;
-		var id = setInterval(frame, speed);
-		function frame() {
-			if (pos == 100 ) {
-				clearInterval(id);
-			} else {
-				pos++;
-				elem.style.top = pos + 'px';
-				elem.style.left = pos + 'px';
-
-			}
-
-		}
-	}
 
 
 }

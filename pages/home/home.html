@@ -13,15 +13,16 @@
 
 
     <div id="myContainer">
-      <div id="myAnimation"></div>
+      <div class="myAnimation"></div>
     </div>
 
 
   <p>
     <br />
     <br />
-    <button (click)="start()">Start/Stop</button>
-    <button (click)="restart()">Opnieuw</button>
+    <button id="btnStart" (click)="start()"> <span class="btnText">Start</span></button>
+    <button (click)="reverse()">Opnieuw</button>
+
 
 
   </p>

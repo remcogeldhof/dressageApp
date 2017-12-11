@@ -17,29 +17,18 @@ page-home {
     position: relative;
     border-color: black;
     border: solid;
-    //  padding-top: 150%; b n
+    //padding-top: 150%; b
   }
 
-  #myAnimation {
-    //  margin-top: 15%;
+  .myAnimation {
+    //margin-top: 15%;
     width: 15px;
     height: 15px;
     position: absolute;
     background-color: #4CAF50;
     border-radius: 40px;
-    padding: 1%;
-    -webkit-animation: mymove1 10s; /* Safari 4.0 - 8.0 */
-    -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
-    -webkit-animation-delay: 2s; /* Safari 4.0 - 8.0 */
-    animation: mymove1 10s;
-    animation-timing-function: linear;
   }
-
-  
-
-
-  .animation {
-  }
+ 
   //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
   button {
     background-color: #4CAF50; /* Green */
@@ -55,125 +44,7 @@ page-home {
   p {
     text-align: center;
   }
-  //move
-  @keyframes mymove1 {
-    0% {
-      left: 64.5px;
-      top: 0px;
-    }
-
-    20% {
-      left: 64.5px;
-      top: 429px;
-    }
-    //move2 0 50 100 .
-    25% {
-      left: 0px;
-      top: 429px;
-    }
-
-    45% {
-      left: 0px;
-      top: 0px;
-    }
-
-    55% {
-      left: 129px;
-      top: 0px;
-    }
-
-    57% {
-      left: 129px;
-      top: 42.9px;
-    }
-
-    79% {
-      left: 0px;
-      top: 429px;
-    }
-
-    83% {
-      left: 129px;
-      top: 429px;
-    }
-
-    91% {
-      left: 0px;
-      top: 0px;
-    }
-
-    93% {
-      left: 64.5px;
-      top: 0px;
-    }
-
-    100% {
-      #myContainer > #myAnimation {
-        left: 64.5px;
-        top: 0px;
-        animation: circle 5s linear;
-        transform-origin: 50% 73px;
-      }
-   }
-
-      
-    }
-
-  @keyframes mymove2 {
-    0% {
-      left: 65.5px;
-      top: 0px;
-    }
-
-    2% {
-      left: 65.5px;
-      top: 5px;
-    }
-
-    17% {
-      left: 0px;
-      top: 214.5px;
-    }
-
-    32% {
-      left: 0px;
-      top: 429px;
-    }
-  }
-  //test
-  @keyframes frame1 {
-    from {
-      left: 65.5px;
-      top: 0px;
-    }
-
-    to {
-      left: 65.5px;
-      top: 429px;
-    }
-  }
-
-  @keyframes frame2 {
-    from {
-      left: 65.5px;
-      top: 0px;
-    }
-
-    to {
-      left: 129px;
-      top: 429px;
-    }
-  }
-
-  @keyframes circle {
-    from {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(360deg);
-    }
-  }
+ 
   /*
   @media only screen and (min-height: 1000px) {
     #myContainer {
