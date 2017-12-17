@@ -9,5 +9,8 @@ import { MenuLrvPage } from './menu-lrv';
   imports: [
     IonicPageModule.forChild(MenuLrvPage),
   ],
+  entryComponents: [
+    MenuLrvPage
+  ]
 })
 export class MenuLrvPageModule {}

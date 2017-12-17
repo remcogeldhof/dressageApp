@@ -14,16 +14,12 @@
 
 
 <ion-content padding>
-    <button ion-button (click)="openB7()">B7</button>
-  <br />
-  <button ion-button (click)="openB8()">B8</button>
-  <br />
-  <button ion-button (click)="openJ1()">J1</button>
-  <br />
-  <button ion-button (click)="openJ2()">J2</button>
-  <br />
-  <button ion-button (click)="openL9()">L9</button>
-  <br />
-  <button ion-button (click)="openL10()">L10</button>
-  <br />
+  <ion-list>
+
+    <button ion-button *ngFor="let proef of list" (click)="startProef(proef)">
+      {{proef.proefNaam}}
+    </button>
+  </ion-list>
+
+    <br />
 </ion-content>

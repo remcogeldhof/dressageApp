@@ -1,0 +1,31 @@
+<ion-navbar *navbar>
+  <ion-title>Login</ion-title>
+</ion-navbar>
+<ion-content padding class="page1">
+  <h2>Authentication</h2>
+  <div>
+    <label *ngIf="auth_status == 'OK'"><button ion-button (click)="signOut()" color="error">Sign Out</button>{{loggedInUser}}</label>
+  </div>
+  <div>
+    <label>Choose authentication type:</label>
+  </div>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text" [value]="username" (input)="username = $event.target.value"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [value]="password" (input)="password = $event.target.value" type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button (click)="getAuthTokenSimple()" color="success">Token Auth</button>
+  <button ion-button (click)="useAnonymousAuth()" color="danger">Anonymous Auth</button>
+   
+  <br />
+  <div>
+    <label [class.alert]="is_auth_error" [class.alert-danger]="is_auth_error">{{auth_status}}</label>
+  </div>
+
+ 
+</ion-content>

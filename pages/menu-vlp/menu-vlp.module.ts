@@ -9,5 +9,9 @@ import { MenuVlpPage } from './menu-vlp';
   imports: [
     IonicPageModule.forChild(MenuVlpPage),
   ],
+  entryComponents: [
+    MenuVlpPage
+  ]
+
 })
 export class MenuVlpPageModule {}
