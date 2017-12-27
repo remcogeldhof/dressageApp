@@ -23,6 +23,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BackandService } from '@backand/angular2-sdk'
 
 import { HttpModule } from '@angular/http';
+import { BackandProevenProvider } from '../providers/backand-proeven/backand-proeven';
+
+import { IonicStorageModule } from '@ionic/storage';
 
 
 @NgModule({
@@ -36,6 +39,7 @@ import { HttpModule } from '@angular/http';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     MenuPageModule,
     MenuInternationaalPageModule,
     MenuLrvPageModule,
@@ -56,7 +60,8 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     BackandService,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    BackandProevenProvider
   ]
 })
 export class AppModule {}
