@@ -2,19 +2,23 @@ page-menu-vlp {
   .button {
     margin: 0 auto;
     display: block;
-    background-color: #4CAF55;
+    background-color: grey;
     border: none;
     color: white;
     padding: 15px 32px;
     text-align: center;
     font-size: 17px;
-    width: 60%;
-    height: 75px;
+    width: 50%;
+    height: 50px;
   }
 
   h1 {
     font-size: 30px;
     text-align: center;
     color: #4CAF55;
+  }
+
+  .wrapper {
+    background-image: url("../assets/imgs/geopat4.jpg");
   }
 }

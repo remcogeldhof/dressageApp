@@ -2,21 +2,33 @@ page-home {
 
   #wrapper {
     width: 100%;
-    background-image: url("../assets/imgs/middenletters.png");
     background-repeat: no-repeat;
     background-position: center;
     background-position-y: 75px;
     text-align: center;
     background-attachment: fixed;
+   // background-image: url("../assets/imgs/sand2.jpg");
   }
 
   #myContainer {
     margin: auto;
-    width: 150px;
-    height: 450px;
+    width: 125px;
+    height: 375px;
     position: relative;
     border-color: black;
-    border: solid;
+    //HIDDEN!
+    border: hidden;
+    //border: 1px dashed;
+    //padding-top: 150%;
+    left: -5.5%;
+  }
+
+  #buitensteContainer {
+    margin: auto;
+    width: 144px;
+    height: 394px;
+    position: relative;
+    border: 2px solid;
     //padding-top: 150%; b
   }
 
@@ -24,11 +36,11 @@ page-home {
     //margin-top: 15%;
     width: 15px;
     height: 15px;
-    position: relative;
-    background-color: #4CAF50;
+    position: absolute;
+    background-color:black;
     border-radius: 40px;
+
   }
- 
   //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
   button {
     background-color: #4CAF50; /* Green */
@@ -41,10 +53,52 @@ page-home {
     font-size: 16px;
   }
 
-  p {
-    text-align: center;
+  #a {
+    position: relative;
+    top: -5px;
   }
- 
+
+  #c {
+    position: relative;
+    top: 10px;
+  }
+
+  #right {
+    float: left;
+    position: relative;
+    left: 144px;
+  }
+
+  #left {
+    float: left;
+    position: relative;
+    left: -25px;
+  }
+
+  .f {
+    position: relative;
+    top: 30px;
+  }
+
+  .p {
+    position: relative;
+    top: 90px;
+  }
+
+  .b {
+    position: relative;
+    top: 150px;
+  }
+
+  .r {
+    position: relative;
+    top: 210px;
+  }
+
+  .m {
+    position: relative;
+    top: 270px;
+  }
   /*
   @media only screen and (min-height: 1000px) {
     #myContainer {

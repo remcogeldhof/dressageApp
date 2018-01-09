@@ -19,7 +19,7 @@ import { Data } from '../../data';
   templateUrl: 'menu-vlp.html',
 })
 export class MenuVlpPage {
-  public proeven: any[] = [];
+    public proeven: any[] = [];
     public naamProef: String;
     public reeks: String;
     public proefId: number;
@@ -91,10 +91,10 @@ export class MenuVlpPage {
         });*/
      }
 
-    async getproefs() {
-   /* await this.backand.object.getList('Proef').then((res: any) => {
+    /*async getproefs() {
+    await this.backand.object.getList('Proef').then((res: any) => {
       this.proeven = res.data;
-      console.log(this.proeven[0].federatie);*/
+      console.log(this.proeven[0].federatie);
       console.log("da5dd");
 
    //  await this.events.subscribe('proevenList', (proevenlijst, testje) => {
@@ -115,11 +115,11 @@ export class MenuVlpPage {
 
 
 
-      
+      s
      //   });
      this.first = false;
 
-    }
+    }*/
 
  ionViewDidLoad() {
    console.log('ionViewDidLoad MenuVlpPage');

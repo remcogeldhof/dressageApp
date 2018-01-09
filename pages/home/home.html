@@ -3,17 +3,38 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>{{proef.proefNaam}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding id="wrapper">
   <br />
-  
-    <div id="myContainer">
-      <div class="myAnimation"></div>
+  <div id="a">A</div>
+
+  <div id="buitensteContainer">
+
+    <div id=left>
+    <div class="f">F</div>
+    <div class="p">P</div>
+    <div class="b">B</div>
+    <div class="r">R</div>
+    <div class="m">M</div>
+
     </div>
 
+    <div id=right>
+      <div class="f">K</div>
+      <div class="p">V</div>
+      <div class="b">E</div>
+      <div class="r">S</div>
+      <div class="m">H</div>
+    </div>
+      <div id="myContainer">
+        <div class="myAnimation"></div>
+      </div>
+
+    </div>
+  <div id="c">C</div>
 
   <p>
     <br />
@@ -21,8 +42,6 @@
     <button id="btnStart" (click)="start()"> <span class="btnText">Start</span></button>
     <button (click)="opnieuw()">Opnieuw</button>
   </p>
-
-  
 
 </ion-content>
 

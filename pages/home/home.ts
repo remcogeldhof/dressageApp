@@ -6,7 +6,7 @@ import { ListPage } from '../list/list';
 import * as $ from 'jquery'
 import gsap from "gsap";
 import { Linear } from "gsap";
-import { TweenLite, TweenMax } from "gsap";
+import { TweenLite, TweenMax, Power0 } from "gsap";
 import { BackandService } from '@backand/angular2-sdk'
  
 import { Storage } from '@ionic/storage';
@@ -110,8 +110,8 @@ export class HomePage {
   ionViewDidLoad() {
 
     //zodat animatie start bij A
-    TweenLite.from('.myAnimation', 0.5, { left: 64.5, top: 0 });
-    TweenLite.to('.myAnimation', 0.5, { left: 64.5, top: 0 });
+    TweenLite.from('.myAnimation', 0.5, { left: 62.5, top: 0 });
+    TweenLite.to('.myAnimation', 0.5, { left: 62.5, top: 0 });
 
     
   }
@@ -145,7 +145,30 @@ export class HomePage {
     let next = true;
     let volgnummer = 0;
     let duur = 0;
+    let kleur = "black";
 
+    var R = 125;
+    /*
+    
+    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
+      bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }
+      , ease: Power0.easeNone, repeat: -1
+    }));
+
+
+    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
+      bezier: { curviness: 1.75, values: [{ x: 0, y: 125 }, { x: 62.5, y: 62.5+125 }, { x: 0, y: 250 }] }
+      , ease: Power0.easeNone, repeat: -1
+    }));
+
+    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
+      bezier: { curviness: 2, values: [{ x: 0, y: 250 }, { x: -62.5, y: 62.5 + 250 }, { x: 0, y: 375 }] }
+      , ease: Power0.easeNone, repeat: -1
+    }));
+    */
+   
+
+    
 
     while (next == true) {
       for (let item of this.oefening) {
@@ -153,7 +176,7 @@ export class HomePage {
           this.oef = new Oefening(item.oefeningId, item.oefeningBasisId, item.proefId, item.beschrijving, item.gang, item.reeksNummer);
           oefeningBasisId = item.oefeningBasisId;
           console.log("beschrijving " + count + " " + this.oef.beschrijving + "oef basis id == " + oefeningBasisId);
-
+           
       
           for (let item of this.oefeningBasis) {
             if (item.oefeningBasisId == oefeningBasisId) {
@@ -174,23 +197,33 @@ export class HomePage {
                   posTop_to = item.posTop;
                 }
               }
-             /* if (this.oef.gang == "GALOP") {
+              if (this.oef.gang == "GALOP") {
                 console.log(this.oef.gang);
-                duur = duur * 1.5;
+                duur = duur * 0.75;
+                kleur = "#f4427d";
               }
               if (this.oef.gang == "STAP") {
-                duur = duur * 0.5;
-              }*/
+                duur = duur * 2;
+                kleur = "#40408e";
+
+              }
               if (count == 1) {
-                this.toolTimeline.add(TweenLite.from('.myAnimation', 0, { left: posLeft_from, top: posTop_from, ease: Linear.easeNone }));
+
+                this.toolTimeline.add(TweenLite.from('.myAnimation', 0, { left: posLeft_from, top: posTop_from, backgroundColor: kleur, ease: Linear.easeNone }));
                 console.log(count + "ste keer");
               } else {
                 console.log(count + "de keer");
                 //this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_from, top: posTop_from, ease: Linear.easeNone }));
               }
+              console.log(kleur);
+              //this.toolTimeline.add(TweenLite.set('.myAnimation', { backgroundColor: "#40408e" }));
+             // this.toolTimeline.add(TweenLite.to('.myAnimation', 0, {backgroundColor: kleur, }));
               this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_to, top: posTop_to, ease: Linear.easeNone }));
             }
           }
+             // $(".myAnimation").css('background-color', 'blue');
+
+          kleur = "black";
           volgnummer = item.reeksNummer;
           count++;
           if (volgnummer == 8) {
@@ -198,6 +231,7 @@ export class HomePage {
             console.log("stop");
           }
         }
+    
 
       }
     }
