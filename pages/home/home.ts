@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ListPage } from '../list/list';
-
+ 
 
 import * as $ from 'jquery'
 import gsap from "gsap";
 import { Linear } from "gsap";
-import { TweenLite, TweenMax, Power0 } from "gsap";
-import { BackandService } from '@backand/angular2-sdk'
+import { TweenLite } from "gsap";
  
 import { Storage } from '@ionic/storage';
 
@@ -31,7 +29,7 @@ export class HomePage {
   searchQuery: string;
   test: Boolean;
 
-  constructor(public navCtrl: NavController, public backand: BackandService, public navParams: NavParams, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
     this.test = true;
     this.proef = navParams.get("proef");
 
@@ -147,8 +145,7 @@ export class HomePage {
     let duur = 0;
     let kleur = "black";
 
-    var R = 125;
-    /*
+     /*
     
     this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
       bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }

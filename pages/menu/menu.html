@@ -5,19 +5,19 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Dressage Test Learner </ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding class="wrapper">
   <br />
-  <button  style="background: url(../assets/imgs/feidressage.jpg) no-repeat" ion-button (click)="openInternationaal()">FEI Proeven</button>
+  <button style="background: url(../assets/imgs/feidressage.jpg) no-repeat" ion-button (click)="openInternationaal()">FEI Proeven</button>
   <br />
-  <button class="stretch" style="background: url(../assets/imgs/noges.jpg) no-repeat"  ion-button (click)="openVLP()">VLP</button>
+  <button class="stretch" style="background: url(../assets/imgs/noges.jpg) no-repeat" ion-button (click)="openVLP()">VLP</button>
   <br />
   <button style="background: url(../assets/imgs/member2.jpg) no-repeat" ion-button (click)="openLRV()">LRV</button>
 </ion-content>
