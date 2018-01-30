@@ -19,6 +19,7 @@ import { Data } from '../../data';
   templateUrl: 'menu-vlp.html',
 })
 export class MenuVlpPage {
+    public federatie: String;
     public proeven: any[] = [];
     public naamProef: String;
     public reeks: String;
@@ -27,21 +28,22 @@ export class MenuVlpPage {
     data: Data;
     first: boolean;
 
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService, public events: Events, private storage: Storage) {
       this.list = [];
       this.first = true;
+      this.federatie = navParams.get("federatie");
        
       storage.get('proevenlijst').then((val) => {
-        console.log('dit is het ', val);
+     //   console.log('dit is het ', val);
         this.proeven = []
         for (var i of val) {
           this.proeven.push(i);
         }
-        console.log(this.proeven[0].federatie + "lol");
 
         for (let item of this.proeven) {
 
-          if (item.federatie == "VLP") {
+          if (item.federatie == this.federatie) {
             this.naamProef = item.naam;
             this.reeks = item.reeks;
             this.proefId = item.proefId;
@@ -53,7 +55,6 @@ export class MenuVlpPage {
 
       });
 
-     console.log("test");
     //  events.subscribe('proevenList', (proevenlijst, testje) => {
       //  console.log("we are in vlp constructor");
        // console.log(testje);
@@ -91,61 +92,11 @@ export class MenuVlpPage {
         });*/
      }
 
-    /*async getproefs() {
-    await this.backand.object.getList('Proef').then((res: any) => {
-      this.proeven = res.data;
-      console.log(this.proeven[0].federatie);
-      console.log("da5dd");
 
-   //  await this.events.subscribe('proevenList', (proevenlijst, testje) => {
-      // this.proeven = proevenlijst;
-
-       for (let item of this.proeven) {
-         console.log(this.proeven[0].naam);
-
-         if (item.federatie == "VLP") {
-           this.naamProef = item.naam;
-           this.reeks = item.reeks;
-           this.proefId = item.proefId;
-           console.log(item.reeks);
-           let p = new Proef(item.proefId, item.naam, item.reeks, item.federatie);
-           this.list.push(p);
-         }
-       }
-
-
-
-      s
-     //   });
-     this.first = false;
-
-    }*/
 
  ionViewDidLoad() {
    console.log('ionViewDidLoad MenuVlpPage');
- 
 
-  //30 min
-
-   /* this.backand.object.getList('Proef')
-      .then((res: any) => {
-        this.proeven = res.data;
-        console.log("Proef loaded");
-        */
-     // this.events.subscribe('proevenList', (proevenlijst, testje) => {
-      //this.proeven = proevenlijst;
-
-    
-       
-    
-      //});
-      /*}
-
-      },
-      (err: any) => {
-        console.log(err.data);
-      });
-   */
   }
 
 
@@ -154,10 +105,6 @@ export class MenuVlpPage {
     proef: p
   });
   }
-
- 
-
- 
 
 }
 

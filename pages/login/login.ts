@@ -125,7 +125,7 @@ NativeStorage.getItem('loginname').then( data => this.name = data, console.error
                this.storage.set("storagePassword", null);
              }
 
-             this.navCtrl.push(MenuPage);
+             this.navCtrl.setRoot(MenuPage);
            }
          }
 

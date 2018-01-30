@@ -15,9 +15,12 @@
 
 <ion-content padding class="wrapper">
   <br />
-  <button style="background: url(../assets/imgs/feidressage.jpg) no-repeat" ion-button (click)="openInternationaal()">FEI Proeven</button>
+  <div id="titel">
+    <h1>Kies federatie</h1>
+  </div>
+  <button style="background-image: url(../assets/imgs/FEI_logo.jpg)" ion-button (click)="openInternationaal()"></button>
   <br />
-  <button class="stretch" style="background: url(../assets/imgs/noges.jpg) no-repeat" ion-button (click)="openVLP()">VLP</button>
+  <button style="background-image: url(../assets/imgs/VLP_logo.png)" ion-button (click)="openVLP()"></button>
   <br />
-  <button style="background: url(../assets/imgs/member2.jpg) no-repeat" ion-button (click)="openLRV()">LRV</button>
+  <button style="background-image: url(../assets/imgs/LRV_logo.png); background-size: 100px auto;" ion-button (click)="openLRV()"></button>
 </ion-content>
