@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content padding id="wrapper">
+  <div class="desc"> </div>
   <br />
   <div id="a">A</div>
 
@@ -36,13 +37,19 @@
     </div>
   <div id="c">C</div>
 
-  <p>
+     <br />
     <br />
-    <br />
-    <button id="btnStart" (click)="start()"> <span class="btnText">Start</span></button>
-    <button (click)="opnieuw()">Opnieuw</button>
-  </p>
+    <div>
+      <button id="speeddown" (click)="speedDown()">&#171;</button>
+      <button style="font-size:25px;" (click)="stop()">&#10073;&#10073;</button>
+      <button (click)="start()">&#9654;</button>
+      <button (click)="opnieuw()">&#8634;</button>
+      <button id="speedup" (click)="speedUp()">&#187;</button>
+      <div id="speed">x1</div>
+    </div>
+   
 
+ 
 </ion-content>
 
 

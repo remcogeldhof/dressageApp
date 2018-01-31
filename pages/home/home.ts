@@ -6,7 +6,7 @@ import * as $ from 'jquery'
 import gsap from "gsap";
 import { Linear } from "gsap";
 import { TweenLite } from "gsap";
- 
+
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -24,6 +24,8 @@ export class HomePage {
   public oef: Oefening;
   public basis: OefeningBasis;
   public p: Punt;
+  public speedAnimation: number;
+
   
   
   searchQuery: string;
@@ -32,6 +34,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
     this.test = true;
     this.proef = navParams.get("proef");
+    this.speedAnimation = 1;
 
     storage.get('oefeningenlijst').then((val) => {
       console.log("oefn");
@@ -66,44 +69,7 @@ export class HomePage {
      
   }
   
-    
-  /*
-  public getOefening() {
-    this.backand.object.getList('Oefening')
-      .then((res: any) => {
-        this.oefening = res.data;
-        console.log("Oefening loaded");
-
-      },
-      (err: any) => {
-        //alert(err.data);
-      });
-  }
-
-  public getOefeningBasis() {
-    this.backand.object.getList('OefeningBasis')
-      .then((res: any) => {
-        this.oefeningBasis = res.data;
-        console.log("Oefeningbasis loaded");
-
-      },
-      (err: any) => {
-       // alert(err.data);
-      });
-  }
-
-  public getPunten() {
-    this.backand.object.getList('Punt')
-      .then((res: any) => {
-        this.punt = res.data;
-        console.log("punten loaded");
-
-      },
-      (err: any) => {
-     //   alert(err.data);
-      });
-  }
-  */
+  
 
   ionViewDidLoad() {
 
@@ -111,7 +77,6 @@ export class HomePage {
     TweenLite.from('.myAnimation', 0.5, { left: 62.5, top: 0 });
     TweenLite.to('.myAnimation', 0.5, { left: 62.5, top: 0 });
 
-    
   }
 
 
@@ -165,8 +130,6 @@ export class HomePage {
     */
    
 
-    
-
     while (next == true) {
       for (let item of this.oefening) {
         if (item.proefId == this.proef.proefId && item.reeksNummer == count) {
@@ -194,6 +157,8 @@ export class HomePage {
                   posTop_to = item.posTop;
                 }
               }
+
+              /* KLEUR VERANDEREN GANG
               if (this.oef.gang == "GALOP") {
                 console.log(this.oef.gang);
                 duur = duur * 0.75;
@@ -202,10 +167,10 @@ export class HomePage {
               if (this.oef.gang == "STAP") {
                 duur = duur * 2;
                 kleur = "#40408e";
+              }*/
 
-              }
               if (count == 1) {
-
+                //this.toolTimeline.set("#desc", { text:"Your new text"});
                 this.toolTimeline.add(TweenLite.from('.myAnimation', 0, { left: posLeft_from, top: posTop_from, backgroundColor: kleur, ease: Linear.easeNone }));
                 console.log(count + "ste keer");
               } else {
@@ -216,6 +181,9 @@ export class HomePage {
               //this.toolTimeline.add(TweenLite.set('.myAnimation', { backgroundColor: "#40408e" }));
              // this.toolTimeline.add(TweenLite.to('.myAnimation', 0, {backgroundColor: kleur, }));
               this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_to, top: posTop_to, ease: Linear.easeNone }));
+              //this.toolTimeline.add(TweenLite.to($('#desc'), 0, { css: { opacity: 0 } }));
+            //  this.toolTimeline.add(TweenLite.set('.desc', { text: "Your new text" }));
+        
             }
           }
              // $(".myAnimation").css('background-color', 'blue');
@@ -223,7 +191,7 @@ export class HomePage {
           kleur = "black";
           volgnummer = item.reeksNummer;
           count++;
-          if (volgnummer == 8) {
+          if (volgnummer == 13){
             next = false;
             console.log("stop");
           }
@@ -234,48 +202,6 @@ export class HomePage {
     }
     console.log("stop confirmed, loop stopped");
 
-    /*
-    for (let item of this.oefeningBasis) {
-      if (item.oefeningBasisId == this.oef.oefeningBasisId) {
-        this.basis = new OefeningBasis(item.oefeningBasisId, item.naam, item.puntId1, item.puntId2);
-        oefeningBasisId = item.oefeningBasisId;
-        console.log(this.basis.oefeningBasisId);
-      }
-      puntId1 = item.puntId1;
-      puntId2 = item.puntId2;
-
-      console.log(puntId2);
-    }
-
-    for (let item of this.punt) {
-      if (item.puntId == puntId1) {
-        posLeft = item.posLeft;
-        posTop = item.posTop;
-        console.log(posLeft);
-        console.log(posTop);
-        this.toolTimeline.add(TweenLite.from('.myAnimation',0, { left: posLeft, top: posTop, ease: Linear.easeNone }));
-      }
-    }
-    for (let item of this.punt) {
-      if (item.puntId == puntId2) {
-        posLeft = item.posLeft;
-        posTop = item.posTop;
-        console.log(posLeft);
-        console.log(posTop);
-        this.toolTimeline.add(TweenLite.to('.myAnimation', (posTop*0.01), { left: posLeft, top: posTop, ease: Linear.easeNone }));
-      }
-    }
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 0.654, { left: 0, top: 429, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 4.29, { left: 0, top: 0, ease: Linear.easeNone }));
-    */
-    /*
-    var duration = .5;
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 0.654, { left: 64.5,top:0, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 1.29, { left: 64.5, top:429, ease: Linear.easeNone }));
-   this.toolTimeline.add(TweenLite.to('.myAnimation', 0.429, { top: 42.9, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3.861, { top: 386.1, left: 0, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 0.429, { top: 429, left: 0, ease: Linear.easeNone }));*/
-
   }
     
   start() {
@@ -285,19 +211,38 @@ export class HomePage {
       this.startAnimation();
       this.test = false;
     }
-      this.element = document.getElementById("btnStart");
-      if ($("#btnStart span").text() == "Start") {
-        $("#btnStart span").text("Stop")
-        this.toolTimeline.play();
-      } else {
-        $("#btnStart span").text("Start")
-        this.toolTimeline.pause();
-      }
-    }
+    this.toolTimeline.play();
+  }
+
+  stop() {
+    this.toolTimeline.pause();
+  }
  
     opnieuw() {
       this.toolTimeline.restart();
       $("#btnStart span").text("Stop");
+    }
+
+    speedUp() {
+      if (this.speedAnimation == 5) {
+        this.speedAnimation = 5;
+      } else {
+        this.speedAnimation++;
+      }
+      this.toolTimeline.timeScale(this.speedAnimation);
+
+      $("#speed").text("x" + this.speedAnimation);
+    }
+    speedDown() {
+      if (this.speedAnimation == 1) {
+        this.speedAnimation = 1;
+
+      } else {
+        this.speedAnimation--;
+      }
+      this.toolTimeline.timeScale(this.speedAnimation);
+      $("#speed").text("x"+this.speedAnimation);
+
     }
 
  
