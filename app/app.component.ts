@@ -1,19 +1,14 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
  
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
 
 import { Events } from 'ionic-angular';
-
-import { BackandService, Response } from '@backand/angular2-sdk'
-import { Data } from '../data';
-
+import { BackandService } from '@backand/angular2-sdk'
 import { Storage } from '@ionic/storage';
 
  
@@ -28,10 +23,11 @@ export class MyApp{
   public oefening: any[] = [];
   public oefeningBasis: any[] = [];
   public puntenlijst: any[] = [];
+  public gebruikerslijst: any[] = [];
+
 
 
   rootPage: any = MenuPage;
-  data:Data;
   pages: Array<{title: string, component: any}>;
 
   constructor(public events: Events, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private backand: BackandService, private storage: Storage) {
@@ -113,6 +109,19 @@ export class MyApp{
         })
         .catch(error => { })
 
+      this.backand.object.getList("Gebruiker", {
+        "pageSize": 21,
+        "pageNumber": 1,
+        "filter": [],
+        "sort": []
+      })
+        .then((res: any) => {
+          this.gebruikerslijst = res.data;
+          storage.set('gebruikerslijst', this.gebruikerslijst);
+          console.log("gebruikers loaded");
+        })
+        .catch(error => { })
+
 
       /* this.backand.object.getList('Punt')
            .then((res: any) => {
@@ -129,11 +138,9 @@ export class MyApp{
       
     });
     // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'Menu', component: MenuPage },
-      { title: 'Login', component: LoginPage }
+     this.pages = [
+       { title: 'Home', component: MenuPage },
+       { title: 'Login', component: LoginPage }
 
     ];
 
