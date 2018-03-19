@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { ToastController } from 'ionic-angular';
 import * as $ from 'jquery'
 import { MenuPage } from '../menu/menu';
-
+import { Gebruiker } from '../../models/gebruiker';
 /*
  * Generated class for the LoginPage page.
  *
@@ -33,13 +33,16 @@ export class LoginPage{
     storage.get('storageUsername').then((val) => {
       this.storageUsername = val;
       this.gebruiker.gebruikersnaam = val;
+      if (val != null) {
+        this.switchLogout();
+      } else {
+        this.switchLogin();
+      }
     });
     storage.get('storagePassword').then((val) => {
       this.storagePassword = val;
       this.gebruiker.wachtwoord = val;
-    });
-
-    
+    });    
   }
  
    createAccount() {
@@ -54,15 +57,15 @@ export class LoginPage{
       .then((res: any) => {
         console.log("res " + res.status);
         if (res.status == "200") {
-          loading.dismiss()
+          loading.dismiss();
           toastSuccesful.present();
-          $(".aanmelding").css('display', 'none');
-          $(".login").css('display', 'block');
+          this.switchLogin();
 
         }
       },
       (err: any) => {
         console.log("err " + err);
+        loading.dismiss();
         toastError.present();
         });
 
@@ -87,16 +90,12 @@ export class LoginPage{
      let loading = this.loadingCtrl.create({
        content: 'Please wait...'
      });
+
      loading.present();
-
      
-
-
     /* NativeStorage.setItem('loginname', this.gebruiker.gebruikersnaam)
        .then(() => console.log('Stored Login Data!'), error => console.error('Error storing LoginData', error));
 NativeStorage.getItem('loginname').then( data => this.name = data, console.error('Error getting LoginData', error));
-
-
 */
 
      // voor login get gebruikers 
@@ -131,6 +130,7 @@ NativeStorage.getItem('loginname').then( data => this.name = data, console.error
 
          if (succesful == false) {
            toastError.present();
+           loading.dismiss();
          }
        })
        .catch(error => { })
@@ -149,14 +149,30 @@ NativeStorage.getItem('loginname').then( data => this.name = data, console.error
      });
    }
 
+   logout() {
+     this.storage.set("storageUsername", null);
+     this.storage.set("storagePassword", null);
+     this.switchLogin();
+   }
+
+
    switchCreate() {
      $(".aanmelding").css('display', 'block');
      $(".login").css('display', 'none');
+     $(".logout").css('display', 'none');
+
    }
 
    switchLogin() {
      $(".aanmelding").css('display', 'none');
      $(".login").css('display', 'block');
+     $(".logout").css('display', 'none');
+   }
+
+   switchLogout() {
+     $(".aanmelding").css('display', 'none');
+     $(".login").css('display', 'none');
+     $(".logout").css('display', 'block');
    }
 
   ionViewDidLoad() {
@@ -166,27 +182,5 @@ NativeStorage.getItem('loginname').then( data => this.name = data, console.error
   }
 
 
- 
-
 }
 
-class Gebruiker {
-  //field 
-  gebruikersId: number;
-  gebruikersnaam: string;
-  wachtwoord: string;
-  email: string;
-  voornaam: string;
-  achternaam: string;
-
-  //constructor 
-  constructor(gebruikersId: number, gebruikersnaam: string, wachtwoord:string, email: string, voornaam: string, achternaam:string) {
-    this.gebruikersId = gebruikersId;
-    this.gebruikersnaam = gebruikersnaam;
-    this.wachtwoord = wachtwoord;
-    this.email = email;
-    this.voornaam = voornaam;
-    this.achternaam = achternaam;
-  }
-
-}

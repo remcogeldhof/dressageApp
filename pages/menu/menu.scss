@@ -14,6 +14,16 @@ page-menu {
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: center;
+    background-image: url(../assets/imgs/FEI_logo.jpg);
+  }
+
+  #vlp {
+    background-image: url(../assets/imgs/VLP_logo.png);
+  }
+
+  #lrv {
+    background-image: url(../assets/imgs/LRV_logo.png);
+    background-size: 100px auto;
   }
 
   .wrapper {
@@ -26,6 +36,6 @@ page-menu {
     height: 30px;
     margin: 0 auto;
     display: block;
-    margin-bottom:20px;
+    margin-bottom: 20px;
   }
 }

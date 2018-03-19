@@ -6,6 +6,9 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
+import { CreateTestPage } from '../pages/create-test/create-test';
+import { CreateExercisesPage } from '../pages/create-exercises/create-exercises';
+
 
 import { MenuVlpPageModule } from '../pages/menu-vlp/menu-vlp.module';
 import { MenuVlpPage } from '../pages/menu-vlp/menu-vlp';
@@ -18,8 +21,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BackandService } from '@backand/angular2-sdk'
 import { NativeStorage } from '@ionic-native/native-storage';
 
- import { BackandProevenProvider } from '../providers/backand-proeven/backand-proeven';
-
+  
 import { IonicStorageModule } from '@ionic/storage';
 
 
@@ -27,7 +29,9 @@ import { IonicStorageModule } from '@ionic/storage';
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    CreateTestPage,
+    CreateExercisesPage
 
   ],
   imports: [
@@ -43,7 +47,10 @@ import { IonicStorageModule } from '@ionic/storage';
     HomePage,
     MenuPage,
     MenuVlpPage,
-    LoginPage
+    LoginPage,
+    CreateTestPage,
+    CreateExercisesPage
+
   ],
   providers: [
     StatusBar,
@@ -51,7 +58,6 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     NativeStorage,
-    BackandProevenProvider
-  ]
+   ]
 })
 export class AppModule {}

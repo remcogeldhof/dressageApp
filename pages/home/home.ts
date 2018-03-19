@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
- 
-
 import * as $ from 'jquery'
 import gsap from "gsap";
 import { Linear } from "gsap";
-import { TweenLite } from "gsap";
-
+import { TweenLite, Power0, TextPlugin } from "gsap";
 import { Storage } from '@ionic/storage';
+import { Proef } from '../../models/proef';
+import { Punt } from '../../models/punt';
+import { Oefening } from '../../models/oefening';
+import { OefeningBasis } from '../../models/oefening-basis';
+
 
 @Component({
 	selector: 'page-home',
@@ -17,7 +19,8 @@ export class HomePage {
   element: HTMLElement;
   toolTimeline = new gsap.TimelineLite({ paused: true });
   public proeven: any[] = [];
-  public oefening: any[] = [];
+  public oefeningLijst: any[] = [];
+  public filteredExerciseList: any[] = [];
   public oefeningBasis: any[] = [];
   public punt: any[] = [];
   public proef: Proef;
@@ -25,8 +28,6 @@ export class HomePage {
   public basis: OefeningBasis;
   public p: Punt;
   public speedAnimation: number;
-
-  
   
   searchQuery: string;
   test: Boolean;
@@ -35,15 +36,19 @@ export class HomePage {
     this.test = true;
     this.proef = navParams.get("proef");
     this.speedAnimation = 1;
+    this.oefeningLijst = []
 
     storage.get('oefeningenlijst').then((val) => {
       console.log("oefn");
-      this.oefening = []
       for (var i of val) {
-        this.oefening.push(i);
+        this.oefeningLijst.push(i);
       }
-
-      console.log(this.oefening[0].oefeningId);
+      for (var i of this.oefeningLijst) {
+        if (i.proefId == this.proef.proefId) {
+          this.filteredExerciseList.push(i);
+        }
+      }
+      console.log(this.oefeningLijst[0].oefeningId);
     });
 
     storage.get('oefeningbasislijst').then((val) => {
@@ -65,18 +70,13 @@ export class HomePage {
 
       console.log(this.punt[0].puntId);
     });
-
-     
   }
   
   
-
   ionViewDidLoad() {
-
     //zodat animatie start bij A
     TweenLite.from('.myAnimation', 0.5, { left: 62.5, top: 0 });
     TweenLite.to('.myAnimation', 0.5, { left: 62.5, top: 0 });
-
   }
 
 
@@ -111,7 +111,6 @@ export class HomePage {
     let kleur = "black";
 
      /*
-    
     this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
       bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }
       , ease: Power0.easeNone, repeat: -1
@@ -128,22 +127,27 @@ export class HomePage {
       , ease: Power0.easeNone, repeat: -1
     }));
     */
-   
+
+    /*
+    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
+      bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }
+      , ease: Power0.easeNone, repeat: -1
+    }));*/
 
     while (next == true) {
-      for (let item of this.oefening) {
+      for (let item of this.filteredExerciseList) {
         if (item.proefId == this.proef.proefId && item.reeksNummer == count) {
           this.oef = new Oefening(item.oefeningId, item.oefeningBasisId, item.proefId, item.beschrijving, item.gang, item.reeksNummer);
           oefeningBasisId = item.oefeningBasisId;
           console.log("beschrijving " + count + " " + this.oef.beschrijving + "oef basis id == " + oefeningBasisId);
-           
-      
+         // $(".desc").text(this.oef.beschrijving);
           for (let item of this.oefeningBasis) {
             if (item.oefeningBasisId == oefeningBasisId) {
+              this.toolTimeline.call(this.placeDescription, [this.oef.beschrijving]);
+
               puntId1 = item.puntId1;
               puntId2 = item.puntId2;
               duur = item.duur;
-             
               console.log("duur: " + duur);
               console.log("puntid1" + puntId1);
               console.log("puntid2" + puntId2);
@@ -181,6 +185,7 @@ export class HomePage {
               //this.toolTimeline.add(TweenLite.set('.myAnimation', { backgroundColor: "#40408e" }));
              // this.toolTimeline.add(TweenLite.to('.myAnimation', 0, {backgroundColor: kleur, }));
               this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_to, top: posTop_to, ease: Linear.easeNone }));
+              // this.toolTimeline.call(this.txt());
               //this.toolTimeline.add(TweenLite.to($('#desc'), 0, { css: { opacity: 0 } }));
             //  this.toolTimeline.add(TweenLite.set('.desc', { text: "Your new text" }));
         
@@ -191,7 +196,7 @@ export class HomePage {
           kleur = "black";
           volgnummer = item.reeksNummer;
           count++;
-          if (volgnummer == 13){
+            if (this.filteredExerciseList.length == item.reeksNummer) {
             next = false;
             console.log("stop");
           }
@@ -203,6 +208,11 @@ export class HomePage {
     console.log("stop confirmed, loop stopped");
 
   }
+ 
+
+  placeDescription(newtext) {
+  $(".desc").text(newtext)
+}
     
   start() {
     console.log("start");
@@ -233,6 +243,7 @@ export class HomePage {
 
       $("#speed").text("x" + this.speedAnimation);
     }
+
     speedDown() {
       if (this.speedAnimation == 1) {
         this.speedAnimation = 1;
@@ -249,73 +260,6 @@ export class HomePage {
 }
 
 
-class Proef { 
-   //field 
-   proefId:number;
-   proefNaam: string;
-   reeks:string;
-   federatie:string
  
-   //constructor 
-   constructor(proefId:number, proefNaam: string, reeks:string, federatie:string) { 
-      this.proefId = proefId
-      this.proefNaam = proefNaam 
-      this.reeks = reeks 
-      this.federatie = federatie 
-   }  
 
-}
 
-class Oefening {
-  //field 
-  oefeningId: number;
-  oefeningBasisId: number;
-  proefId: number;
-  beschrijving: string;
-  gang: string;
-  reeksNummer: number;
-
-  //constructor 
-  constructor(oefeningId: number, oefeningBasisId: number, proefId: number, beschrijving: string, gang: string, reeksNummer: number) {
-    this.oefeningId = oefeningId
-    this.oefeningBasisId = oefeningBasisId
-    this.proefId = proefId
-    this.beschrijving = beschrijving
-    this.gang = gang
-    this.reeksNummer = reeksNummer
-  }
-}
-
-class OefeningBasis {
-  //field 
-  oefeningBasisId: number;
-  naam: string;
-  puntId1: number;
-  puntId2: number;
-  duur: number;
-
-  //constructor 
-  constructor(oefeningBasisId: number, naam: string, puntId1: number, puntId2: number, duur:number) {
-    this.oefeningBasisId = oefeningBasisId
-    this.naam = naam
-    this.puntId1 = puntId1
-    this.puntId2 = puntId2
-    this.duur = duur;
-  }
-}
-
-class Punt {
-  //field 
-  puntId: number;
-  naam: string;
-  posLeft: number;
-  posTop: number;
-
-  //constructor 
-  constructor(puntId: number, naam: string, posLeft: number, posTop: number) {
-    this.puntId = puntId
-    this.naam = naam
-    this.posLeft = posLeft
-    this.posTop = posTop
-  }
-}

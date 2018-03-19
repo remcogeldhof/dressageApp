@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding id="wrapper">
-  <div class="desc"> </div>
+  <div class="desc">description</div>
   <br />
   <div id="a">A</div>
 
@@ -40,11 +40,12 @@
      <br />
     <br />
     <div>
-      <button id="speeddown" (click)="speedDown()">&#171;</button>
-      <button style="font-size:25px;" (click)="stop()">&#10073;&#10073;</button>
-      <button (click)="start()">&#9654;</button>
+      <button id="speeddown" (click)="speedDown()"><ion-icon ios="ios-rewind" md="md-rewind"></ion-icon></button>
+      <button (click)="stop()"><ion-icon ios="ios-pause" md="md-pause"></ion-icon></button>
+      <button (click)="start()"><ion-icon ios="ios-play" md="md-play"></ion-icon></button>
       <button (click)="opnieuw()">&#8634;</button>
-      <button id="speedup" (click)="speedUp()">&#187;</button>
+      <!--  <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>-->
+      <button id="speedup" (click)="speedUp()"><ion-icon ios="ios-fastforward" md="md-fastforward"></ion-icon></button>
       <div id="speed">x1</div>
     </div>
    

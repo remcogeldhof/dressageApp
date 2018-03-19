@@ -4,7 +4,7 @@ import { HomePage } from '../home/home';
 import { BackandService } from '@backand/angular2-sdk'
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
+ import { Proef } from '../../models/proef';
 import { Data } from '../../data';
 /**
  * Generated class for the MenuVlpPage page.
@@ -107,21 +107,23 @@ export class MenuVlpPage {
   }
 
 }
+/*
+class Proef {
+  //field 
+  proefId: number;
+  proefNaam: string;
+  reeks: string;
+  federatie: string
 
-class Proef { 
-   //field 
-   proefId:number;
-   proefNaam: string;
-   reeks:string;
-   federatie:string
- 
-   //constructor 
-   constructor(proefId:number, proefNaam: string, reeks:string, federatie:string) { 
-      this.proefId = proefId
-      this.proefNaam = proefNaam 
-      this.reeks = reeks 
-      this.federatie = federatie 
-   }  
-}
+  //constructor 
+  constructor(proefId: number, proefNaam: string, reeks: string, federatie: string) {
+    this.proefId = proefId
+    this.proefNaam = proefNaam
+    this.reeks = reeks
+    this.federatie = federatie
+  }
+
+}*/
+
 
 

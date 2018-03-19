@@ -1,0 +1,47 @@
+<!--
+  Generated template for the CreateExercisesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>createExercises</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="newExercise">
+    <form (ngSubmit)="next()">
+      <ion-label style="font-size:18px">Excercise {{oefening.reeksNummer}}</ion-label>
+      <ion-label>Choose dressage letters</ion-label>
+      <ion-item>
+          <ion-searchbar id="search" [showCancelButton]="shouldShowCancel" [(ngModel)]="searchQuery" (ionInput)="getItems($event)" [ngModelOptions]="{standalone: true}"></ion-searchbar>
+          <ion-list *ngIf="showList">
+            <ion-item *ngFor="let item of items">
+              {{ item }}
+            </ion-item>
+          </ion-list>
+      </ion-item>
+      <ion-item>
+        <ion-label>Pace</ion-label>
+        <ion-input type="text" [(ngModel)]="oefening.gang" name="naam"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-textarea rows="4" type="text" [(ngModel)]="oefening.beschrijving" name="naam"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <button ion-button type="submit" name="confirm">Create next exercise</button>
+        <button ion-button type="button" (click)="create()" name="create">Create test</button>
+      </ion-item>
+    </form>
+
+  </div>
+
+
+
+</ion-content>

@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
+import { CreateTestPage } from '../pages/create-test/create-test';
+
 
 import { Events } from 'ionic-angular';
 import { BackandService } from '@backand/angular2-sdk'
@@ -140,7 +142,9 @@ export class MyApp{
     // used for an example of ngFor and navigation
      this.pages = [
        { title: 'Home', component: MenuPage },
-       { title: 'Login', component: LoginPage }
+       { title: 'Login', component: LoginPage },
+       { title: 'Create test', component: CreateTestPage }
+
 
     ];
 
