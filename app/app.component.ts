@@ -2,18 +2,20 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
- 
-
 import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
 import { CreateTestPage } from '../pages/create-test/create-test';
-
-
 import { Events } from 'ionic-angular';
 import { BackandService } from '@backand/angular2-sdk'
 import { Storage } from '@ionic/storage';
+import { Http } from '@angular/http';
+import { Network } from '@ionic-native/network';
+import { ToastController } from 'ionic-angular';
 
- 
+import 'rxjs/add/operator/map'
+
+import { Punt } from '../models/punt';
+
 @Component({
   selector: 'Dressage App',
   templateUrl: 'app.html'
@@ -24,18 +26,16 @@ export class MyApp{
   public proevenlijst: any[] = [];
   public oefening: any[] = [];
   public oefeningBasis: any[] = [];
-  public puntenlijst: any[] = [];
+  public puntenlijst: Punt[] = [];
   public gebruikerslijst: any[] = [];
-
-
 
   rootPage: any = MenuPage;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public events: Events, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private backand: BackandService, private storage: Storage) {
+  constructor(public events: Events, public platform: Platform, public statusBar: StatusBar,
+    public splashScreen: SplashScreen, private backand: BackandService, private storage: Storage,
+    public http: Http, private network: Network, private toastCtrl: ToastController) {
      platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
        //connection backand
@@ -46,34 +46,81 @@ export class MyApp{
         runSocket: false,
         mobilePlatform: 'ionic'
       });
-        
-       //load proeven backand
-      this.backand.object.getList('Proef')
+
+
+
+  
+      //load tests
+
+      this.http.get('http://localhost/dressageapi/proef/get.php').map(res => res.json().records).subscribe((data) => {
+        this.proevenlijst = data;
+        storage.set('proevenlijst', this.proevenlijst);
+        console.log("Proevenlijst loaded" + this.proevenlijst[0].naam);
+      });
+
+   /*   {
+        console.dir(data);
+        this.proevenlijst = data;
+
+        storage.set('proevenlijst', this.proevenlijst);
+        console.log("Proevenlijst loaded" + data.naam);
+      },
+        (error) =>
+        {
+          console.dir(error);
+        });*/
+
+
+       /* Backand way
+
+     this.backand.object.getList("Proef", {
+        "pageSize": 200,
+        "pageNumber": 1,
+        "filter": [],
+        "sort": []
+      })
         .then((res: any) => {
           this.proevenlijst = res.data;
-          //https://ionicframework.com/docs/storage/
           storage.set('proevenlijst', this.proevenlijst);
-          console.log("Proevenlijst loaded in app component");
-        },
-        (err: any) => {
-          console.log(err.data);
-        });
+          console.log("Proevenlijst loaded");
+        })
+        .catch(error => { })*/
+       
+   
+
+      this.backand.object.getList("Oefening", {
+        "pageSize": 200,
+        "pageNumber": 1,
+        "filter": [],
+        "sort": []
+      })
+        .then((res: any) => {
+          this.oefening = res.data;
+          storage.set('oefeningenlijst', this.oefening);
+          console.log("Oefeningen loaded");
+        })
+        .catch(error => { })
+
+
+      storage.get('oefeningbasislijst').then((val) => {
+        if (val == null) {
+          this.http.get('http://localhost/dressageapi/basisoefening/get.php').map(res => res.json().records).subscribe((data) => {
+            this.oefeningBasis = data;
+            storage.set('oefeningbasislijst', this.oefeningBasis);
+            console.log("Oefeningbasis loaded");
+          },
+            (error: any) => {
+              console.dir(error);
+            });
+        } else {
+          console.log("basic excercises already in storage, no api call")
+        }
+      });
 
       
-      this.backand.object.getList('Oefening')
-           .then((res: any) => {
-             this.oefening = res.data;
-             storage.set('oefeningenlijst', this.oefening);
-             console.log("Oefening loaded");
-           },
-        (err: any) => {
-          console.log(err.data);
-             //alert(err.data);
-           });
-       
-
-      this.backand.object.getList("OefeningBasis", {
-        "pageSize": 200,
+     
+      /*this.backand.object.getList("OefeningBasis", {
+        "pageSize": 500,
         "pageNumber": 1,
         "filter": [],
         "sort": []
@@ -83,33 +130,41 @@ export class MyApp{
           storage.set('oefeningbasislijst', this.oefeningBasis);
           console.log("Oefeningbasis loaded");
         })
-        .catch(error => { })
+        .catch(error => { })*/
 
+      storage.get('puntenlijst').then((val) => {
+        if (val == null) {
+          this.http.get('http://localhost/dressageapi/punt/get.php').map(res => res.json().records).subscribe((data) => {
+            this.puntenlijst = data;
+            storage.set('puntenlijst', this.puntenlijst);
+            console.log("Puntenlijst loaded");
+          },
+            (error: any) => {
+              console.dir(error);
+            });
+        } else {
+          console.log("points already in storage, no api call")
+        }
+      });
 
-     /* this.backand.object.getList('OefeningBasis')
-           .then((res: any) => {
-             this.oefeningBasis = res.data;
-             storage.set('oefeningbasislijst', this.oefeningBasis);
-             console.log("Oefeningbasis loaded");
-           },
-        (err: any) => {
-          console.log(err.data);
-             // alert(err.data);
-           });*/
-       
+  
 
-      this.backand.object.getList("Punt", {
-        "pageSize": 21,
-        "pageNumber": 1,
-        "filter": [],
-        "sort": []
-      })
-        .then((res: any) => {
-          this.puntenlijst = res.data;
-          storage.set('puntenlijst', this.puntenlijst);
-          console.log("punten loaded");
-        })
-        .catch(error => { })
+   /*
+   this.backand.object.getList("Punt", {
+     "pageSize": 21,
+     "pageNumber": 1,
+     "filter": [],
+     "sort": []
+   })
+     .then((res: any) => {
+       this.puntenlijst = res.data;
+       console.log("backand", res.data);
+       console.log("backand arr", this.puntenlijst);
+
+       //storage.set('puntenlijst', this.puntenlijst);
+       console.log("punten loaded");
+     })
+     .catch(error => { });*/
 
       this.backand.object.getList("Gebruiker", {
         "pageSize": 21,
@@ -123,19 +178,6 @@ export class MyApp{
           console.log("gebruikers loaded");
         })
         .catch(error => { })
-
-
-      /* this.backand.object.getList('Punt')
-           .then((res: any) => {
-             this.puntenlijst = res.data;
-             storage.set('puntenlijst', this.puntenlijst);
-             console.log("punten loaded");
-           },
-         (err: any) => {
-           console.log(err.data);
-             //   alert(err.data);
-           });*/
-       
    
       
     });
@@ -147,7 +189,6 @@ export class MyApp{
 
 
     ];
-
   }
  
   openPage(page) {

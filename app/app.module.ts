@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { FormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -24,6 +25,9 @@ import { NativeStorage } from '@ionic-native/native-storage';
   
 import { IonicStorageModule } from '@ionic/storage';
 
+import { HttpModule } from '@angular/http'
+import { Network } from '@ionic-native/network';
+
 
 @NgModule({
   declarations: [
@@ -36,10 +40,12 @@ import { IonicStorageModule } from '@ionic/storage';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     MenuPageModule,
-    MenuVlpPageModule
+    MenuVlpPageModule,
+    FormsModule
    ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,6 +64,8 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     NativeStorage,
+    Network
+
    ]
 })
 export class AppModule {}

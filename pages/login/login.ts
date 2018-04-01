@@ -6,6 +6,10 @@ import { ToastController } from 'ionic-angular';
 import * as $ from 'jquery'
 import { MenuPage } from '../menu/menu';
 import { Gebruiker } from '../../models/gebruiker';
+import { Guuid } from '../../models/Guuid';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+
+
 /*
  * Generated class for the LoginPage page.
  *
@@ -24,12 +28,26 @@ export class LoginPage{
   private remember: Boolean;
   private storageUsername: string;
   private storagePassword: string;
+  //private login_form: FormGroup;
+ // private signupform: FormGroup;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService, public storage: Storage, private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 
-    this.gebruiker = { gebruikersId: null, gebruikersnaam: "", wachtwoord: "", email: "", voornaam: "", achternaam: "" };
+  constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService,
+    public storage: Storage, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public formBuilder: FormBuilder) {
+
+    this.gebruiker = { gebruikersId: Guuid.newGuid(), gebruikersnaam: "", wachtwoord: "", email: "", voornaam: "", achternaam: "" };
     this.remember = true;
+   
+    //let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+   // this.signupform = formBuilder.group({
+   //   name: ['',Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(10)],
+     // password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]),
+   ///   name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(30)]),
+    //  email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)]),
+    //});
+
+
     storage.get('storageUsername').then((val) => {
       this.storageUsername = val;
       this.gebruiker.gebruikersnaam = val;
@@ -93,11 +111,6 @@ export class LoginPage{
 
      loading.present();
      
-    /* NativeStorage.setItem('loginname', this.gebruiker.gebruikersnaam)
-       .then(() => console.log('Stored Login Data!'), error => console.error('Error storing LoginData', error));
-NativeStorage.getItem('loginname').then( data => this.name = data, console.error('Error getting LoginData', error));
-*/
-
      // voor login get gebruikers 
      this.backand.object.getList("Gebruiker", {
        "pageSize": 21,
@@ -154,8 +167,7 @@ NativeStorage.getItem('loginname').then( data => this.name = data, console.error
      this.storage.set("storagePassword", null);
      this.switchLogin();
    }
-
-
+  
    switchCreate() {
      $(".aanmelding").css('display', 'block');
      $(".login").css('display', 'none');
@@ -180,7 +192,6 @@ NativeStorage.getItem('loginname').then( data => this.name = data, console.error
     $(".aanmelding").css('display', 'none');
     $(".login").css('display', 'block');
   }
-
 
 }
 

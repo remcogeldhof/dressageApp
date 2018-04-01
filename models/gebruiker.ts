@@ -1,6 +1,6 @@
 export class Gebruiker {
   //field 
-  gebruikersId: number;
+  gebruikersId: string;
   gebruikersnaam: string;
   wachtwoord: string;
   email: string;
@@ -8,7 +8,7 @@ export class Gebruiker {
   achternaam: string;
 
   //constructor 
-  constructor(gebruikersId: number, gebruikersnaam: string, wachtwoord:string, email: string, voornaam: string, achternaam:string) {
+  constructor(gebruikersId: string, gebruikersnaam: string, wachtwoord:string, email: string, voornaam: string, achternaam:string) {
     this.gebruikersId = gebruikersId;
     this.gebruikersnaam = gebruikersnaam;
     this.wachtwoord = wachtwoord;

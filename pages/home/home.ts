@@ -22,7 +22,7 @@ export class HomePage {
   public oefeningLijst: any[] = [];
   public filteredExerciseList: any[] = [];
   public oefeningBasis: any[] = [];
-  public punt: any[] = [];
+  public punt: Punt[] = [];
   public proef: Proef;
   public oef: Oefening;
   public basis: OefeningBasis;
@@ -39,7 +39,6 @@ export class HomePage {
     this.oefeningLijst = []
 
     storage.get('oefeningenlijst').then((val) => {
-      console.log("oefn");
       for (var i of val) {
         this.oefeningLijst.push(i);
       }
@@ -48,27 +47,20 @@ export class HomePage {
           this.filteredExerciseList.push(i);
         }
       }
-      console.log(this.oefeningLijst[0].oefeningId);
     });
 
     storage.get('oefeningbasislijst').then((val) => {
-      console.log("bas");
       this.oefeningBasis = []
       for (var i of val) {
         this.oefeningBasis.push(i);
       }
-
-      console.log(this.oefeningBasis[0].oefeningBasisId);
-    });
+     });
 
     storage.get('puntenlijst').then((val) => {
-      console.log("put");
-      this.punt = []
+      this.punt = [];
       for (var i of val) {
         this.punt.push(i);
       }
-
-      console.log(this.punt[0].puntId);
     });
   }
   
@@ -91,10 +83,10 @@ export class HomePage {
     let puntId1: number;
     let puntId2: number;
 
-    let posLeft_from;
-    let posTop_from;
-    let posLeft_to;
-    let posTop_to;
+    let posLeft_from: number;
+    let posTop_from: number;
+    let posLeft_to: number;
+    let posTop_to: number;
 
  /*   for (let item of this.proeven) {
       naamProef = item.naam;
@@ -133,80 +125,83 @@ export class HomePage {
       bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }
       , ease: Power0.easeNone, repeat: -1
     }));*/
+    if (this.filteredExerciseList.length >= 1) {
 
-    while (next == true) {
-      for (let item of this.filteredExerciseList) {
-        if (item.proefId == this.proef.proefId && item.reeksNummer == count) {
-          this.oef = new Oefening(item.oefeningId, item.oefeningBasisId, item.proefId, item.beschrijving, item.gang, item.reeksNummer);
-          oefeningBasisId = item.oefeningBasisId;
-          console.log("beschrijving " + count + " " + this.oef.beschrijving + "oef basis id == " + oefeningBasisId);
-         // $(".desc").text(this.oef.beschrijving);
-          for (let item of this.oefeningBasis) {
-            if (item.oefeningBasisId == oefeningBasisId) {
-              this.toolTimeline.call(this.placeDescription, [this.oef.beschrijving]);
 
-              puntId1 = item.puntId1;
-              puntId2 = item.puntId2;
-              duur = item.duur;
-              console.log("duur: " + duur);
-              console.log("puntid1" + puntId1);
-              console.log("puntid2" + puntId2);
-              for (let item of this.punt) {
-                if (item.puntId == puntId1) {
-                  posLeft_from = item.posLeft;
-                  posTop_from = item.posTop;
+      while (next == true) {
+        for (let item of this.filteredExerciseList) {
+          if (item.proefId == this.proef.proefId && item.reeksNummer == count) {
+            this.oef = new Oefening(item.oefeningId, item.oefeningBasisId, item.proefId, item.beschrijving, item.gang, item.reeksNummer);
+            oefeningBasisId = item.oefeningBasisId;
+            console.log("beschrijving " + count + " " + this.oef.beschrijving + "oef basis id == " + oefeningBasisId);
+
+            for (let item of this.oefeningBasis) {
+              if (item.oefeningBasisId == oefeningBasisId) {
+                this.toolTimeline.call(this.placeDescription, [this.oef.beschrijving]);
+
+                puntId1 = item.puntId1;
+                puntId2 = item.puntId2;
+                duur = item.duur;
+                console.log("duur: " + duur);
+                console.log("puntid1" + puntId1);
+                console.log("puntid2" + puntId2);
+                for (let item of this.punt) {
+                  if (item.puntId == puntId1) {
+                    posLeft_from = item.posLeft;
+                    posTop_from = item.posTop;
+
+                  }
+                  if (item.puntId == puntId2) {
+                    posLeft_to = +item.posLeft;
+                    posTop_to = +item.posTop;
+                  }
                 }
-                if (item.puntId == puntId2) {
-                  posLeft_to = item.posLeft;
-                  posTop_to = item.posTop;
+
+                /* KLEUR VERANDEREN GANG
+                if (this.oef.gang == "GALOP") {
+                  console.log(this.oef.gang);
+                  duur = duur * 0.75;
+                  kleur = "#f4427d";
                 }
-              }
+                if (this.oef.gang == "STAP") {
+                  duur = duur * 2;
+                  kleur = "#40408e";
+                }*/
 
-              /* KLEUR VERANDEREN GANG
-              if (this.oef.gang == "GALOP") {
-                console.log(this.oef.gang);
-                duur = duur * 0.75;
-                kleur = "#f4427d";
-              }
-              if (this.oef.gang == "STAP") {
-                duur = duur * 2;
-                kleur = "#40408e";
-              }*/
+                if (count == 1) {
+                  //this.toolTimeline.set("#desc", { text:"Your new text"});
+                  this.toolTimeline.add(TweenLite.from('.myAnimation', 0, { left: posLeft_from, top: posTop_from, backgroundColor: kleur, ease: Linear.easeNone }));
+                  console.log(count + "ste keer");
+                } else {
+                  console.log(count + "de keer");
+                  //this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_from, top: posTop_from, ease: Linear.easeNone }));
+                }
+                console.log(kleur);
+                //this.toolTimeline.add(TweenLite.set('.myAnimation', { backgroundColor: "#40408e" }));
+                // this.toolTimeline.add(TweenLite.to('.myAnimation', 0, {backgroundColor: kleur, }));
+                this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_to, top: posTop_to, ease: Linear.easeNone }));
+                // this.toolTimeline.call(this.txt());
+                //this.toolTimeline.add(TweenLite.to($('#desc'), 0, { css: { opacity: 0 } }));
+                //  this.toolTimeline.add(TweenLite.set('.desc', { text: "Your new text" }));
 
-              if (count == 1) {
-                //this.toolTimeline.set("#desc", { text:"Your new text"});
-                this.toolTimeline.add(TweenLite.from('.myAnimation', 0, { left: posLeft_from, top: posTop_from, backgroundColor: kleur, ease: Linear.easeNone }));
-                console.log(count + "ste keer");
-              } else {
-                console.log(count + "de keer");
-                //this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_from, top: posTop_from, ease: Linear.easeNone }));
               }
-              console.log(kleur);
-              //this.toolTimeline.add(TweenLite.set('.myAnimation', { backgroundColor: "#40408e" }));
-             // this.toolTimeline.add(TweenLite.to('.myAnimation', 0, {backgroundColor: kleur, }));
-              this.toolTimeline.add(TweenLite.to('.myAnimation', duur, { left: posLeft_to, top: posTop_to, ease: Linear.easeNone }));
-              // this.toolTimeline.call(this.txt());
-              //this.toolTimeline.add(TweenLite.to($('#desc'), 0, { css: { opacity: 0 } }));
-            //  this.toolTimeline.add(TweenLite.set('.desc', { text: "Your new text" }));
-        
+            }
+            // $(".myAnimation").css('background-color', 'blue');
+
+            kleur = "black";
+            volgnummer = item.reeksNummer;
+            count++;
+            if (this.filteredExerciseList.length == item.reeksNummer) {
+              next = false;
+              console.log("stop");
             }
           }
-             // $(".myAnimation").css('background-color', 'blue');
 
-          kleur = "black";
-          volgnummer = item.reeksNummer;
-          count++;
-            if (this.filteredExerciseList.length == item.reeksNummer) {
-            next = false;
-            console.log("stop");
-          }
+
         }
-    
-
       }
+      console.log("stop confirmed, loop stopped");
     }
-    console.log("stop confirmed, loop stopped");
-
   }
  
 

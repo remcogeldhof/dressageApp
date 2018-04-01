@@ -28,7 +28,11 @@
       </ion-item>
       <ion-item>
         <ion-label>Pace</ion-label>
-        <ion-input type="text" [(ngModel)]="oefening.gang" name="naam"></ion-input>
+        <ion-select [(ngModel)]="oefening.gang" multiple="false" [ngModelOptions]="{standalone: true}">
+          <ion-option value="stap">Stap</ion-option>
+          <ion-option value="draf">Draf</ion-option>
+          <ion-option value="galop">Galop</ion-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Description</ion-label>
@@ -36,12 +40,20 @@
       </ion-item>
       <ion-item>
         <button ion-button type="submit" name="confirm">Create next exercise</button>
-        <button ion-button type="button" (click)="create()" name="create">Create test</button>
+        <button class="btnCreate" ion-button type="button" (click)="create()" name="create">Create test</button>
       </ion-item>
     </form>
-
   </div>
 
+  <!--<div class="listOfExercises">
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of exerciseListNames">
+        <ion-item>
+         
+        </ion-item>
+      </ion-item-sliding>
+    </ion-list>
+  </div>-->
 
 
 </ion-content>

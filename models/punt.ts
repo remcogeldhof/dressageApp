@@ -12,4 +12,8 @@ export class Punt {
     this.posLeft = posLeft
     this.posTop = posTop
   }
+
+  toString() {
+    return this.puntId + this.naam + this.posLeft + this.posTop;
+  }
 }

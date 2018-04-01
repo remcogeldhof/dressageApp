@@ -18,10 +18,9 @@
   <div class="aanmelding">
     <ion-label>Maak een nieuw account aan</ion-label>
     <form (ngSubmit)="createAccount()">
-
       <ion-item>
         <ion-label>Voornaam</ion-label>
-        <ion-input type="text" [(ngModel)]="gebruiker.voornaam" name="voornaam"></ion-input>
+          <ion-input type="text" [(ngModel)]="gebruiker.voornaam" name="voornaam"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Achternaam</ion-label>
@@ -33,11 +32,11 @@
       </ion-item>
       <ion-item>
         <ion-label>Gebruikersnaam</ion-label>
-        <ion-input type="text" [(ngModel)]="gebruiker.gebruikersnaam" name="gebruikersnaam"></ion-input>
+        <ion-input type="text" [(ngModel)]="gebruiker.gebruikersnaam" name="username"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Wachtwoord</ion-label>
-        <ion-input type="password" [(ngModel)]="gebruiker.wachtwoord" name="wachtwoord"></ion-input>
+        <ion-input type="password" [(ngModel)]="gebruiker.wachtwoord" name="password"></ion-input>
       </ion-item>
       <ion-item>
         <button ion-button type="submit" name="confirm">Maak aan</button>

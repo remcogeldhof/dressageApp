@@ -1,11 +1,15 @@
 import { CreateTestPage } from '../create-test/create-test';
+import { MenuPage } from '../menu/menu';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Proef } from '../../models/proef';
 import { Oefening } from '../../models/oefening';
 import { OefeningBasis } from '../../models/oefening-basis';
 import { BackandService, Response } from '@backand/angular2-sdk'
+import { AlertController } from 'ionic-angular';
+import * as $ from 'jquery'
+
 
 
 /**
@@ -29,15 +33,16 @@ export class CreateExercisesPage {
   public map: Map<string, string>;
   private searchQuery: string = '';
   private items: string[];
+  private exerciseListNames: string[];
   public search: string;
   showList: boolean = false;
-
   public static exerciseList: Oefening[] = [];
   public list: Oefening[] = [];
+  public static reeksNummer: number = 1;
 
-  public static reeksNummer: number = 0;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public backand: BackandService,
+    public loadingCtrl: LoadingController, private alertCtrl: AlertController) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public backand: BackandService) {
     storage.get('oefeningbasislijst').then((val) => {
       this.oefeningBasisItems = []
       for (var i of val) {
@@ -45,10 +50,17 @@ export class CreateExercisesPage {
       }
     });
     this.initializeItems();
-     this.proef = navParams.get("proef");
+    this.exerciseListNames = CreateExercisesPage.exerciseList.map(a => a.gang);
+    this.proef = navParams.get("proef");
     console.log("reeks"+this.proef.reeks);
     this.search = "";
+    this.showList = false;
     this.oefening = { oefeningId: null, oefeningBasisId: 1, proefId: this.proef.proefId, beschrijving: "", gang: "", reeksNummer: CreateExercisesPage.reeksNummer };
+    if (CreateExercisesPage.exerciseList.length >= 1) {
+      this.oefening = CreateExercisesPage.exerciseList[CreateExercisesPage.exerciseList.length-1];
+    }
+
+   
   }
 
   next() {
@@ -59,9 +71,12 @@ export class CreateExercisesPage {
 
   create() {
     console.log("proefid " + this.proef.proefId, this.proef.federatie, this.proef.naam, this.proef.reeks);
-    
-    
 
+    let loading = this.loadingCtrl.create({
+      content: 'Creating test...'
+    });
+    loading.present();
+    
    this.backand.object.create('Proef', this.proef)
       .then((res: any) => {
         console.log("res " + res.status);
@@ -74,6 +89,7 @@ export class CreateExercisesPage {
      });
 
    console.log("log2: ", CreateExercisesPage.exerciseList[0].beschrijving);
+   console.log("length: ", CreateExercisesPage.exerciseList.length);
 
    for (var i = 0; i < CreateExercisesPage.exerciseList.length; i++) {
      console.log("log3: ", CreateExercisesPage.exerciseList[0].beschrijving);
@@ -84,18 +100,17 @@ export class CreateExercisesPage {
           if (res.status == "200") {
             console.log("oefening "+i+" pushed");
           }
+         if (i == CreateExercisesPage.exerciseList.length) {
+           loading.dismiss();
+           this.setAlert();
+          }
         },
         (err: any) => {
           console.log("err " + err);
        });
 
-    }
-
+   }
     console.log("wait for async");
-
-    
-
-
 
 
   //  this.storage.set(this.proef.proefNaam, this.exerciseList);
@@ -134,10 +149,9 @@ export class CreateExercisesPage {
   }
 
   addExercise() {
-    CreateExercisesPage.reeksNummer++;
     this.oefening.reeksNummer = CreateExercisesPage.reeksNummer;
+    CreateExercisesPage.reeksNummer++;
     console.log("add exercise, reeksnummer=" + this.oefening.reeksNummer);
-     
     var oef: OefeningBasis;
     for (oef of this.oefeningBasisItems) {
        if (oef.naam == this.searchQuery.toUpperCase()) {
@@ -151,7 +165,7 @@ export class CreateExercisesPage {
     console.log("log: ", CreateExercisesPage.exerciseList[0].beschrijving);
 
     // set oefening to default for next one
-    this.oefening = { oefeningId: null, oefeningBasisId: 1, proefId: this.proef.proefId, beschrijving: "", gang: "", reeksNummer: CreateExercisesPage.reeksNummer };
+    //this.oefening = { oefeningId: null, oefeningBasisId: 1, proefId: this.proef.proefId, beschrijving: "", gang: "", reeksNummer: CreateExercisesPage.reeksNummer };
   }
 
   initializeItems() {
@@ -174,13 +188,32 @@ export class CreateExercisesPage {
         return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     this.showList = true;
-    } else {
-        this.showList = false;
-    }
+    } 
+  }
+
+  setAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Test created successful',
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'ok',
+          handler: () => {
+            this.navCtrl.setRoot(MenuPage);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateExercisesPage');
+    if (CreateExercisesPage.exerciseList.length < 1) {
+      $(".btnCreate").css('display', 'none');
+    } else {
+      $("#btnCreate").css('display', 'block');
+    }
   }
 }
 
