@@ -1,6 +1,6 @@
 export class Oefening {
   //field 
-  oefeningId: number;
+  oefeningId: string;
   oefeningBasisId: number;
   proefId: string;
   beschrijving: string;
@@ -8,7 +8,7 @@ export class Oefening {
   reeksNummer: number;
 
   //constructor 
-  constructor(oefeningId: number, oefeningBasisId: number, proefId: string, beschrijving: string, gang: string, reeksNummer: number) {
+  constructor(oefeningId: string, oefeningBasisId: number, proefId: string, beschrijving: string, gang: string, reeksNummer: number) {
     this.oefeningId = oefeningId
     this.oefeningBasisId = oefeningBasisId
     this.proefId = proefId

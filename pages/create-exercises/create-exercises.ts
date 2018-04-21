@@ -9,6 +9,11 @@ import { OefeningBasis } from '../../models/oefening-basis';
 import { BackandService, Response } from '@backand/angular2-sdk'
 import { AlertController } from 'ionic-angular';
 import * as $ from 'jquery'
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map'
+
+import { Guuid } from '../../models/Guuid';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 
@@ -40,8 +45,11 @@ export class CreateExercisesPage {
   public list: Oefening[] = [];
   public static reeksNummer: number = 1;
 
+  private createExerciseForm: FormGroup;
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public backand: BackandService,
-    public loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+    public loadingCtrl: LoadingController, private alertCtrl: AlertController, public http: Http, public formBuilder: FormBuilder) {
 
     storage.get('oefeningbasislijst').then((val) => {
       this.oefeningBasisItems = []
@@ -56,11 +64,11 @@ export class CreateExercisesPage {
     this.search = "";
     this.showList = false;
     this.oefening = { oefeningId: null, oefeningBasisId: 1, proefId: this.proef.proefId, beschrijving: "", gang: "", reeksNummer: CreateExercisesPage.reeksNummer };
-    if (CreateExercisesPage.exerciseList.length >= 1) {
-      this.oefening = CreateExercisesPage.exerciseList[CreateExercisesPage.exerciseList.length-1];
-    }
 
-   
+    /*this.createExerciseForm = formBuilder.group({
+      description: ['', Validators.compose([Validators.maxLength(100), Validators.pattern('[a-zA-Z ]*'), Validators.required])]
+    });
+    */
   }
 
   next() {
@@ -71,13 +79,22 @@ export class CreateExercisesPage {
 
   create() {
     console.log("proefid " + this.proef.proefId, this.proef.federatie, this.proef.naam, this.proef.reeks);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
     let loading = this.loadingCtrl.create({
       content: 'Creating test...'
     });
     loading.present();
-    
-   this.backand.object.create('Proef', this.proef)
+
+
+    let body = JSON.stringify(this.proef);
+    console.log(body);
+    this.http.post('http://localhost/dressageapi/proef/create.php', body,
+      headers).map(res => res.json()).subscribe(data => {
+        console.log(data);
+      });
+ /*  this.backand.object.create('Proef', this.proef)
       .then((res: any) => {
         console.log("res " + res.status);
         if (res.status == "200") {
@@ -86,14 +103,27 @@ export class CreateExercisesPage {
       },
       (err: any) => {
         console.log("err " + err);
-     });
+     });*/
 
    console.log("log2: ", CreateExercisesPage.exerciseList[0].beschrijving);
    console.log("length: ", CreateExercisesPage.exerciseList.length);
 
    for (var i = 0; i < CreateExercisesPage.exerciseList.length; i++) {
-     console.log("log3: ", CreateExercisesPage.exerciseList[0].beschrijving);
+     console.log("log3: ", CreateExercisesPage.exerciseList[i].beschrijving);
 
+    
+     let body = JSON.stringify(CreateExercisesPage.exerciseList[i]);
+     console.log(body);
+     this.http.post('http://localhost/dressageapi/oefening/create.php', body,
+       headers).map(res => res.json()).subscribe(data => {
+         console.log(data);
+         if (i == CreateExercisesPage.exerciseList.length) {
+           loading.dismiss();
+           this.setAlert();
+         }
+       });
+
+     /*
      this.backand.object.create('Oefening', CreateExercisesPage.exerciseList[i])
         .then((res: any) => {
           console.log("res " + res.status);
@@ -107,7 +137,7 @@ export class CreateExercisesPage {
         },
         (err: any) => {
           console.log("err " + err);
-       });
+       });*/
 
    }
     console.log("wait for async");
@@ -149,6 +179,7 @@ export class CreateExercisesPage {
   }
 
   addExercise() {
+    this.oefening.oefeningId = Guuid.newGuid();
     this.oefening.reeksNummer = CreateExercisesPage.reeksNummer;
     CreateExercisesPage.reeksNummer++;
     console.log("add exercise, reeksnummer=" + this.oefening.reeksNummer);
@@ -160,9 +191,12 @@ export class CreateExercisesPage {
          console.log("id oef" + this.oefening.oefeningBasisId);
       }
     }
+
+ 
+
     // this.storage.set(this.reeksNummer.toString(), JSON.stringify(this.oefening));
     CreateExercisesPage.exerciseList.push(this.oefening);
-    console.log("log: ", CreateExercisesPage.exerciseList[0].beschrijving);
+    console.log("first element: ", CreateExercisesPage.exerciseList[0].beschrijving);
 
     // set oefening to default for next one
     //this.oefening = { oefeningId: null, oefeningBasisId: 1, proefId: this.proef.proefId, beschrijving: "", gang: "", reeksNummer: CreateExercisesPage.reeksNummer };

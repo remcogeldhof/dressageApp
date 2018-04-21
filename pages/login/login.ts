@@ -5,9 +5,13 @@ import { Storage } from '@ionic/storage';
 import { ToastController } from 'ionic-angular';
 import * as $ from 'jquery'
 import { MenuPage } from '../menu/menu';
-import { Gebruiker } from '../../models/gebruiker';
+import { User } from '../../models/user';
 import { Guuid } from '../../models/Guuid';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Toast } from '../../Helper/Toast';
+import { Http } from '@angular/http';
+import { LoginController } from '../../api/LoginController';
+import { Loading } from '../../Helper/Loading';
 
 
 /*
@@ -23,23 +27,17 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   templateUrl: 'login.html',
 })
 export class LoginPage{
-  public gebruikerslijst: Gebruiker[] = [];
-  private gebruiker: Gebruiker;
-  private remember: Boolean;
-  private storageUsername: string;
-  private storagePassword: string;
-  //private login_form: FormGroup;
- // private signupform: FormGroup;
-
-
+  private user: User;
+  private token: string;
+ // private loginForm: FormGroup;
+  private signUpForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService,
-    public storage: Storage, private toastCtrl: ToastController, public loadingCtrl: LoadingController, public formBuilder: FormBuilder) {
-
-    this.gebruiker = { gebruikersId: Guuid.newGuid(), gebruikersnaam: "", wachtwoord: "", email: "", voornaam: "", achternaam: "" };
-    this.remember = true;
+    public storage: Storage, private toastCtrl: ToastController, public loadingCtrl: LoadingController,
+    public formBuilder: FormBuilder, private http: Http) {
+    this.user = { userId: null, firstname: "", lastname: "", mail: "", password: "" };
    
-    //let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
    // this.signupform = formBuilder.group({
    //   name: ['',Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(10)],
      // password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]),
@@ -47,72 +45,62 @@ export class LoginPage{
     //  email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)]),
     //});
 
+    this.signUpForm = formBuilder.group({
+      mail: ['', Validators.compose([Validators.maxLength(30), Validators.pattern(EMAILPATTERN), Validators.required])],
+      password: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$'), Validators.required])],
+      firstname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      lastname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])]
 
-    storage.get('storageUsername').then((val) => {
-      this.storageUsername = val;
-      this.gebruiker.gebruikersnaam = val;
+    });
+
+
+    storage.get('token').then((val) => {
+      this.token = val;
       if (val != null) {
-        this.switchLogout();
+         this.switchLogout();
       } else {
         this.switchLogin();
       }
     });
+    storage.get('storageUsername').then((val) => {
+      this.user.mail = val;
+    });
     storage.get('storagePassword').then((val) => {
-      this.storagePassword = val;
-      this.gebruiker.wachtwoord = val;
+      this.user.password = val;
+    });
+    storage.get('firstname').then((val) => {
+      this.user.firstname = val;
     });    
   }
  
-   createAccount() {
-     console.log(this.gebruiker);
+  createAccount() {
+    if (this.signUpForm.valid) {
+       LoginController.createLogin(this.http, this.user, this.loadingCtrl, this.toastCtrl);
+       this.switchLogin();
+    }
+   
 
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-    loading.present();
-
-      this.backand.object.create('Gebruiker', this.gebruiker)
+     /* this.backand.object.create('Gebruiker', this.gebruiker)
       .then((res: any) => {
         console.log("res " + res.status);
         if (res.status == "200") {
           loading.dismiss();
-          toastSuccesful.present();
+          Toast.toastAccountCreatedSuccessful(this.toastCtrl);
           this.switchLogin();
-
         }
       },
       (err: any) => {
         console.log("err " + err);
         loading.dismiss();
-        toastError.present();
-        });
+        Toast.toastAccountNotCreatedSuccessful(this.toastCtrl);
+        }); */
+   }
 
-
-    let toastSuccesful = this.toastCtrl.create({
-      message: 'Account successfully created',
-      duration: 3000,
-      position: 'top'
-    });
-
-    let toastError = this.toastCtrl.create({
-      message: 'Account creation failed: username or email already exists',
-      duration: 3000,
-      position: 'top'
-    });
-
-  }
-
-   login() {
-     var succesful: Boolean;
-     succesful = false;
-     let loading = this.loadingCtrl.create({
-       content: 'Please wait...'
-     });
-
-     loading.present();
-     
+  login() {
+      LoginController.checkLogin(this.http, this.user, this.loadingCtrl, this.toastCtrl, this.storage, this.navCtrl);
+    
      // voor login get gebruikers 
-     this.backand.object.getList("Gebruiker", {
+    /* this.backand.object.getList("Gebruiker", {
        "pageSize": 21,
        "pageNumber": 1,
        "filter": [],
@@ -123,15 +111,15 @@ export class LoginPage{
          console.log("gebruikers loaded");
 
          for (var value of this.gebruikerslijst) {
-           if (value.gebruikersnaam == this.gebruiker.gebruikersnaam && value.wachtwoord == this.gebruiker.wachtwoord) {
+           if (value.mail == this.user.mail && value.password == this.user.password) {
              loading.dismiss();
              toastSuccesful.present();
              succesful = true;
 
              if (this.remember) {
                console.log("remember");
-               this.storage.set("storageUsername", this.gebruiker.gebruikersnaam);
-               this.storage.set("storagePassword", this.gebruiker.wachtwoord);
+               this.storage.set("storageUsername", this.user.mail);
+               this.storage.set("storagePassword", this.user.password);
              } else {
                this.storage.set("storageUsername", null);
                this.storage.set("storagePassword", null);
@@ -146,23 +134,12 @@ export class LoginPage{
            loading.dismiss();
          }
        })
-       .catch(error => { })
-
-
-     let toastSuccesful = this.toastCtrl.create({
-       message: 'Welcome',
-       duration: 3000,
-       position: 'top'
-     });
-
-     let toastError = this.toastCtrl.create({
-       message: 'Username or password is not correct',
-       duration: 3000,
-       position: 'top'
-     });
+       .catch(error => { })*/
    }
 
-   logout() {
+  logout() {
+     this.user = { userId: null, firstname: "", lastname: "", mail: "", password: "" };
+     this.storage.set("token", null);
      this.storage.set("storageUsername", null);
      this.storage.set("storagePassword", null);
      this.switchLogin();

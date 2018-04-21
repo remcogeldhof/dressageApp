@@ -9,13 +9,20 @@ import { Proef } from '../../models/proef';
 import { Punt } from '../../models/punt';
 import { Oefening } from '../../models/oefening';
 import { OefeningBasis } from '../../models/oefening-basis';
-
+import { Comment } from '../../models/comment';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { CommentController } from '../../api/CommentController';
+import { Http } from '@angular/http';
 
 @Component({
 	selector: 'page-home',
 	templateUrl: 'home.html'
 })
 export class HomePage {
+  private commentForm: FormGroup;
+  private comment: Comment;
+  private userId: string;
+
   element: HTMLElement;
   toolTimeline = new gsap.TimelineLite({ paused: true });
   public proeven: any[] = [];
@@ -32,7 +39,11 @@ export class HomePage {
   searchQuery: string;
   test: Boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public formBuilder: FormBuilder, public http: Http) {
+    this.comment = { commentId: null, proefId: "", userId : "", comment: "" };
+    
+
+
     this.test = true;
     this.proef = navParams.get("proef");
     this.speedAnimation = 1;
@@ -61,6 +72,14 @@ export class HomePage {
       for (var i of val) {
         this.punt.push(i);
       }
+    });
+
+    storage.get('userid').then((val) => {
+      this.userId = val;
+    });
+
+    this.commentForm = formBuilder.group({
+      commentName: ['', Validators.compose([Validators.maxLength(250), Validators.required])]
     });
   }
   
@@ -249,6 +268,19 @@ export class HomePage {
       this.toolTimeline.timeScale(this.speedAnimation);
       $("#speed").text("x"+this.speedAnimation);
 
+    }
+
+    addComment() {
+      if (this.commentForm.valid) {
+        this.comment.proefId = this.proef.proefId;
+        this.comment.userId = this.userId;
+        console.log(this.comment.comment);
+        console.log(this.comment.proefId);
+        console.log(this.comment.userId);
+
+        CommentController.createComment(this.http, this.storage, this.comment);
+
+      }
     }
 
  

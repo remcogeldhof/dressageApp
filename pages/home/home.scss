@@ -23,7 +23,7 @@ page-home {
   }
 
   #buitensteContainer {
-   // background-image: url("../assets/imgs/sand.jpg");
+    // background-image: url("../assets/imgs/sand.jpg");
     margin: auto;
     width: 144px;
     height: 394px;
@@ -51,12 +51,16 @@ page-home {
     text-decoration: none;
     display: inline-block;
     font-size: 40px;
-    background-color:white;
+    background-color: white;
   }
 
-  #desc{
-    display:block;
-    visibility:hidden;
+  .btn {
+    width: 100%;
+  }
+
+  #desc {
+    display: block;
+    visibility: hidden;
   }
 
   #a {
@@ -105,6 +109,11 @@ page-home {
     position: relative;
     top: 270px;
   }
+
+  .errorMessage {
+    font-size: 12px;
+  }
+
   /*
   @media only screen and (min-height: 1000px) {
     #myContainer {

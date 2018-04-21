@@ -36,8 +36,7 @@
 
     </div>
   <div id="c">C</div>
-
-     <br />
+    <br />
     <br />
     <div>
       <button id="speeddown" (click)="speedDown()"><ion-icon ios="ios-rewind" md="md-rewind"></ion-icon></button>
@@ -48,9 +47,35 @@
       <button id="speedup" (click)="speedUp()"><ion-icon ios="ios-fastforward" md="md-fastforward"></ion-icon></button>
       <div id="speed">x1</div>
     </div>
-   
+  <br />
+  <br />
+  <br />
+  <div class="newComment">
+  <ion-label>Comments</ion-label>
+  <form (ngSubmit)="addComment()" [formGroup]="commentForm" >
 
- 
+    <ion-item>
+      <ion-label>Your comment:</ion-label>
+      <ion-textarea type="text" rows="4" [(ngModel)]="comment.comment" formControlName="commentName"></ion-textarea>
+    </ion-item>
+    <ion-item *ngIf="!commentForm.controls.commentName.valid && commentForm.controls.commentName.dirty || submitAttempt">
+      <p class="errorMessage">Comments cannot be longer than 250 characters</p>
+    </ion-item>
+    <!-- 
+    <ion-item>
+      <ion-label>Your comment:</ion-label>
+      <ion-textarea rows="4" [(ngModel)]="comment" name="comment"></ion-textarea>
+    </ion-item>-->
+    <ion-item>
+      <button ion-button color="light" class="btn" type="submit" name="confirm">Place Comment</button>
+    </ion-item>
+  </form>
+
+  </div>
+
+  <div class="comments">
+
+  </div>
 </ion-content>
 
 

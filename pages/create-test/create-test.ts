@@ -5,8 +5,6 @@ import { Proef } from '../../models/proef';
 import { BackandService, Response } from '@backand/angular2-sdk'
 import { Guuid } from '../../models/Guuid';
 
-
-
 /**
  * Generated class for the CreateTestPage page.
  *
@@ -24,7 +22,7 @@ export class CreateTestPage {
   fed: string = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService) {
-    this.proef = { proefId: Guuid.newGuid(), naam: "", reeks: "", federatie: "" };
+    this.proef = { proefId: Guuid.newGuid(), naam: "", reeks: "", federatie: "UNOFFICIAL" };
   }
 
   ionViewDidLoad() {

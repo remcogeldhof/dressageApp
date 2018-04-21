@@ -29,6 +29,8 @@ import { HttpModule } from '@angular/http'
 import { Network } from '@ionic-native/network';
 
 
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -64,7 +66,8 @@ import { Network } from '@ionic-native/network';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     NativeStorage,
-    Network
+      Network
+   
 
    ]
 })
