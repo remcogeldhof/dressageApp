@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{federatie}}</ion-title>
+    <ion-title>VLP</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,9 +17,8 @@
   <ion-list>
 
     <button ion-button round *ngFor="let proef of list" (click)="startProef(proef)">
-      {{proef.naam}}
+      {{proef.proefNaam}}
     </button>
-  
   </ion-list>
 
     <br />

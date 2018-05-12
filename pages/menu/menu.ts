@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MenuInternationaalPage } from '../menu-internationaal/menu-internationaal';
+import { MenuLrvPage } from '../menu-lrv/menu-lrv';
 import { MenuVlpPage } from '../menu-vlp/menu-vlp';
 
 
@@ -22,21 +24,15 @@ export class MenuPage {
   }
 
   openInternationaal() {
-    this.navCtrl.push(MenuVlpPage, {
-      federatie: "FEI"
-    });
+    this.navCtrl.push(MenuInternationaalPage);
   }
   openLRV() {
-    this.navCtrl.push(MenuVlpPage, {
-      federatie: "LRV"
-    });
+    this.navCtrl.push(MenuLrvPage);
   }
   openVLP() {
-    this.navCtrl.push(MenuVlpPage, {
-      federatie: "VLP"
-    });
+    this.navCtrl.push(MenuVlpPage);
   }
- 
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');

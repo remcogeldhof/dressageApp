@@ -7,98 +7,69 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="login"></ion-icon>
     </button>
-    <ion-title>Account</ion-title>
+    <ion-title>login</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="wrapper">
 
   <div class="aanmelding">
-    <ion-label>Create a new account</ion-label>
-    <form [formGroup]="signUpForm" (ngSubmit)="createAccount()">
+    <ion-label>Maak een nieuw account aan</ion-label>
+    <form (ngSubmit)="logForm()">
 
       <ion-item>
-        <ion-label>First name</ion-label>
-          <ion-input type="text" [(ngModel)]="user.firstname" formControlName="firstname"></ion-input>
+        <ion-label>Voornaam</ion-label>
+        <ion-input type="text" [(ngModel)]="gebruiker.voornaam" name="voornaam"></ion-input>
       </ion-item>
-      <ion-item *ngIf="!signUpForm.controls.firstname.valid && signUpForm.controls.firstname.dirty || submitAttempt">
-        <p class="errorMessage">Please enter a valid firstname.</p>
-      </ion-item>
-
       <ion-item>
-        <ion-label>Last name</ion-label>
-        <ion-input type="text" [(ngModel)]="user.lastname" formControlName="lastname"></ion-input>
+        <ion-label>Achternaam</ion-label>
+        <ion-input type="text" [(ngModel)]="gebruiker.achternaam" name="achternaam"></ion-input>
       </ion-item>
-      <ion-item *ngIf="!signUpForm.controls.lastname.valid && signUpForm.controls.lastname.dirty || submitAttempt">
-        <p class="errorMessage">Please enter a valid lastname.</p>
-      </ion-item>
-
       <ion-item>
-        <ion-label>Email</ion-label>
-        <ion-input type="text" [(ngModel)]="user.mail" formControlName="mail"></ion-input>
+        <ion-label>E-mailadres</ion-label>
+        <ion-input type="text" [(ngModel)]="gebruiker.email" name="email"></ion-input>
       </ion-item>
-      <ion-item *ngIf="!signUpForm.controls.mail.valid && signUpForm.controls.mail.dirty || submitAttempt">
-        <p class="errorMessage">Please enter a valid mail.</p>
-      </ion-item>
-
       <ion-item>
-        <ion-label>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password" formControlName="password"></ion-input>
+        <ion-label>Gebruikersnaam</ion-label>
+        <ion-input type="text" [(ngModel)]="gebruiker.gebruikersnaam" name="gebruikersnaam"></ion-input>
       </ion-item>
-      <ion-item *ngIf="!signUpForm.controls.password.valid && signUpForm.controls.password.dirty || submitAttempt">
-        <p class="errorMessage">Password must contain at least 6 characters,<br />including at least 1 character and 1 digit</p>
-      </ion-item>
-
       <ion-item>
-        <button ion-button type="submit" name="confirm">Create account</button>
-        <button ion-button type="button" (click)="switchLogin()"  name="switchLogin">Go to login page</button>
+        <ion-label>Wachtwoord</ion-label>
+        <ion-input type="password" [(ngModel)]="gebruiker.wachtwoord" name="wachtwoord"></ion-input>
       </ion-item>
-
+      <ion-item>
+        <button ion-button type="submit" name="confirm">Maak aan</button>
+      </ion-item>
     </form>
 
 </div>
 
   <div class="login">
     <ion-label>Login</ion-label>
-    <form (ngSubmit)="login()">
 
-      <!--  <ion-item>
+  <!--  <ion-item>
       <ion-label>Gebruikersnaam / E-mailadres</ion-label>
       <ion-toggle [(ngModel)]="keuze.gebruikersnaam"></ion-toggle>
-    </ion-item>
+    </ion-item>-->
     <div id="email">
       <ion-item>
         <ion-label>E-mailadres</ion-label>
         <ion-input type="text" [(ngModel)]="gebruiker.email" name="email"></ion-input>
       </ion-item>
-    </div>-->
+    </div>
+    <div id="gebruikersnaam">
       <ion-item>
-        <ion-label>Email</ion-label>
-        <ion-input type="text" [(ngModel)]="user.mail" name="mail"></ion-input>
+        <ion-label>Gebruikersnaam</ion-label>
+        <ion-input type="text" [(ngModel)]="gebruiker.gebruikersnaam" name="gebruikersnaam"></ion-input>
       </ion-item>
-     <!-- <ion-item *ngIf="!loginForm.controls.mail.valid && loginForm.controls.mail.dirty || submitAttempt">
-        <p class="errorMessage">Please enter a valid mail.</p>
-      </ion-item> -->
-      <ion-item>
-        <ion-label>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
-      </ion-item>
-     <!-- <ion-item *ngIf="!loginForm.controls.password.valid && loginForm.controls.password.dirty || submitAttempt">
-        <p class="errorMessage">Please enter a valid password.</p>
-      </ion-item>
-      -->
-      <ion-item>
-        <button ion-button type="submit" name="confirm">Log in</button>
-        <button ion-button type="button" (click)="switchCreate()" name="switchCreat">Create new account</button>
-      </ion-item>
-    </form>
+    </div>
 
-</div>
+      <ion-item>
+        <ion-label>Wachtwoord</ion-label>
+        <ion-input type="password" [(ngModel)]="gebruiker.wachtwoord" name="wachtwoord"></ion-input>
+      </ion-item>
+    </div>
 
-  <div class="logout">
-    <h3>Welcome, u bent ingelogd als {{this.user.mail}}</h3>
-    <button ion-button type="button" (click)="logout()" name="logout">Log out</button>
-  </div>
 </ion-content>

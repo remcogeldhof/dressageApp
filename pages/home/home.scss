@@ -4,9 +4,10 @@ page-home {
     width: 100%;
     background-repeat: no-repeat;
     background-position: center;
+    background-position-y: 75px;
     text-align: center;
     background-attachment: fixed;
-    // background-image: url("../assets/imgs/sand2.jpg");
+   // background-image: url("../assets/imgs/sand2.jpg");
   }
 
   #myContainer {
@@ -23,7 +24,6 @@ page-home {
   }
 
   #buitensteContainer {
-    // background-image: url("../assets/imgs/sand.jpg");
     margin: auto;
     width: 144px;
     height: 394px;
@@ -37,30 +37,20 @@ page-home {
     width: 15px;
     height: 15px;
     position: absolute;
-    background-color: black;
+    background-color:black;
     border-radius: 40px;
+
   }
   //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
   button {
-    // background-color: white;
+    background-color: #4CAF50; /* Green */
     border: none;
-    color: black;
-    width: 40px;
-    height: 40px;
+    color: white;
+    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 40px;
-    background-color: white;
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  #desc {
-    display: block;
-    visibility: hidden;
+    font-size: 16px;
   }
 
   #a {
@@ -109,11 +99,6 @@ page-home {
     position: relative;
     top: 270px;
   }
-
-  .errorMessage {
-    font-size: 12px;
-  }
-
   /*
   @media only screen and (min-height: 1000px) {
     #myContainer {
