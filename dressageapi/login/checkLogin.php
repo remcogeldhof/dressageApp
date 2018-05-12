@@ -39,8 +39,8 @@ $num = $stmt->rowCount();
 if($num>0) {
 
     // products array
-    $punt_arr = array();
-    $punt_arr["records"] = array();
+    $user_arr = array();
+    $user_arr["user"] = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
@@ -57,22 +57,18 @@ if($num>0) {
                     "firstname" => $firstname,
                     "lastname" => $lastname,
                     "loginId" => $loginId,
-                    "token" => $token
+                    "token" => $token,
                 );
 
             }
         }
 
-        array_push($punt_arr["records"], $user_item);
 
-//        $item = array(
-//            "token" => $token,
-//        );
 
-    //    array_push($punt_arr["records"], $item);
+        array_push($user_arr["user"], $user_item);
     }
 
-    echo json_encode($punt_arr);
+    echo json_encode($user_arr);
 
 
 }else{

@@ -17,11 +17,13 @@ class User
     public $loginId;
 
     // constructor with $db as database connection
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    function getUserByLoginId($loginId){
+    function getUserByLoginId($loginId)
+    {
         $query = "SELECT * from User p
             WHERE
                 p.loginId = '$loginId'
@@ -37,7 +39,25 @@ class User
         return $stmt;
     }
 
-    function getBy(){
+    function getUserById($id)
+    {
+        $query = "SELECT * from User p
+            WHERE
+                p.userId = '$id'
+            LIMIT
+                0,1";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    function getBy()
+    {
         // query to read single record
         $query = "SELECT * from User p
             WHERE
@@ -46,7 +66,7 @@ class User
                 0,1";
 
         // prepare query statement
-        $stmt = $this->conn->prepare( $query );
+        $stmt = $this->conn->prepare($query);
 
         // bind id of product to be updated
         $stmt->bindParam(1, $this->id);
@@ -91,4 +111,5 @@ class User
 
         return false;
     }
+
 }

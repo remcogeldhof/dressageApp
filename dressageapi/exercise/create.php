@@ -17,35 +17,35 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
 
 // instantiate product object
-include_once '../objects/Comment.php';
+include_once '../objects/Exercise.php';
 include_once '../config/IdGenerator.php';
-
 
 $database = new Database();
 $db = $database->getConnection();
 
-$comment = new Comment($db);
+$exercise = new Exercise($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
-$comment->commentId = IdGenerator::generateId();
-$comment->proefId = $data->proefId;
-$comment->userId = $data->userId;
-$comment->comment = $data->comment;
-$comment->date = $data->date;
+$exercise->exerciseId = IdGenerator::generateId();
+$exercise->basicExerciseId = $data->basicExerciseId;
+$exercise->testId = $data->testId;
+$exercise->description = $data->description;
+$exercise->pace = $data->pace;
+$exercise->serialNumber = $data->serialNumber;
 
 // create the product
-if($comment->create()){
+if($exercise->create()){
     echo '{';
-    echo '"message": "Comment was created."';
+    echo '"message": "Exercise was created."';
     echo '}';
 }
 
 // if unable to create the product, tell the user
 else{
     echo '{';
-    echo '"message": "Unable to create Comment."';
+    echo '"message": "Unable to create exercise."';
     echo '}';
 }

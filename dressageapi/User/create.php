@@ -19,15 +19,13 @@ include_once '../config/database.php';
 // instantiate product object
 include_once '../objects/User.php';
 include_once '../objects/Login.php';
-
-//generate token
-$token = openssl_random_pseudo_bytes(25);
-$token = bin2hex($token);
+include_once '../config/IdGenerator.php';
 
 //generate id
-$genId = openssl_random_pseudo_bytes(25);
-$genId = bin2hex($genId);
+$loginId = IdGenerator::generateId();
 
+$genUserId = openssl_random_pseudo_bytes(25);
+$genUserId = bin2hex($genUserId);
 
 $database = new Database();
 $db = $database->getConnection();
@@ -38,24 +36,31 @@ $login = new Login($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
-$user->userId = $data->userId;
+$user->userId = IdGenerator::generateId();
 $user->firstname = $data->firstname;
 $user->lastname = $data->lastname;
-$user->loginId = $genId;
+$user->loginId = $loginId;
 
-
-$login->loginId = $genId;
+$login->loginId = $loginId;
 $login->mail = $data->mail;
 $login->password = $data->password;
-$login->token = $token;
+$login->token = IdGenerator::generateId();
+
 // create the product
-if($user->create() && $login->create()){
-    echo '{';
-    echo '"message": "User was created."';
-    echo '}';
+if($login->create()){
+
+    if($user->create()){
+        echo '{';
+        echo '"message": "login & user created"';
+        echo '}';
+    }else{
+        echo '{';
+        echo '"message": "unable to create user"';
+        echo '}';
+    }
 }
 else{
     echo '{';
-    echo '"message": "Unable to create user."';
+    echo '"message": "unable to create login & user"';
     echo '}';
 }
