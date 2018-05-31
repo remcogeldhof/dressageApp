@@ -7,69 +7,98 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="login"></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>login</ion-title>
+    <ion-title>Account</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="wrapper">
 
   <div class="aanmelding">
-    <ion-label>Maak een nieuw account aan</ion-label>
-    <form (ngSubmit)="logForm()">
+    <ion-label>Create a new account</ion-label>
+    <form [formGroup]="signUpForm" (ngSubmit)="createAccount()">
 
-      <ion-item>
-        <ion-label>Voornaam</ion-label>
-        <ion-input type="text" [(ngModel)]="gebruiker.voornaam" name="voornaam"></ion-input>
+      <ion-item class="green">
+        <ion-label>First name</ion-label>
+          <ion-input type="text" [(ngModel)]="user.firstname" formControlName="firstname"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label>Achternaam</ion-label>
-        <ion-input type="text" [(ngModel)]="gebruiker.achternaam" name="achternaam"></ion-input>
+      <ion-item *ngIf="!signUpForm.controls.firstname.valid && signUpForm.controls.firstname.dirty || submitAttempt">
+        <p class="errorMessage">Please enter a valid firstname.</p>
       </ion-item>
-      <ion-item>
-        <ion-label>E-mailadres</ion-label>
-        <ion-input type="text" [(ngModel)]="gebruiker.email" name="email"></ion-input>
+
+      <ion-item class="green">
+        <ion-label>Last name</ion-label>
+        <ion-input type="text" [(ngModel)]="user.lastname" formControlName="lastname"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label>Gebruikersnaam</ion-label>
-        <ion-input type="text" [(ngModel)]="gebruiker.gebruikersnaam" name="gebruikersnaam"></ion-input>
+      <ion-item *ngIf="!signUpForm.controls.lastname.valid && signUpForm.controls.lastname.dirty || submitAttempt">
+        <p class="errorMessage">Please enter a valid lastname.</p>
       </ion-item>
-      <ion-item>
-        <ion-label>Wachtwoord</ion-label>
-        <ion-input type="password" [(ngModel)]="gebruiker.wachtwoord" name="wachtwoord"></ion-input>
+
+      <ion-item class="green">
+        <ion-label>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="user.mail" formControlName="mail"></ion-input>
       </ion-item>
-      <ion-item>
-        <button ion-button type="submit" name="confirm">Maak aan</button>
+      <ion-item *ngIf="!signUpForm.controls.mail.valid && signUpForm.controls.mail.dirty || submitAttempt" class="green">
+        <p class="errorMessage">Please enter a valid mail.</p>
       </ion-item>
+
+      <ion-item class="green">
+        <ion-label>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!signUpForm.controls.password.valid && signUpForm.controls.password.dirty || submitAttempt">
+        <p class="errorMessage">Password must contain at least 6 characters,<br />including at least 1 character and 1 digit</p>
+      </ion-item>
+
+      <ion-item class="green">
+        <button ion-button round color="primaryGreen" class="btn" type="submit" name="confirm">Create account</button>
+        <button ion-button round color="primaryGreen" class="btn" type="button" (click)="switchLogin()" name="switchLogin">Go to login page</button>
+      </ion-item>
+
     </form>
 
 </div>
 
   <div class="login">
     <ion-label>Login</ion-label>
+    <form (ngSubmit)="login()">
 
-  <!--  <ion-item>
+      <!--  <ion-item>
       <ion-label>Gebruikersnaam / E-mailadres</ion-label>
       <ion-toggle [(ngModel)]="keuze.gebruikersnaam"></ion-toggle>
-    </ion-item>-->
+    </ion-item>
     <div id="email">
       <ion-item>
         <ion-label>E-mailadres</ion-label>
         <ion-input type="text" [(ngModel)]="gebruiker.email" name="email"></ion-input>
       </ion-item>
-    </div>
-    <div id="gebruikersnaam">
-      <ion-item>
-        <ion-label>Gebruikersnaam</ion-label>
-        <ion-input type="text" [(ngModel)]="gebruiker.gebruikersnaam" name="gebruikersnaam"></ion-input>
+    </div>-->
+      <ion-item class="green">
+        <ion-label>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="user.mail" name="mail"></ion-input>
       </ion-item>
-    </div>
-
-      <ion-item>
-        <ion-label>Wachtwoord</ion-label>
-        <ion-input type="password" [(ngModel)]="gebruiker.wachtwoord" name="wachtwoord"></ion-input>
+     <!-- <ion-item *ngIf="!loginForm.controls.mail.valid && loginForm.controls.mail.dirty || submitAttempt">
+        <p class="errorMessage">Please enter a valid mail.</p>
+      </ion-item> -->
+      <ion-item class="green">
+        <ion-label>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
       </ion-item>
-    </div>
+     <!-- <ion-item *ngIf="!loginForm.controls.password.valid && loginForm.controls.password.dirty || submitAttempt">
+        <p class="errorMessage">Please enter a valid password.</p>
+      </ion-item>
+      -->
+      <ion-item class="green">
+        <button ion-button round color="primaryGreen" class="btn" type="submit" name="confirm">Log in</button>
+        <button ion-button round color="primaryGreen" class="btn" type="button" (click)="switchCreate()" name="switchCreate">Create new account</button>
+      </ion-item>
+    </form>
 
+</div>
+
+  <div class="logout">
+      <h4>Welcome {{this.currentUser.firstname}}, you can sign out here.</h4>
+      <button ion-button round color="primaryGreen" class="btn" type="button" (click)="logout()" name="logout">Sign out</button>
+    </div>
 </ion-content>

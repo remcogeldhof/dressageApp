@@ -1,12 +1,17 @@
 export class Toast {
 
-  private static showToast(toast, message, duration, top) {
+  private static showToast(toast, message, duration, pos) {
     var basicToast = toast.create({
       message: message,
       duration: duration,
-      position: top
+      position: pos
     });
     basicToast.present();
+  }
+
+  public static toastExerciseCreated(toast, message) {
+    console.log('network was disconnected :-(');
+    this.showToast(toast, message, 3000, 'bottom');
   }
 
   public static toastConnected(toast) {
@@ -24,7 +29,7 @@ export class Toast {
   }
 
   public static toastAccountNotCreatedSuccessful(toast) {
-    this.showToast(toast, 'Account creation failed: username or email already exists', 3000, 'top');
+    this.showToast(toast, 'This email is already registered', 3000, 'top');
   }
 
   public static toastLoginSuccessful(toast) {

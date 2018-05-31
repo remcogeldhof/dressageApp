@@ -1,16 +1,16 @@
 import { Http } from '@angular/http'; 
 import { Storage } from '@ionic/storage';
-import { Punt } from '../models/punt';
+import { Point } from '../models/Point';
 
 
 export class PointController{
 
-  private static pointList: Punt[] = [];
+  private static pointList: Point[] = [];
  
   public static loadAllPoints(http, storage) {
-    storage.get('puntenlijst').then((val) => {
-      if (val == null) {
-        http.get('http://localhost/dressageapi/punt/get.php').map(res => res.json().records).subscribe((data) => {
+    /*storage.get('puntenlijst').then((val) => {
+      if (val == null) {*/
+        http.get('http://localhost/dressageapi/point/get.php').map(res => res.json().records).subscribe((data) => {
           this.pointList = data;
           storage.set('Points', this.pointList);
           console.log("Points loaded");
@@ -18,10 +18,10 @@ export class PointController{
           (error: any) => {
             console.dir(error);
           });
-      } else {
+      /* else {
         console.log("points already in storage, no api call")
       }
-    });
+    });*/
 
   }
 

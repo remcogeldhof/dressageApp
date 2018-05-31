@@ -1,19 +1,88 @@
 page-menu {
-  .button {
+
+  .button:not(#back) {
     margin: 0 auto;
     display: block;
-    background-color: #4CAF55;
-    border: none;
     color: white;
-    text-shadow: 1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
+    text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
     padding: 15px 32px;
     text-align: center;
+    font-size: 50px;
+    width: 80%;
+    min-width: 300px;
+    height: 120px;
+    background-color: white;
+    background-size: 100% auto; /* To fill the dimensions of container (button), or */
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    // border: 5px solid black;
+  }
+  //#007D40
+  #back {
+    color: white;
     font-size: 20px;
-    width: 60%;
-    height: 140px;
+    background-color: none;
+  }
+
+  #icon {
+    background-color: none;
+  }
+
+  #disciplines {
+    display: block;
+  }
+
+  #countries {
+    display: none;
+  }
+
+  #eventing {
+    background-image: url(../assets/imgs/Eventing2.jpg);
+  }
+
+  #dressage {
+    background-image: url(../assets/imgs/Dressage.jpg);
+  }
+
+  #ownTests {
+    background-image: url(../assets/imgs/paddock.jpg);
+  }
+
+  #fei {
+    background-image: url(../assets/imgs/FEI.jpg);
+  }
+
+  #belgium {
+    background-image: url(../assets/imgs/Belgium.jpg);
+  }
+
+  ion-content {
+    background-image: url('../assets/imgs/geopat4.jpg');
   }
 
   .wrapper {
-    background-image: url("../assets/imgs/geopat4.jpg");
+    //background-image: url("../assets/imgs/geopat4.jpg");
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+
+  h3 {
+    color: white;
+    width: 300px;
+    height: 30px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  #titel {
+    color: white;
+    width: 300px;
+    height: 30px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 40px;
   }
 }

@@ -5,12 +5,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content class="green">
    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button class="green" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon" item-left></ion-icon>
         {{p.title}}
       </button>
     </ion-list>
+    <img class="image" src="assets/imgs/dressagetestslogo.png" />
   </ion-content>
 
 </ion-menu>

@@ -13,34 +13,74 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding id="wrapper">
   <div class="newExercise">
-    <form (ngSubmit)="next()">
-      <ion-label style="font-size:18px">Excercise {{oefening.reeksNummer}}</ion-label>
+    <form  *ngIf="exercise" (ngSubmit)="addExercise()" [formGroup]="createExerciseForm">
+      <ion-label style="font-size:18px">Excercise {{exercise.serialNumber+1}}</ion-label>
       <ion-label>Choose dressage letters</ion-label>
-      <ion-item>
-          <ion-searchbar id="search" [showCancelButton]="shouldShowCancel" [(ngModel)]="searchQuery" (ionInput)="getItems($event)" [ngModelOptions]="{standalone: true}"></ion-searchbar>
-          <ion-list *ngIf="showList">
+      <ion-item class="green">
+        <select-searchable [(ngModel)]="basicExercise"
+                           [items]="basicExerciseList"
+                           itemValueField="basicExerciseId"
+                           itemTextField="name"
+                           [canSearch]="true"
+                           [multiple]="false"
+                           (onChange)="update($event)"
+                           formControlName="search">
+          <ng-template selectSearchableLabelTemplate>
+            Choose letters
+          </ng-template>
+        </select-searchable>
+       <!--    <ion-searchbar class="green" id="search" formControlName="search" [showCancelButton]="shouldShowCancel" [(ngModel)]="searchQuery" (ionInput)="getItems($event)"></ion-searchbar>
+          <ion-list class="green" *ngIf="showList">
             <ion-item *ngFor="let item of items">
-              {{ item }}
+              <button ion-button full>
+              </button>      
             </ion-item>
-          </ion-list>
+          </ion-list>-->
       </ion-item>
-      <ion-item>
-        <ion-label>Pace</ion-label>
-        <ion-select [(ngModel)]="oefening.gang" multiple="false" [ngModelOptions]="{standalone: true}">
+      <div id="circle">
+        <ion-item class="green">
+          <ion-label class="black">Circle</ion-label>
+          <ion-select [(ngModel)]="circle.radius" multiple="false" formControlName="radius">
+            <ion-option selected value="360">Full circle</ion-option>
+            <ion-option value="180">Half circle</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="green">
+          <ion-label class="black">Size</ion-label>
+          <ion-select [(ngModel)]="circle.height" multiple="false" formControlName="size">
+            <ion-option selected value="125">20m</ion-option>
+            <ion-option value="93.75">15m</ion-option>
+            <ion-option value="62.5">10m</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="green">
+          <ion-label class="black">Hand</ion-label>
+          <ion-select [(ngModel)]="circle.hand" multiple="false" formControlName="hand">
+            <ion-option selected value="LEFT">Left Hand</ion-option>
+            <ion-option value="RIGHT">Right Hand</ion-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <ion-item class="green">
+        <ion-label class="black">Pace</ion-label>
+        <ion-select [(ngModel)]="pace" multiple="false" formControlName="pace">
           <ion-option value="stap">Stap</ion-option>
           <ion-option value="draf">Draf</ion-option>
           <ion-option value="galop">Galop</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Description</ion-label>
-        <ion-textarea rows="4" type="text" [(ngModel)]="oefening.beschrijving" name="description"></ion-textarea>
+      <ion-item class="green">
+        <ion-label class="black">Description</ion-label>
+        <ion-textarea rows="4" type="text" [(ngModel)]="description" formControlName="description" [class.invalid]="!createExerciseForm.controls.description.valid && (createExerciseForm.controls.description.dirty || submitAttempt)"></ion-textarea>
       </ion-item>
-      <ion-item>
-        <button ion-button type="submit" name="confirm">Create next exercise</button>
-        <button class="btnCreate" ion-button type="button" (click)="create()" name="create">Create test</button>
+      <ion-item class="green" *ngIf="!createExerciseForm.controls.description.valid && createExerciseForm.controls.description.dirty || submitAttempt">
+        <p class="errorMessage">Description can be maximum 100 characters long</p>
+      </ion-item>
+      <ion-item class="green">
+        <button ion-button round color="primaryGreen" class="btn" type="submit" [disabled]="!createExerciseForm.valid" name="confirm">Create next exercise</button>
+        <button ion-button round color="primaryGreen" class="btnCreate" type="button" (click)="create()" name="create">Create test</button>
       </ion-item>
     </form>
   </div>

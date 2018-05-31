@@ -4,20 +4,21 @@ export class Loading {
 
   private static loading;
 
-  private static basicLoading(loadingCtrl) {
+  private static basicLoading(loadingCtrl, message) {
     this.loading = loadingCtrl.create({
-      content: 'Please wait...'
+      content: message
     });
   }
 
-  public static startLoading(loadingCtrl) {
-    this.basicLoading(loadingCtrl);
+  public static startLoading(loadingCtrl, message) {
+    this.basicLoading(loadingCtrl, message);
     this.loading.present();
   }
 
   public static stopLoading() {
     this.loading.dismiss();
   }
+
 }
 
 

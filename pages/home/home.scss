@@ -4,10 +4,10 @@ page-home {
     width: 100%;
     background-repeat: no-repeat;
     background-position: center;
-    background-position-y: 75px;
     text-align: center;
     background-attachment: fixed;
-   // background-image: url("../assets/imgs/sand2.jpg");
+    background-color: map-get($colors, secondaryGreen);
+    //background-image: url("../assets/imgs/sand2.jpg");
   }
 
   #myContainer {
@@ -24,6 +24,8 @@ page-home {
   }
 
   #buitensteContainer {
+    //background-image: url("../assets/imgs/geopat4.jpg");
+    background-color: #F6F9C2;
     margin: auto;
     width: 144px;
     height: 394px;
@@ -37,20 +39,48 @@ page-home {
     width: 15px;
     height: 15px;
     position: absolute;
-    background-color:black;
+    background-color: black;
     border-radius: 40px;
-
   }
   //bron layout button:https://www.w3schools.com/css/css3_buttons.asp
   button {
-    background-color: #4CAF50; /* Green */
+    // background-color: white;
     border: none;
-    color: white;
-    padding: 15px 32px;
+    //color: #007D40;
+    width: 40px;
+    height: 40px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 40px;
+    background-color: map-get($colors, secondaryGreen);
+  }
+
+  #controlBar {
+    margin: auto;
+    width: auto;
+    max-width: 450px;
+  }
+
+  .green {
+    background-color: map-get($colors, secondaryGreen);
+    color: black;
+  }
+
+  #black {
+    color: black;
+  }
+
+  .btn {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    color: white;
+  }
+
+  .desc {
+    display: block;
+    height: 30px;
   }
 
   #a {
@@ -99,7 +129,33 @@ page-home {
     position: relative;
     top: 270px;
   }
+
+  .errorMessage {
+    font-size: 12px;
+  }
+
+  .comments {
+    text-align: left;
+  }
+
+  #date {
+    font-size: 12px;
+    text-align: left;
+    margin-left: 10px;
+  }
+
+  b {
+    color: #007D40;
+  }
+
+  .delete {
+    background-color: map-get($colors, primaryGreen);
+    display: block;
+  }
   /*
+
+
+  
   @media only screen and (min-height: 1000px) {
     #myContainer {
       width: 40%;

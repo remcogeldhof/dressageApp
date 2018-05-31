@@ -4,8 +4,12 @@ import { HomePage } from '../home/home';
 import { BackandService } from '@backand/angular2-sdk'
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Test } from '../../models/Test';
+import { User } from '../../models/User';
+import { Http } from '@angular/http';
+import { CommentController } from '../../api/CommentController';
+import { LocalStorage } from '../../Helper/LocalStorage';
 
-import { Data } from '../../data';
 /**
  * Generated class for the MenuVlpPage page.
  *
@@ -19,162 +23,83 @@ import { Data } from '../../data';
   templateUrl: 'menu-vlp.html',
 })
 export class MenuVlpPage {
-    public proeven: any[] = [];
-    public naamProef: String;
-    public reeks: String;
-    public proefId: number;
-    public list: Array<Proef>;
-    data: Data;
-    first: boolean;
+    public discipline: String;
+    public country: String;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService, public events: Events, private storage: Storage) {
-      this.list = [];
+    public dressageTestList: any[] = [];
+    public testId: number;
+    public testList: Array<Test>;
+    first: boolean;
+    user: User;
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService, public events: Events, private storage: Storage, private http:Http) {
+      this.testList = [];
       this.first = true;
-       
+      this.discipline = navParams.get("discipline");
+      this.country = navParams.get("country");
+      this.user = LocalStorage.currentUser;
       storage.get('proevenlijst').then((val) => {
         console.log('dit is het ', val);
-        this.proeven = []
+        this.dressageTestList = []
         for (var i of val) {
-          this.proeven.push(i);
+          this.dressageTestList.push(i);
         }
-        console.log(this.proeven[0].federatie + "lol");
 
-        for (let item of this.proeven) {
-
-          if (item.federatie == "VLP") {
-            this.naamProef = item.naam;
-            this.reeks = item.reeks;
-            this.proefId = item.proefId;
-            console.log(item.reeks);
-            let p = new Proef(item.proefId, item.naam, item.reeks, item.federatie);
-            this.list.push(p);
+        for (let item of this.dressageTestList) {
+          if (item.country != "OWN") {
+            //select all tests of selected descipline and selected country
+            if (item.discipline == this.discipline.toUpperCase() && item.country == this.country) {
+              this.addToList(item);
+            }
+          } else {
+            if (this.user != null && item.userId == this.user.userId) {
+              this.addToList(item);
+            }
           }
         }
+
+        this.testList.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); }); 
 
       });
 
-     console.log("test");
-    //  events.subscribe('proevenList', (proevenlijst, testje) => {
-      //  console.log("we are in vlp constructor");
-       // console.log(testje);
-       // console.log(this.proeven[0].federatie+ "2");
-      //  this.proeven = proevenlijst;
-
-
-        //this.proeven = this.data.getProeven();
-//console.log(this.proeven[0].federatie);
-
-
-     /*   for (let item of this.proeven) {
-
-          if (item.federatie == "VLP") {
-            this.naamProef = item.naam;
-            this.reeks = item.reeks;
-            this.proefId = item.proefId;
-            console.log(item.reeks);
-            let p = new Proef(item.proefId, item.naam, item.reeks, item.federatie);
-            this.list.push(p);
-          }
-        }*/
-
-      //});
-
-      /*this.backand.object.getList('Proef')
-        .then((res: any) => {
-          this.proeven = res.data;
-          console.log(this.proeven[0].federatie);
-
-          console.log("Proef loaded");
-        },
-        (err: any) => {
-          console.log(err.data);
-        });*/
      }
 
-    /*async getproefs() {
-    await this.backand.object.getList('Proef').then((res: any) => {
-      this.proeven = res.data;
-      console.log(this.proeven[0].federatie);
-      console.log("da5dd");
-
-   //  await this.events.subscribe('proevenList', (proevenlijst, testje) => {
-      // this.proeven = proevenlijst;
-
-       for (let item of this.proeven) {
-         console.log(this.proeven[0].naam);
-
-         if (item.federatie == "VLP") {
-           this.naamProef = item.naam;
-           this.reeks = item.reeks;
-           this.proefId = item.proefId;
-           console.log(item.reeks);
-           let p = new Proef(item.proefId, item.naam, item.reeks, item.federatie);
-           this.list.push(p);
-         }
-       }
+    addToList(item) {
+      let p = new Test(item.testId, item.discipline, item.country, item.federation, item.testClass, item.name, item.userId);
+      console.log(p);
+      this.testList.push(p);
+    }
+  
+    ionViewDidLoad() {
+      console.log('ionViewDidLoad MenuVlpPage');
+    }
 
 
-
-      s
-     //   });
-     this.first = false;
-
-    }*/
-
- ionViewDidLoad() {
-   console.log('ionViewDidLoad MenuVlpPage');
- 
-
-  //30 min
-
-   /* this.backand.object.getList('Proef')
-      .then((res: any) => {
-        this.proeven = res.data;
-        console.log("Proef loaded");
-        */
-     // this.events.subscribe('proevenList', (proevenlijst, testje) => {
-      //this.proeven = proevenlijst;
-
-    
-       
-    
-      //});
-      /*}
-
-      },
-      (err: any) => {
-        console.log(err.data);
-      });
-   */
-  }
-
-
-  public startProef(p:Proef) {
+ public startProef(p: Test) {
+    //CommentController.loadCommentsByProefID(this.http, this.storage, p.testId);
     this.navCtrl.push(HomePage, {
     proef: p
   });
   }
 
- 
-
- 
-
 }
+/*
+class Proef {
+  //field 
+  proefId: number;
+  proefNaam: string;
+  reeks: string;
+  federatie: string
 
-class Proef { 
-   //field 
-   proefId:number;
-   proefNaam: string;
-   reeks:string;
-   federatie:string
- 
-   //constructor 
-   constructor(proefId:number, proefNaam: string, reeks:string, federatie:string) { 
-      this.proefId = proefId
-      this.proefNaam = proefNaam 
-      this.reeks = reeks 
-      this.federatie = federatie 
-   }  
-}
+  //constructor 
+  constructor(proefId: number, proefNaam: string, reeks: string, federatie: string) {
+    this.proefId = proefId
+    this.proefNaam = proefNaam
+    this.reeks = reeks
+    this.federatie = federatie
+  }
+
+}*/
+
 
 

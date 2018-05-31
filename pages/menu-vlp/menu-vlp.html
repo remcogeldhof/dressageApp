@@ -7,19 +7,23 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>VLP</ion-title>
+    <ion-title>{{country}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding class="wrapper">
-  <ion-list>
 
-    <button ion-button round *ngFor="let proef of list" (click)="startProef(proef)">
-      {{proef.proefNaam}}
-    </button>
-  </ion-list>
-
-    <br />
+  <div class="tests">
+      <ion-grid no-padding>
+        <div *ngFor="let test of testList">
+          <ion-row>
+            <button ion-button (click)="startProef(test)">
+              {{test.name}}
+            </button>
+           </ion-row>
+        </div>
+      </ion-grid>
+   </div>
 </ion-content>

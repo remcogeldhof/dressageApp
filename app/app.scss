@@ -1,5 +1,15 @@
 // http://ionicframework.com/docs/theming/
 
+.green {
+  background-color: map-get($colors, secondaryGreen);
+}
+
+.image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
 
 // App Global Sass
 // --------------------------------------------------

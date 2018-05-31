@@ -14,22 +14,23 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding id="wrapper">
+  <div *ngIf="user==null">
+      To use this function, you have to be logged in.
+  </div>
+    <div class="newTest" *ngIf="user!=null">
+      <ion-label><h2>Create new dressage test</h2></ion-label>
+      <form *ngIf="dressageTest" [formGroup]="todo" (ngSubmit)="createTest()">
+          <ion-item class="green">
+            <ion-label class="green" id="black">Name test</ion-label>
+            <ion-input class="green" type="text" [(ngModel)]="dressageTest.name" formControlName="name"></ion-input>
+          </ion-item>
 
-  <div class="newTest">
-    <ion-label>Create a new test</ion-label>
-    <form (ngSubmit)="createTest()">
-
-      <ion-item>
-        <ion-label>Name test</ion-label>
-        <ion-input type="text" [(ngModel)]="proef.naam" name="naam"></ion-input>
-      </ion-item>
-    
-      <ion-item>
-        <button ion-button type="submit" name="confirm">Maak aan</button>
-      </ion-item>
+          <ion-item class="green">
+            <button ion-button round color="primaryGreen" class="btn" type="submit" name="confirm" [disabled]="!todo.valid">Next</button>
+          </ion-item>
     </form>
 
-  </div>
+    </div>
 
 </ion-content>

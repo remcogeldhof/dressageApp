@@ -3,22 +3,33 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{proef.proefNaam}}</ion-title>
+    <ion-grid>
+      <ion-row>
+        <ion-title>{{dressageTest.name}}</ion-title>
+        <div *ngIf="dressageTest.country=='OWN'">
+          <button ion-button class="delete" (click)="deleteTest(test)">
+            <img src="../assets/icon/delete.png" height="15"/>
+          </button>
+        </div>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding id="wrapper">
+
+  <div class="desc">Let's play the dressage test :)</div>
   <br />
   <div id="a">A</div>
 
   <div id="buitensteContainer">
 
     <div id=left>
-    <div class="f">F</div>
-    <div class="p">P</div>
-    <div class="b">B</div>
-    <div class="r">R</div>
-    <div class="m">M</div>
+      <div class="f">F</div>
+      <div class="p">P</div>
+      <div class="b">B</div>
+      <div class="r">R</div>
+      <div class="m">M</div>
 
     </div>
 
@@ -29,19 +40,99 @@
       <div class="r">S</div>
       <div class="m">H</div>
     </div>
-      <div id="myContainer">
-        <div class="myAnimation"></div>
-      </div>
-
+    <div id="myContainer">
+      <div class="myAnimation"><!--<img src="assets/imgs/Horse.png" />--></div>
     </div>
-  <div id="c">C</div>
 
-  <p>
-    <br />
-    <br />
-    <button id="btnStart" (click)="start()"> <span class="btnText">Start</span></button>
-    <button (click)="opnieuw()">Opnieuw</button>
-  </p>
+  </div>
+  <div id="c">C</div>
+  <br />
+  <br />
+  <div id="controlBar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button id="speeddown" (click)="speedDown()"><ion-icon ios="ios-rewind" md="md-rewind"></ion-icon></button>
+        </ion-col>
+        <ion-col>
+          <button id="stop" (click)="stop()"><ion-icon ios="ios-pause" md="md-pause"></ion-icon></button>
+        </ion-col>
+        <ion-col>
+          <button id="start" (click)="start()"><ion-icon ios="ios-play" md="md-play"></ion-icon></button>
+          <div id="speed">x1</div>
+        </ion-col>
+        <ion-col>
+          <!-- <button (click)="opnieuw()">&#8634;</button>-->
+          <button (click)="opnieuw()"><ion-icon ios="ios-sync" md="md-sync"></ion-icon></button>
+        </ion-col>
+        <ion-col>
+          <button id="speedup" (click)="speedUp()"><ion-icon ios="ios-fastforward" md="md-fastforward"></ion-icon></button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!--  <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>-->
+  </div>
+  <br />
+        <div *ngIf="dressageTest.country!='OWN'" class="commentSection">
+          <hr />
+          <br />
+        <ion-label><h2>Comments</h2></ion-label>
+        <div *ngIf="user==null">
+           To add your own comment, you have to be logged in
+        </div>
+        <div class="newComment" *ngIf="user!=null">
+          <form (ngSubmit)="addComment()" [formGroup]="commentForm">
+            <ion-item class="green" no-lines>
+              <ion-label class="green" id="black">Your comment:</ion-label>
+              <ion-textarea type="text" rows="2" [(ngModel)]="comment.comment" formControlName="commentName"></ion-textarea>
+            </ion-item>
+            <ion-item class="green" no-lines *ngIf="!commentForm.controls.commentName.valid && commentForm.controls.commentName.dirty || submitAttempt">
+              <p class="errorMessage">Comments cannot be longer than 250 characters</p>
+            </ion-item>
+            <ion-item class="green" no-lines *ngIf="commentForm.controls.commentName.valid && commentForm.controls.commentName || submitAttempt">
+              <p class="succesMessage">Comment successfully added</p>
+            </ion-item>
+
+            <!--
+            <ion-item>
+              <ion-label>Your comment:</ion-label>
+              <ion-textarea rows="4" [(ngModel)]="comment" name="comment"></ion-textarea>
+            </ion-item>-->
+            <ion-item class="green" no-lines>
+              <button ion-button round color="primaryGreen" class="btn" type="submit" name="confirm">Add Comment</button>
+            </ion-item>
+          </form>
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div class="comments">
+          <div *ngFor="let comment of commentList">
+            <ion-grid no-padding>
+              <ion-row>
+                <ion-col>
+                  <div>
+                    <b>{{comment.firstname}} {{comment.lastname}}</b>
+                    <span id="date">{{comment.date.substring(0,10)}}</span>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  {{comment.comment}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <br />
+            <hr />
+            <br />
+          </div>
+          <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+
+        </div>
+      </div>
 
 </ion-content>
 

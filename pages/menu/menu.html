@@ -9,15 +9,36 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Dressage Test Learner </ion-title>
+    <ion-title>{{discipline}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="wrapper">
-  <br />
-  <button style="background: url(../assets/imgs/feidressage.jpg) no-repeat" ion-button (click)="openInternationaal()">FEI Proeven</button>
-  <br />
-  <button class="stretch" style="background: url(../assets/imgs/noges.jpg) no-repeat" ion-button (click)="openVLP()">VLP</button>
-  <br />
-  <button style="background: url(../assets/imgs/member2.jpg) no-repeat" ion-button (click)="openLRV()">LRV</button>
+  <div id="disciplines">
+    <div id="titel">
+      <h1>Welcome!</h1>
+    </div>
+    <h3>Choose your discipline</h3>
+    <br />
+    <button id="dressage" ion-button (click)="openDressage()">Dressage</button>
+    <br />
+    <button id="eventing" ion-button (click)="openEventing()">Eventing</button>
+    <br />
+    <h3>Created dressage tests</h3>
+    <br />
+    <button id="ownTests" ion-button (click)="openOwnTests()">My Tests</button>
+  </div>
+  <div id="countries">
+    <button id="back"  ion-button full outline color="light" (click)="switchDiscipline()">
+      <ion-icon id="icon"  name="arrow-back">Go Back</ion-icon>
+    </button>
+    <br />
+    <h3>{{discipline}} tests</h3>
+    <br />
+    <button id="fei" ion-button (click)="openFEI()"></button>
+    <br />
+    <button id="belgium" ion-button (click)="openBelgium()"></button>
+  </div>
+ 
+  
 </ion-content>

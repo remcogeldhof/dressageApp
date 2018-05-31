@@ -1,19 +1,28 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
- 
-
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
-
+import { CreateTestPage } from '../pages/create-test/create-test';
 import { Events } from 'ionic-angular';
-import { BackandService, Response } from '@backand/angular2-sdk'
+import { BackandService } from '@backand/angular2-sdk'
 import { Storage } from '@ionic/storage';
+import { Http } from '@angular/http'; 
+import { Network } from '@ionic-native/network';
+import { ToastController } from 'ionic-angular';
 
- 
+import 'rxjs/add/operator/map'
+import { Point } from '../models/Point';
+import { TestController } from '../api/TestController';
+import { BasicExerciseController } from '../api/BasicExerciseController';
+import { PointController } from '../api/PointController';
+import { ExerciseController } from '../api/ExerciseController';
+import { CircleController } from '../api/CircleController';
+
+import { Toast } from '../Helper/Toast';
+import { LocalStorage } from '../Helper/LocalStorage';
+
 @Component({
   selector: 'Dressage App',
   templateUrl: 'app.html'
@@ -21,21 +30,13 @@ import { Storage } from '@ionic/storage';
 export class MyApp{
   @ViewChild(Nav) nav: Nav;
 
-  public proevenlijst: any[] = [];
-  public oefening: any[] = [];
-  public oefeningBasis: any[] = [];
-  public puntenlijst: any[] = [];
-  public gebruikerslijst: any[] = [];
-
-
-
   rootPage: any = MenuPage;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon:string}>;
 
-  constructor(public events: Events, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private backand: BackandService, private storage: Storage) {
+  constructor(public events: Events, public platform: Platform, public statusBar: StatusBar,
+    public splashScreen: SplashScreen, private backand: BackandService, private storage: Storage,
+    public http: Http, private network: Network, private toastCtrl: ToastController) {
      platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
        //connection backand
@@ -46,72 +47,30 @@ export class MyApp{
         runSocket: false,
         mobilePlatform: 'ionic'
       });
-        
-       //load proeven backand
-      this.backand.object.getList('Proef')
-        .then((res: any) => {
-          this.proevenlijst = res.data;
-          //https://ionicframework.com/docs/storage/
-          storage.set('proevenlijst', this.proevenlijst);
-          console.log("Proevenlijst loaded in app component");
-        },
-        (err: any) => {
-          console.log(err.data);
-        });
 
-      
-      this.backand.object.getList('Oefening')
-           .then((res: any) => {
-             this.oefening = res.data;
-             storage.set('oefeningenlijst', this.oefening);
-             console.log("Oefening loaded");
-           },
-        (err: any) => {
-          console.log(err.data);
-             //alert(err.data);
-           });
-       
+      //load user from local storage and set in static variable
+      LocalStorage.loadUserAndToken(this.storage);
 
-      this.backand.object.getList("OefeningBasis", {
-        "pageSize": 200,
-        "pageNumber": 1,
-        "filter": [],
-        "sort": []
-      })
-        .then((res: any) => {
-          this.oefeningBasis = res.data;
-          storage.set('oefeningbasislijst', this.oefeningBasis);
-          console.log("Oefeningbasis loaded");
-        })
-        .catch(error => { })
+/*
+      //message when no connection
+      let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+        Toast.toastNotConnected(this.toastCtrl);
+      });
 
+      //message when connected again
+      let connectSubscription = this.network.onConnect().subscribe(() => {
+        Toast.toastConnected(this.toastCtrl);
+      });*/
 
-     /* this.backand.object.getList('OefeningBasis')
-           .then((res: any) => {
-             this.oefeningBasis = res.data;
-             storage.set('oefeningbasislijst', this.oefeningBasis);
-             console.log("Oefeningbasis loaded");
-           },
-        (err: any) => {
-          console.log(err.data);
-             // alert(err.data);
-           });*/
-       
+      //load tests
+      TestController.loadAllTests(this.http, this.storage);
+      ExerciseController.loadAllExercises(this.http, this.storage);
+      BasicExerciseController.loadAllExercises(this.http, this.storage);
+      PointController.loadAllPoints(this.http, this.storage);
+      CircleController.loadAllCircles(this.http, this.storage);
+     
 
-      this.backand.object.getList("Punt", {
-        "pageSize": 21,
-        "pageNumber": 1,
-        "filter": [],
-        "sort": []
-      })
-        .then((res: any) => {
-          this.puntenlijst = res.data;
-          storage.set('puntenlijst', this.puntenlijst);
-          console.log("punten loaded");
-        })
-        .catch(error => { })
-
-      this.backand.object.getList("Gebruiker", {
+  /*    this.backand.object.getList("Gebruiker", {
         "pageSize": 21,
         "pageNumber": 1,
         "filter": [],
@@ -120,39 +79,24 @@ export class MyApp{
         .then((res: any) => {
           this.gebruikerslijst = res.data;
           storage.set('gebruikerslijst', this.gebruikerslijst);
-          console.log("gebruikers loaded");
+          console.log("users loaded");
         })
-        .catch(error => { })
-
-
-      /* this.backand.object.getList('Punt')
-           .then((res: any) => {
-             this.puntenlijst = res.data;
-             storage.set('puntenlijst', this.puntenlijst);
-             console.log("punten loaded");
-           },
-         (err: any) => {
-           console.log(err.data);
-             //   alert(err.data);
-           });*/
+        .catch(error => { })*/
        
-   
-      
-    });
+     });
     // used for an example of ngFor and navigation
      this.pages = [
-       { title: 'Home', component: MenuPage },
-       { title: 'Login', component: LoginPage }
-
-    ];
-
+       { title: 'Home', component: MenuPage, icon: "home" },
+       { title: 'Create Test', component: CreateTestPage, icon: "create" },
+       { title: 'Account', component: LoginPage, icon: "log-in" }
+     ];
   }
- 
+
+
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
+    
     this.nav.setRoot(page.component);
   }
-
- 
 }

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MenuInternationaalPage } from '../menu-internationaal/menu-internationaal';
-import { MenuLrvPage } from '../menu-lrv/menu-lrv';
 import { MenuVlpPage } from '../menu-vlp/menu-vlp';
-
-
+import { TranslateService } from '@ngx-translate/core';
+import * as $ from 'jquery'
 
 /**
  * Generated class for the MenuPage page.
@@ -20,22 +18,63 @@ import { MenuVlpPage } from '../menu-vlp/menu-vlp';
 })
 export class MenuPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    private discipline: string;
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
+        translate.setDefaultLang('en');
+        this.discipline = "All dressage tests"; 
   }
 
-  openInternationaal() {
-    this.navCtrl.push(MenuInternationaalPage);
+  openDressage() {
+      this.switchCountry();
+      this.discipline = "Dressage";
+     // $('.wrapper').css("background-image", "url(../assets/imgs/Dressage3.jpg)");  
+
   }
-  openLRV() {
-    this.navCtrl.push(MenuLrvPage);
-  }
-  openVLP() {
-    this.navCtrl.push(MenuVlpPage);
+  openEventing() {
+      this.switchCountry();
+      this.discipline = "Eventing";
+     // $('.wrapper').css("background-image", "url(../assets/imgs/Eventing4.jpg)");  
   }
 
+  openOwnTests() {
+    this.navCtrl.push(MenuVlpPage, {
+      discipline: "OWN",
+      country: "OWN"
+    });
+  }
+
+  openFEI() {
+      this.navCtrl.push(MenuVlpPage, {
+          discipline: this.discipline,
+          country: "FEI"
+    });
+  }
+
+  openBelgium() {
+      this.navCtrl.push(MenuVlpPage, {
+          discipline: this.discipline,
+           country: "Belgium"
+    });
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
   }
 
+  switchDiscipline() {
+      this.discipline = "All dressage tests"
+    $(document).ready(function () {
+      $("#countries").css('display', 'none');
+      $("#disciplines").css('display', 'block');
+     // $('.wrapper').css("background-image", "url(../assets/imgs/geopat4.jpg)");  
+    });
+  }
+
+  switchCountry() {
+    $(document).ready(function () {
+      $("#countries").css('display', 'block');
+      $("#disciplines").css('display', 'none');
+    });
+  }
 }

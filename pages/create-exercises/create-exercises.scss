@@ -1,3 +1,21 @@
 page-create-exercises {
- 
+  #wrapper, .green {
+    background-color: map-get($colors, secondaryGreen);
+  }
+
+  .black {
+    color: black;
+  }
+
+  .btn {
+    width: 50%;
+  }
+
+  .btnCreate{
+    width:40%;
+  }
+
+  #circle{
+    display:none;
+  }
 }

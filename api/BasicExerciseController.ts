@@ -1,16 +1,16 @@
 import { Http } from '@angular/http'; 
 import { Storage } from '@ionic/storage';
-import { OefeningBasis } from '../models/oefening-basis';
+import { BasicExercise } from '../models/BasicExercise';
 
 
 export class BasicExerciseController{
 
-  private static basicExerciseList: OefeningBasis[] = [];
+  private static basicExerciseList: BasicExercise[] = [];
  
   public static loadAllExercises(http, storage) {
-    storage.get('oefeningbasislijst').then((val) => {
-      if (val == null) {
-        http.get('http://localhost/dressageapi/basisoefening/get.php').map(res => res.json().records).subscribe((data) => {
+ /*   storage.get('oefeningbasislijst').then((val) => {
+      if (val == null) {*/
+        http.get('http://localhost/dressageapi/basicexercise/get.php').map(res => res.json().records).subscribe((data) => {
           this.basicExerciseList = data;
           storage.set('oefeningbasislijst', this.basicExerciseList);
           console.log("Basic exercises loaded");
@@ -18,7 +18,7 @@ export class BasicExerciseController{
           (error: any) => {
             console.dir(error);
           });
-      } else {
+      /*} else {
         console.log("Basic excercises already in storage, no api call")
       }
     });
