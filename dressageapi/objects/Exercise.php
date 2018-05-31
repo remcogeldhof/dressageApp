@@ -17,6 +17,7 @@ class Exercise
     public $description;
     public $pace;
     public $serialNumber;
+    public $circleId;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -39,7 +40,7 @@ class Exercise
     function create()
     {
         // query to insert record
-        $query = "INSERT INTO Exercise(exerciseId,basicExerciseId,testId,description,pace,serialNumber) Values (:exerciseId, :basicExerciseId, :testId, :description,:pace, :serialNumber)";
+        $query = "INSERT INTO Exercise(exerciseId,basicExerciseId,testId,description,pace,serialNumber, circleId) Values (:exerciseId, :basicExerciseId, :testId, :description,:pace, :serialNumber, :circleId)";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -51,6 +52,7 @@ class Exercise
         $this->description = htmlspecialchars(strip_tags($this->description));
         $this->pace = htmlspecialchars(strip_tags($this->pace));
         $this->serialNumber = htmlspecialchars(strip_tags($this->serialNumber));
+        $this->circleId = htmlspecialchars(strip_tags($this->circleId));
 
         // bind values
         $stmt->bindParam(":exerciseId", $this->exerciseId);
@@ -59,9 +61,32 @@ class Exercise
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":pace", $this->pace);
         $stmt->bindParam(":serialNumber", $this->serialNumber);
+        $stmt->bindParam(":circleId", $this->circleId);
+
 
         // execute query
         if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    function delete($testId){
+
+        // delete query
+        $query = "DELETE FROM Exercise WHERE testId = '$testId'";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $testId=htmlspecialchars(strip_tags($testId));
+
+        // bind id of record to delete
+        $stmt->bindParam(1, $testId);
+
+        // execute query
+        if($stmt->execute()){
             return true;
         }
         return false;

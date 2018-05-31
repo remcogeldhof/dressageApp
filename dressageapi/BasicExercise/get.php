@@ -40,8 +40,7 @@ if($num>0){
             "name" => $name,
             "pointId1" => $pointId1,
             "pointId2" => $pointId2,
-            "duration" => $duration,
-            "circleId" => $circleId
+            "duration" => $duration
         );
 
         array_push($basicExercise__arr["records"], $basicExercise__item);

@@ -35,6 +35,7 @@ $exercise->testId = $data->testId;
 $exercise->description = $data->description;
 $exercise->pace = $data->pace;
 $exercise->serialNumber = $data->serialNumber;
+$exercise->circleId = $data->circleId;
 
 // create the product
 if($exercise->create()){

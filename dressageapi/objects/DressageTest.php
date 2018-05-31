@@ -18,6 +18,7 @@ class DressageTest
     public $federation;
     public $testClass;
     public $name;
+    public $userId;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -44,7 +45,7 @@ class DressageTest
     {
 
         // query to insert record
-        $query = "INSERT INTO DressageTest(testId, discipline, country, federation, class, name) Values (:testId, :discipline, :country, :federation, :class, :name)";
+        $query = "INSERT INTO DressageTest(testId, discipline, country, federation, testClass, name, userId) Values (:testId, :discipline, :country, :federation, :testClass, :name, :userId)";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -56,14 +57,16 @@ class DressageTest
         $this->federation = htmlspecialchars(strip_tags($this->federation));
         $this->testClass = htmlspecialchars(strip_tags($this->testClass));
         $this->name = htmlspecialchars(strip_tags($this->name));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
 
         // bind values
         $stmt->bindParam(":testId", $this->testId);
         $stmt->bindParam(":discipline", $this->discipline);
         $stmt->bindParam(":country", $this->country);
         $stmt->bindParam(":federation", $this->federation);
-        $stmt->bindParam(":class", $this->testClass);
+        $stmt->bindParam(":testClass", $this->testClass);
         $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":userId", $this->userId);
 
         // execute query
         if ($stmt->execute()) {

@@ -17,6 +17,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // include database and object file
 include_once '../config/Database.php';
 include_once '../objects/DressageTest.php';
+include_once '../objects/Exercise.php';
 
 // get database connection
 $database = new Database();
@@ -24,6 +25,8 @@ $db = $database->getConnection();
 
 // prepare product object
 $dressageTest = new DressageTest($db);
+$exercise = new Exercise($db);
+
 
 // get product id
 $data = json_decode(file_get_contents("php://input"));
@@ -35,11 +38,17 @@ $dressageTest->testId  = isset($_GET['id']) ? $_GET['id'] : die();
 
 // delete the product
 if($dressageTest->delete()){
-    echo '{';
-    echo '"message": "Test was deleted."';
-    echo '}';
-}
 
+    if($exercise->delete($dressageTest->testId)){
+        echo '{';
+        echo '"message": "Test and exercises were deleted."';
+        echo '}';
+    }else{
+        echo '{';
+        echo '"message": "unable to delete exercises"';
+        echo '}';
+    }
+}
 // if unable to delete the product
 else{
     echo '{';

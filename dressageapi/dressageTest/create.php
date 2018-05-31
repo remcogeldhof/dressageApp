@@ -29,12 +29,13 @@ $dressageTest = new DressageTest($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
-$dressageTest->testId = IdGenerator::generateId();
+$dressageTest->testId = $data->testId;
 $dressageTest->discipline = $data->discipline;
 $dressageTest->country = $data->country;
 $dressageTest->federation = $data->federation;
 $dressageTest->testClass = $data->testClass;
 $dressageTest->name = $data->name;
+$dressageTest->userId = $data->userId;
 
 // create the product
 if($dressageTest->create()){

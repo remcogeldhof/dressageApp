@@ -12,7 +12,7 @@ class Comment
 
     // object properties
     public $commentId;
-    public $proefId;
+    public $testId;
     public $userId;
     public $comment;
     public $date;
@@ -27,7 +27,7 @@ class Comment
 
         $query = "SELECT * from Comment p
             WHERE
-                p.proefId = '$id' ORDER BY p.date DESC";
+                p.testId = '$id' ORDER BY p.date DESC";
 
         $stmt = $this->conn->prepare($query);
 
@@ -58,21 +58,21 @@ class Comment
     function create()
     {
         // query to insert record
-        $query = "INSERT INTO Comment(commentId, proefId, userId, comment, date) Values (:commentId, :proefId, :userId, :comment, :date)";
+        $query = "INSERT INTO Comment(commentId, testId, userId, comment, date) Values (:commentId, :testId, :userId, :comment, :date)";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize
         $this->commentId = htmlspecialchars(strip_tags($this->commentId));
-        $this->proefId = htmlspecialchars(strip_tags($this->proefId));
+        $this->testId = htmlspecialchars(strip_tags($this->testId));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->comment = htmlspecialchars(strip_tags($this->comment));
         $this->date = htmlspecialchars(strip_tags($this->date));
 
         // bind values
         $stmt->bindParam(":commentId", $this->commentId);
-        $stmt->bindParam(":proefId", $this->proefId);
+        $stmt->bindParam(":testId", $this->testId);
         $stmt->bindParam(":userId", $this->userId);
         $stmt->bindParam(":comment", $this->comment);
         $stmt->bindParam(":date", $this->date);

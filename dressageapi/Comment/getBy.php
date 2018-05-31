@@ -23,10 +23,10 @@ $db = $database->getConnection();
 $comment = new Comment($db);
 $user = new User($db);
 
-$comment->proefId = isset($_GET['proefId']) ? $_GET['proefId'] : die();
+$comment->testId = isset($_GET['testId']) ? $_GET['testId'] : die();
 
 // query products
-$stmt = $comment->getBy($comment->proefId);
+$stmt = $comment->getBy($comment->testId);
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
@@ -52,7 +52,7 @@ if($num>0){
 
         $item=array(
             "commentId" => $commentId,
-            "proefId" => $proefId,
+            "testId" => $testId,
             "userId" => $userId,
             "firstname" => $firstname,
             "lastname" => $lastname,

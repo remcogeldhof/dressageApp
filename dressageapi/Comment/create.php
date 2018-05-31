@@ -31,7 +31,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
 $comment->commentId = IdGenerator::generateId();
-$comment->proefId = $data->proefId;
+$comment->testId = $data->testId;
 $comment->userId = $data->userId;
 $comment->comment = $data->comment;
 $comment->date = $data->date;
