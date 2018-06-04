@@ -39,7 +39,7 @@ export class CreateExercisesPage {
   public pace: string;
   public radius: string;
   public size: string;
-  public hand: string;
+  public letter: string;
   public circleId: number;
   public dressageTest: Test;
   public static exerciseList: Exercise[] = [];
@@ -74,15 +74,42 @@ export class CreateExercisesPage {
       search: ['', Validators.required],
       radius: [],
       size: [],
-      hand: []
-
+      hand: [],
+      letter: []
     });
   }
 
+  updateLetter(value) {
+    console.log(value);
+  }
+
+
   update(event: { component: SelectSearchableComponent, value: any }) {
     console.log('circle:', event.value.name);
-    if (event.value.name == "circle") {
-      $("#circle").css('display', 'block');
+    if (event.value.name.substring(0, 6) == "circle") {
+      if (event.value.name.length == 12) {
+        console.log("half circle middle");
+        $("#size").css('display', 'none');
+      } /*else {
+        $("#radius").css('display', 'block');
+      }*/
+   /*   var basixEx: BasicExercise = this.basicExerciseList.find(x => x.basicExerciseId == CreateExercisesPage.exerciseList[CreateExercisesPage.exerciseList.length - 1].basicExerciseId);
+      var name = basixEx.name;
+      name = name.substr(name.length - 1);
+      console.log(name);
+      if (name == 'A') {
+        $("#direction").css('display', 'none');
+        this.direction == "DOWN";
+      } else if (name = 'C') {
+        console.log("thistoch CCC");
+        $("#direction").css('display', 'none');
+        this.direction = "UP";
+      } else {
+        console.log("displ direction");
+        $("#direction").css('display', 'block');
+      }
+      console.log(this.direction);*/
+      $("#circle").css('display', 'block'); 
     } else {
       $("#circle").css('display', 'none');
     }
@@ -91,34 +118,34 @@ export class CreateExercisesPage {
   create() {
     console.log("proefid " + this.dressageTest.testId, this.dressageTest.federation, this.dressageTest.name, this.dressageTest.testClass);
     // Loading.startLoading(this.loadingCtrl, "Creating test...");
-    TestController.createDressageTest(this.dressageTest, this.http, this.storage);
-    ExerciseController.createExercises(this.http, this.alertCtrl, this.navCtrl, this.loadingCtrl, this.storage);
+    TestController.createDressageTest(this.dressageTest, this.http, this.storage, this.navCtrl, this.alertCtrl, this.loadingCtrl);
+    ExerciseController.createExercises(this.http, this.toastCtrl, this.storage);
   }
 
   addExercise() {
     if (this.createExerciseForm.valid) {
       var serial = CreateExercisesPage.serialNumber;
       var BEId = this.basicExercise.basicExerciseId;
-      if (serial != 0 && BEId == CreateExercisesPage.exerciseList[serial-1].basicExerciseId) {
-        console.log("BEID is hetzelfde!");
-        Alert.setAlert(this.alertCtrl, "You cannot choose these letters");
-      } else {
+      console.log("HOO", this.basicExercise.name.substring(0, 6));
+      if (serial != 0 && this.basicExercise.name.substring(0,6) != "circle" && BEId == CreateExercisesPage.exerciseList[serial - 1].basicExerciseId) {
+          console.log("BEID is hetzelfde!");
+          Alert.setAlert(this.alertCtrl, "You cannot choose these letters");
+      }else {
         //fields ok, excercise can be created
-
-        //circle
+      
+        //circle?
         this.circleId = 0;
-        if (this.basicExercise.name == "circle") {
-          console.log("radius"+this.circle.radius +"hand" + this.circle.hand +"size" +this.circle.height);
-
-          var basixEx: BasicExercise = this.basicExerciseList.find(x => x.basicExerciseId == this.basicExercise.basicExerciseId);
-          var direction = this.getDirection(basixEx);
-          if (direction == "") {
-            direction = this.circle.hand;
-          }
-          console.log(direction);
+        if (this.basicExercise.name.substring(0, 6) == "circle") {
+         
+          console.log("hand:  " + this.circle.hand +"  size: "  +this.circle.height );
           for (let circle of this.circleList) {
-            if (circle.hand == this.circle.hand && circle.radius == this.circle.radius && circle.height == this.circle.height && circle.direction==this.circle.direction) {
+            if (this.basicExercise.name.length == 8 && circle.hand == this.circle.hand && parseFloat(circle.height.toString()) == parseFloat(this.circle.height.toString()) && circle.radius == 360){
               this.circleId = circle.circleId;
+              console.log(this.circleId);
+            }
+            if (this.basicExercise.name.length == 12 && circle.hand == this.circle.hand &&  circle.height == 62.50 && circle.radius==360) {
+              this.circleId = circle.circleId;
+              console.log(this.circleId);
             }
           }
         }
@@ -138,28 +165,6 @@ export class CreateExercisesPage {
     }
   }
 
-  getDirection(basicExercise: BasicExercise) {
-    var name = basicExercise.name;
-    var direction;
-    console.log(name.substr(name.length - 1))
-    switch (name.substr(name.length-1).toUpperCase()) {
-      case 'A': direction = "DOWN";break;
-      case 'F': direction = "RIGHT";break;
-      case 'P': direction = "RIGHT"; break;
-      case 'B': direction = "RIGHT"; break;
-      case 'R': direction = "RIGHT"; break;
-      case 'M': direction = "RIGHT"; break;
-      case 'C': direction = "UP"; break;
-      case 'H': direction = "RIGHT"; break;
-      case 'S': direction = "RIGHT"; break;
-      case 'E': direction = "RIGHT"; break;
-      case 'V': direction = "RIGHT"; break;
-      case 'K': direction = "RIGHT"; break;
-      default: direction = "";
-    }
-    console.log(direction);
-    return direction;
-  }
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateExercisesPage');

@@ -30,6 +30,7 @@ export class LoginPage{
   private user: User;
   private currentUser: User;
   private token: string;
+  private repeat: string;
  // private loginForm: FormGroup;
   private signUpForm: FormGroup;
 
@@ -37,7 +38,7 @@ export class LoginPage{
     public storage: Storage, private toastCtrl: ToastController, public loadingCtrl: LoadingController,
     public formBuilder: FormBuilder, private http: Http) {
     this.user = { userId: null, firstname: "", lastname: "", mail: "", password: "", token: "" };
-   
+    this.repeat = "";
     let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
    // this.signupform = formBuilder.group({
    //   name: ['',Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(10)],
@@ -73,10 +74,12 @@ export class LoginPage{
   }
  
   createAccount() {
-    if (this.signUpForm.valid) {
+    if (this.user.password != this.repeat) {
+      Toast.toastPasswordsNotMatch(this.toastCtrl);
+    }else if (this.signUpForm.valid) {
       var i = LoginController.createLogin(this.http, this.user, this.loadingCtrl, this.toastCtrl);
         this.switchLogin();
-    }
+    } 
    
 
      /* this.backand.object.create('Gebruiker', this.gebruiker)

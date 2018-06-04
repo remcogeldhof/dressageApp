@@ -22,7 +22,8 @@ export class MenuPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
         translate.setDefaultLang('en');
-        this.discipline = "All dressage tests"; 
+        this.discipline = "All dressage tests";
+
   }
 
   openDressage() {

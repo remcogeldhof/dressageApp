@@ -9,6 +9,7 @@ import { User } from '../../models/User';
 import { Http } from '@angular/http';
 import { CommentController } from '../../api/CommentController';
 import { LocalStorage } from '../../Helper/LocalStorage';
+import { TestController } from '../../api/TestController';
 
 /**
  * Generated class for the MenuVlpPage page.
@@ -26,7 +27,7 @@ export class MenuVlpPage {
     public discipline: String;
     public country: String;
 
-    public dressageTestList: any[] = [];
+    public dressageTestList: Test[] = [];
     public testId: number;
     public testList: Array<Test>;
     first: boolean;
@@ -38,35 +39,31 @@ export class MenuVlpPage {
       this.discipline = navParams.get("discipline");
       this.country = navParams.get("country");
       this.user = LocalStorage.currentUser;
-      storage.get('proevenlijst').then((val) => {
-        console.log('dit is het ', val);
-        this.dressageTestList = []
-        for (var i of val) {
-          this.dressageTestList.push(i);
-        }
 
-        for (let item of this.dressageTestList) {
-          if (item.country != "OWN") {
-            //select all tests of selected descipline and selected country
-            if (item.discipline == this.discipline.toUpperCase() && item.country == this.country) {
-              this.addToList(item);
-            }
-          } else {
-            if (this.user != null && item.userId == this.user.userId) {
-              this.addToList(item);
-            }
+      this.dressageTestList = TestController.testList;
+      this.sortList();
+      
+    }
+
+    sortList() {
+      for (let item of this.dressageTestList) {
+        if (this.country == "OWN" && item.country == "OWN") {
+          if (this.user != null && item.userId == this.user.userId) {
+            this.addToList(item);
+          }
+        } else {
+          //select all tests of selected descipline and selected country
+          if (item.discipline == this.discipline.toUpperCase() && item.country == this.country) {
+            this.addToList(item);
           }
         }
-
-        this.testList.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); }); 
-
-      });
-
-     }
+      }
+      this.testList.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); });
+    }
 
     addToList(item) {
       let p = new Test(item.testId, item.discipline, item.country, item.federation, item.testClass, item.name, item.userId);
-      console.log(p);
+
       this.testList.push(p);
     }
   
@@ -83,23 +80,5 @@ export class MenuVlpPage {
   }
 
 }
-/*
-class Proef {
-  //field 
-  proefId: number;
-  proefNaam: string;
-  reeks: string;
-  federatie: string
-
-  //constructor 
-  constructor(proefId: number, proefNaam: string, reeks: string, federatie: string) {
-    this.proefId = proefId
-    this.proefNaam = proefNaam
-    this.reeks = reeks
-    this.federatie = federatie
-  }
-
-}*/
-
 
 

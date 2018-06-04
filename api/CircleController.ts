@@ -10,12 +10,12 @@ export class CircleController {
   public static loadAllCircles(http, storage) {
     /*   storage.get('oefeningbasislijst').then((val) => {
          if (val == null) {*/
-    http.get('http://localhost/dressageapi/circle/get.php').map(res => res.json().records).subscribe((data) => {
+    //LOCAL localhost/dressageapi/circle/get.php
+    //API10.3.50.51/api/circle/get.php
+    http.get('http://10.3.50.51/api/circle/get.php').map(res => res.json().records).subscribe((data) => {
       this.circleList = data;
       storage.set('circleList', this.circleList);
       console.log("Circles loaded");
-      console.log(data);
-
     },
       (error: any) => {
         console.dir(error);

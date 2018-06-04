@@ -15,7 +15,7 @@ export class Alert {
     alert.present();
   }
 
-   public static deleteTestAlert(alertCtrl, message, navCtrl, page, http, storage, testId) {
+   public static deleteTestAlert(alertCtrl, message, navCtrl, page, http, storage, testId, toast) {
     let alert = alertCtrl.create({
       title: message,
       buttons: [
@@ -23,7 +23,7 @@ export class Alert {
           text: 'DELETE',
           role: 'ok',
           handler: () => {
-            TestController.deleteDressageTest(http, storage, testId);
+            TestController.deleteDressageTest(http, toast, storage, testId);
             //navCtrl.setRoot(MenuPage);
             navCtrl.insert(0, page);
             navCtrl.popToRoot();

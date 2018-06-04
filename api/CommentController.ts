@@ -7,7 +7,7 @@ export class CommentController{
   public static loadCommentsByProefID(http, storage, testId) {
     this.commentList = null;
     console.log(testId);
-    http.get('http://localhost/dressageapi/comment/getBy.php?testId='+testId).map(res => res.json().records).subscribe((data) => {
+    http.get('http://10.3.50.51/api/comment/getBy.php?testId='+testId).map(res => res.json().records).subscribe((data) => {
       console.log(data);
       this.commentList = data;
       storage.set('commentList', this.commentList);
@@ -27,9 +27,13 @@ export class CommentController{
      
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    http.post('http://localhost/dressageapi/comment/create.php', body, headers).map(res => res.json()).subscribe(data => {
+    http.post('http://10.3.50.51/api/comment/create.php', body, headers).map(res => res.json()).subscribe(data => {
         console.log(data);
       });
   }
 
 }
+
+
+    //LOCAL localhost/dressageapi/comment/getBy.php?testId= localhost/dressageapi/comment/create.php
+    //API 10.3.50.51/api/comment/create.php 10.3.50.51/api/comment/getBy.php?testId=1

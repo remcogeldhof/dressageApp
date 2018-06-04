@@ -40,14 +40,7 @@
           </ion-list>-->
       </ion-item>
       <div id="circle">
-        <ion-item class="green">
-          <ion-label class="black">Circle</ion-label>
-          <ion-select [(ngModel)]="circle.radius" multiple="false" formControlName="radius">
-            <ion-option selected value="360">Full circle</ion-option>
-            <ion-option value="180">Half circle</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item class="green">
+        <ion-item id="size" class="green">
           <ion-label class="black">Size</ion-label>
           <ion-select [(ngModel)]="circle.height" multiple="false" formControlName="size">
             <ion-option selected value="125">20m</ion-option>
@@ -66,9 +59,9 @@
       <ion-item class="green">
         <ion-label class="black">Pace</ion-label>
         <ion-select [(ngModel)]="pace" multiple="false" formControlName="pace">
-          <ion-option value="stap">Stap</ion-option>
-          <ion-option value="draf">Draf</ion-option>
-          <ion-option value="galop">Galop</ion-option>
+          <ion-option value="WALK">Walk</ion-option>
+          <ion-option value="TROT">Trot</ion-option>
+          <ion-option value="CANTER">Canter</ion-option>
         </ion-select>
       </ion-item>
       <ion-item class="green">

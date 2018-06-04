@@ -8,7 +8,7 @@
         <ion-title>{{dressageTest.name}}</ion-title>
         <div *ngIf="dressageTest.country=='OWN'">
           <button ion-button class="delete" (click)="deleteTest(test)">
-            <img src="../assets/icon/delete.png" height="15"/>
+            <img src="assets/icon/delete.png" height="15"/>
           </button>
         </div>
       </ion-row>
@@ -19,6 +19,7 @@
 <ion-content padding id="wrapper">
 
   <div class="desc">Let's play the dressage test :)</div>
+
   <br />
   <div id="a">A</div>
 
@@ -47,7 +48,7 @@
   </div>
   <div id="c">C</div>
   <br />
-  <br />
+  <div class="pace">Pace</div>
   <div id="controlBar">
     <ion-grid>
       <ion-row>

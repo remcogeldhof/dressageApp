@@ -10,7 +10,6 @@ export class Toast {
   }
 
   public static toastExerciseCreated(toast, message) {
-    console.log('network was disconnected :-(');
     this.showToast(toast, message, 3000, 'bottom');
   }
 
@@ -40,5 +39,17 @@ export class Toast {
     this.showToast(toast, 'Username or password is not correct', 3000, 'top');
   }
 
+  public static toastTestDeletedSuccessful(toast) {
+    this.showToast(toast, 'Test successfully deleted', 3000, 'top');
+  }
 
+  public static toastTestNotDeleted(toast) {
+    this.showToast(toast, 'Error: Test could not be deleted', 3000, 'top');
+  }
+  public static toastTestNotcreated(toast) {
+    this.showToast(toast, 'Error: Test could be created', 3000, 'top');
+  }
+  public static toastPasswordsNotMatch(toast) {
+    this.showToast(toast, 'The passwords does not match', 3000, 'bottom');
+  }
 }

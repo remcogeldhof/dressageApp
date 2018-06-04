@@ -10,7 +10,10 @@ export class BasicExerciseController{
   public static loadAllExercises(http, storage) {
  /*   storage.get('oefeningbasislijst').then((val) => {
       if (val == null) {*/
-        http.get('http://localhost/dressageapi/basicexercise/get.php').map(res => res.json().records).subscribe((data) => {
+        
+        //API 10.3.50.51/api/basicExercise/get.php
+        //LOCAL localhost/dressageapi/basicexercise/get.php
+        http.get('http://10.3.50.51/api/basicExercise/get.php').map(res => res.json().records).subscribe((data) => {
           this.basicExerciseList = data;
           storage.set('oefeningbasislijst', this.basicExerciseList);
           console.log("Basic exercises loaded");

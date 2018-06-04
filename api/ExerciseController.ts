@@ -4,14 +4,15 @@ import { Exercise } from '../models/Exercise';
 import { CreateExercisesPage } from '../pages/create-exercises/create-exercises';
 import { MenuPage } from '../pages/menu/menu';
 import { Loading } from '../Helper/Loading';
+import { Alert } from '../Helper/Alert';
 
 
 export class ExerciseController{
 
-  private static exerciseList: Exercise[] = [];
+  public static exerciseList: Exercise[] = [];
  
   public static loadAllExercises(http, storage) {
-	 http.get('http://localhost/dressageapi/exercise/get.php').map(res => res.json().records).subscribe((data) => {
+    http.get('http://10.3.50.51/api/exercise/get.php').map(res => res.json().records).subscribe((data) => {
        this.exerciseList = data;
        storage.set('oefeningenlijst', this.exerciseList);
             console.log("Exercises loaded");
@@ -36,9 +37,7 @@ export class ExerciseController{
         .catch(error => { })*/
 	}
 
-  public static createExercises(http, alertCtrl, navCtrl, loadingCtrl, storage) {
-     Loading.startLoading(loadingCtrl, "Creating dressage test...");
-
+  public static createExercises(http, storage, toast) {
     for (var i = 0; i < CreateExercisesPage.exerciseList.length; i++) {
       // console.log("log3: ", CreateExercisesPage.exerciseList[i].description);
 
@@ -46,34 +45,22 @@ export class ExerciseController{
       console.log(body);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      http.post('http://localhost/dressageapi/exercise/create.php', body,
+      http.post('http://10.3.50.51/api/exercise/create.php', body,
         headers).map(res => res.json()).subscribe(data => {
           console.log(data);
-          if (i == CreateExercisesPage.exerciseList.length) {
-            ExerciseController.loadAllExercises(http, storage);
-            Loading.stopLoading();
-            ExerciseController.setAlert(alertCtrl, navCtrl);
-          }
+        if (i == CreateExercisesPage.exerciseList.length) {
+          console.log("last");
+        }
+        },
+        (error: any) => {
+          console.dir(error);
         });
     }
   }
 
-  public static setAlert(alertCtrl, navCtrl) {
-    let alert = alertCtrl.create({
-      title: 'Test created successful',
-      buttons: [
-        {
-          text: 'Ok',
-          role: 'ok',
-          handler: () => {
-            //navCtrl.setRoot(MenuPage);
-            navCtrl.insert(0, MenuPage);
-            navCtrl.popToRoot();
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+  
 
 }
+
+//10.3.50.51/api/exercise/create.php  localhost/dressageapi/exercise/create.php
+//10.3.50.51/api/exercise/get.php localhost/dressageapi/exercise/get.php

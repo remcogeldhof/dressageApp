@@ -18,8 +18,8 @@ export class LoginController {
     headers.append('Content-Type', 'application/json');
 
     let body = JSON.stringify(user);
-
-     http.post('http://localhost/dressageapi/user/create.php', body,
+    // 10.3.50.51/api/user/create.php localhost/dressageapi/user/create.php
+    http.post('http://10.3.50.51/api/user/create.php', body,
        headers).map(res => res.json()).subscribe(data => {
          console.log(data.message);
          Loading.stopLoading();
@@ -43,8 +43,8 @@ export class LoginController {
     headers.append('Content-Type', 'application/json');
 
     let body = JSON.stringify(user);
-
-    http.post('http://localhost/dressageapi/login/checklogin.php', body, headers).map(res => res.json()).subscribe((data) => {
+    //10.3.50.51/api/login/checkLogin.php localhost/dressageapi/login/checklogin.php
+    http.post('http://10.3.50.51/api/login/checkLogin.php', body, headers).map(res => res.json()).subscribe((data) => {
         if (data.user != null) {
    
           this.currentUser = data.user[0];

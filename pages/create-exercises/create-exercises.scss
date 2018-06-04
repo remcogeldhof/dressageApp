@@ -11,11 +11,15 @@ page-create-exercises {
     width: 50%;
   }
 
-  .btnCreate{
-    width:40%;
+  .btnCreate {
+    width: 40%;
   }
 
-  #circle{
-    display:none;
+  #circle, .full {
+    display: none;
+  }
+
+  #direction {
+    display: none;
   }
 }

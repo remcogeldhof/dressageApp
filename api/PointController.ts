@@ -10,7 +10,8 @@ export class PointController{
   public static loadAllPoints(http, storage) {
     /*storage.get('puntenlijst').then((val) => {
       if (val == null) {*/
-        http.get('http://localhost/dressageapi/point/get.php').map(res => res.json().records).subscribe((data) => {
+    //localhost/dressageapi/point/get.php 10.3.50.51/api/point/get.php
+        http.get('http://10.3.50.51/api/point/get.php').map(res => res.json().records).subscribe((data) => {
           this.pointList = data;
           storage.set('Points', this.pointList);
           console.log("Points loaded");
