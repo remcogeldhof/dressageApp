@@ -90,10 +90,6 @@
             <ion-item class="green" no-lines *ngIf="!commentForm.controls.commentName.valid && commentForm.controls.commentName.dirty || submitAttempt">
               <p class="errorMessage">Comments cannot be longer than 250 characters</p>
             </ion-item>
-            <ion-item class="green" no-lines *ngIf="commentForm.controls.commentName.valid && commentForm.controls.commentName || submitAttempt">
-              <p class="succesMessage">Comment successfully added</p>
-            </ion-item>
-
             <!--
             <ion-item>
               <ion-label>Your comment:</ion-label>

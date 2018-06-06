@@ -21,7 +21,7 @@ export class CommentController{
 
   public static createComment(http, comment: Comment) {
     console.log(comment);
-    this.commentList.unshift(comment);
+    //this.commentList.unshift(comment);
     let body = JSON.stringify(comment);
     console.log(body);
      

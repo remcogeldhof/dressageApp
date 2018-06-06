@@ -16,7 +16,6 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { CommentController } from '../../api/CommentController';
 import { LoginController } from '../../api/LoginController';
 import { ExerciseController } from '../../api/ExerciseController';
-
 import { Http } from '@angular/http';
 import { MenuPage } from '../../pages/menu/menu';
 import { Alert } from '../../Helper/Alert'
@@ -64,7 +63,7 @@ export class HomePage {
         this.filterExcerciseList();
     } else {
      storage.get('oefeningenlijst').then((val) => {
-        console.log("oefeningenlijst",val);
+        console.log("exercises loaded",val);
         for (var i of val) {
           this.exerciseList.push(i);
         }
@@ -72,9 +71,8 @@ export class HomePage {
       });
     }
    
-
     storage.get('oefeningbasislijst').then((val) => {
-      console.log("oefeningbasislijst", val);
+      console.log("basic exercises loaded", val);
       this.basicExerciseList = []
       for (var i of val) {
         this.basicExerciseList.push(i);
@@ -82,7 +80,7 @@ export class HomePage {
      });
 
     storage.get('Points').then((val) => {
-      console.log("Points",val);
+      console.log("Points loaded",val);
       this.pointList = [];
       for (var i of val) {
         this.pointList.push(i);
@@ -90,7 +88,7 @@ export class HomePage {
     });
 
     storage.get('circleList').then((val) => {
-      console.log("Circles", val);
+      console.log("Circles loaded", val);
       this.circleList = [];
       for (var i of val) {
         this.circleList.push(i);
@@ -123,144 +121,16 @@ export class HomePage {
   startAnimation() {
 
     let basicExerciseId: number;
-
     let pointId1: number;
     let pointId2: number;
-
     let x_from: number;
     let y_from: number;
     let x_to: number;
     let y_to: number;
-
     let count = 1;
     let next = true;
     let duration = 0;
     let circleId;
-
-/* FYEA
-  this.toolTimeline.add(TweenLite.to('.myAnimation', 2, { left: 62.5, top:187.5, ease: Linear.easeNone }));
-       
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 1, {
-      bezier: { curviness: 1.75, values: [{ left: 62.5, top: 187.5 }, { left: 31.25, top: 151.25 }, { left: 0  , top: 187.25 }] }
-      , ease: Power0.easeNone, repeat: -1
-    }));
-
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 2, { left: 0, top: 250, ease: Linear.easeNone }));
-
-
-   */
-
-   /* this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 2, values: [{ x: -65.5, y: 0 }, { x: -31.25, y: -31.25 }, { x: 0, y: 0 }] }
-      , ease: Power0.easeNone, repeat: -1
-    }));*/
-
-
-    // SLANGEVOLGTE
-   /* this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }
-      , ease: Power0.easeNone, repeat: -1
-    }));
-
-   this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 2, values: [{ x: 0, y: 125 }, { x: 62.5, y: 187.5 }, { x: 0, y: 250 }] }
-      , ease: Power0.easeNone, repeat: -1
-    })); 
-   this.toolTimeline.add(TweenLite.from('.myAnimation', 1, { left: 62.5, top: 250, ease: Linear.easeNone }));
-   this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 0, top: 250, ease: Linear.easeNone }));
-
-    */
-
-
-    // H C M
-   /* this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 125, top: 100, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation',1, { left: 125, top: 337.5, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: {
-        curviness: 1.5, values: [{ left: 125, top: 337.5 }, { left: 125, top: 340 },  { left: 105, top: 370 }, { left: 62.5, top: 375 }]
-      }
-      , ease: Linear.easeNone, repeat: -1
-    }));
-    // perfect
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 1.5, values: [{ left: 62.5, top: 375 }, { left: 20, top: 370 }, { left: 0, top: 337.5 }] }
-      , ease: Linear.easeNone, repeat: -1
-    }));
-    */
-
-    //M C H
-    /*this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 0, top: 100, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 0, top: 337.5, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: {
-        curviness: 1.5, values: [{ left: 0, top: 337.5 }, { left: 0, top: 340 }, { left: 20, top: 370 }, { left: 62.5, top: 375 }]
-      }
-      , ease: Linear.easeNone, repeat: -1
-    }));
-    // perfect
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 1.5, values: [{ left: 62.5, top: 375 }, { left: 105, top: 370 }, { left: 125, top: 337.5 }] }
-      , ease: Linear.easeNone, repeat: -1
-    }));*/
-
-     //F A K
-  /*  this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 0, top: 37.5, ease: Linear.easeNone }));
-   // this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 0, top: 337.5, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: {
-        curviness: 1.5, values: [{ left: 0, top: 37.5 }, { left: 20, top: 5 }, { left: 62.5, top: 0 }]
-      }
-      , ease: Linear.easeNone, repeat: -1
-    }));
-    // perfect
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 1.5, values: [{ left: 62.5, top: 0 }, { left: 105, top: 5 }, { left: 125, top: 37.5 }] }
-      , ease: Linear.easeNone, repeat: -1
-    }));
-    */
-    //K A F
-    /*this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 125, top: 37.5, ease: Linear.easeNone }));
-    // this.toolTimeline.add(TweenLite.to('.myAnimation', 1, { left: 0, top: 337.5, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: {
-        curviness: 1.5, values: [{ left: 125, top: 37.5 }, { left: 105, top: 5 }, { left: 62.5, top: 0 }]
-      }
-      , ease: Linear.easeNone, repeat: -1
-    }));
-    // perfect
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 1.5, values: [{ left: 62.5, top: 0 }, { left: 20, top: 5 }, { left: 0, top: 37.5 }] }
-      , ease: Linear.easeNone, repeat: -1
-    }));*/
-
-
-
-    //TweenLite.to('.myAnimation', 0.5, { left: 62.5, top: 375 });
-   /* this.toolTimeline.add(TweenLite.from('.myAnimation', 0.1, { left: 62.5, top: 375, ease: Linear.easeNone }));
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 1, {
-      bezier: { curviness: 1, values: [{ x:0, y: 0 }, { x: -45, y: -5 }, { x: -62.5, y: -37.5 }] }
-      , ease: Linear.easeNone, repeat: -1
-    }));*/
-  
-    /*
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 1.75, values: [{ x: 0, y:0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }
-      , ease: Power0.easeNone, repeat: -1
-    }));
-    
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 2, values: [{ x: 0, y: 250 }, { x: -62.5, y: 62.5 + 250 }, { x: 0, y: 375 }] }
-      , ease: Power0.easeNone, repeat: -1
-    }));
-    */
-
-    /*
-    this.toolTimeline.add(TweenLite.to('.myAnimation', 3, {
-      bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: -62.5, y: 62.5 }, { x: 0, y: 125 }] }
-      , ease: Power0.easeNone, repeat: -1
-    }));*/
-
-
 
      if (this.filteredExerciseList.length >= 1) {
 
@@ -272,8 +142,6 @@ export class HomePage {
             basicExerciseId = item.basicExerciseId;
             circleId = item.circleId;
 
-            console.log("beschrijving " + count + " " + this.exercise.description + "oef basis id == " + basicExerciseId);
-
             for (let item of this.basicExerciseList) {
               if (item.basicExerciseId == basicExerciseId) {
                 this.toolTimeline.call(this.placeDescription, [this.exercise.description, this.exercise.pace]);
@@ -281,53 +149,48 @@ export class HomePage {
                 pointId1 = item.pointId1;
                 pointId2 = item.pointId2;
                 duration = item.duration;
-                console.log(circleId);
-                console.log("duur: " + duration);
-                console.log("puntid1" + pointId1);
-                console.log("puntid2" + pointId2);
                 for (let item of this.pointList) {
                   if (item.pointId == pointId1) {
                     x_from = item.posLeft;
                     y_from = item.posTop;
-
                   }
                   if (item.pointId == pointId2) {
                     x_to = +item.posLeft;
                     y_to = +item.posTop;
                   }
-
                 }
 
                // SPEED
                 if (this.exercise.pace == "CANTER") {
-                  duration = duration * 0.75;
+                  duration = duration * 1.25;
                 }
                 if (this.exercise.pace == "WALK") {
+                  duration = duration * 4;
+                }
+                if (this.exercise.pace == "TROT") {
                   duration = duration * 2;
                 }
+
                
                 if (count == 1) {
-                  //this.toolTimeline.set("#desc", { text:"Your new text"});
                   this.toolTimeline.add(TweenLite.from('.myAnimation', 0, { left: x_from, top: y_from, ease: Linear.easeNone }));
-                  console.log(count + "ste keer");
                 }
                 
                 var x1, y1, x2, y2, x3, y3, x4, y4, x5, y5 = 0;
 
                 // CHECK IF CIRCLE
                 if (circleId != 0) {
-                 console.log("circle detected");
-                  for (let circle of this.circleList){
+                  for (let circle of this.circleList) {
                     if (circle.circleId == circleId) {
                       var size = circle.height;
                       var half = size / 2;
                       // IF HALF CIRCLE OR CIRCLE 10 ON MIDDELLIJN
                       if (item.name.length == 12) {
                         // HALF CIRCLE op middellijn OF op hoefslag
-                        if (circle.radius == 180) {}
-                         //FULL CIRCLE 10 m vanop middellijn
+                        if (circle.radius == 180) { }
+                        //FULL CIRCLE 10 m vanop middellijn
                         if (circle.radius == 360) {
-                         //LEFT SIDE
+                          //LEFT SIDE
                           if (x_to == 0) {
                             if (circle.hand == "RIGHT") {
                               x2 = -31.25; y2 = 31.25; x3 = -62.5; y3 = 0, x4 = -31.25, y4 = -31.25;
@@ -353,73 +216,66 @@ export class HomePage {
                       }
                       // IF FULL CIRCLE HOEFSLAG
                       if (item.name.length == 8) {
-                        console.log("circle 8");
-                      var radius = circle.radius;
-                      //console.log("size" + size + "half" + half);
-                      console.log("switchcase :  "+item.name.substr(item.name.length - 1));
-                      switch (item.name.substr(item.name.length - 1).toUpperCase()) {
-                        case 'F':
-                        case 'P':
-                        case 'B':
-                        case 'R':
-                        case 'M':
-                          console.log("r");
-                          if (circle.hand == 'RIGHT') {
-                          x2 = half; y2 = -half; x3 = size; y3 = 0, x4=half, y4=half;
-                          } else { x2 = half; y2 = half; x3 = size; y3 = 0; x4 = half, y4 = -half}
-                          break;
-                        case 'K':
-                        case 'V':
-                        case 'E':
-                        case 'S':
-                        case 'H':
-                          console.log("LEFT");
-                          if (circle.hand == 'RIGHT') {
-                            x2 = -half; y2 = half; x3 = -size; y3 = 0, x4 = -half, y4 = -half;
-                          } else { x2 = -half; y2 = -half; x3 = -size; y3 = 0, x4 = -half, y4 = half; }
-                          break;
-                        case 'A': console.log("DOWN");
-                          if (circle.hand == 'RIGHT') {
-                            x2 = half; y2 = half; x3 = 0; y3 = size, x4 = -half, y4 = half;
-                          } else { x2 = -half; y2 = half; x3 = 0; y3 = size, x4 = half, y4 = half; }
-                          break;
-                        case 'C': console.log("up");
-                          if (circle.hand == 'RIGHT') {
-                            x2 = -half; y2 = -half; x3 = 0; y3 = -size, x4 = half, y4 = -half;
-                          } else { x2 = half; y2 = -half; x3 = 0; y3 = -size, x4 = -half, y4 = -half; }
-                          break;
-                      }
-                      console.log('size' + size);
-                      switch (size.toString()) {
-                        case '125.00': duration = duration*2; break;
-                        case '93.75': duration = duration*1.5; break;
-                      }
+                        var radius = circle.radius;
+                        switch (item.name.substr(item.name.length - 1).toUpperCase()) {
+                          case 'F':
+                          case 'P':
+                          case 'B':
+                          case 'R':
+                          case 'M':
+                            if (circle.hand == 'RIGHT') {
+                              x2 = half; y2 = -half; x3 = size; y3 = 0, x4 = half, y4 = half;
+                            } else { x2 = half; y2 = half; x3 = size; y3 = 0; x4 = half, y4 = -half }
+                            break;
+                          case 'K':
+                          case 'V':
+                          case 'E':
+                          case 'S':
+                          case 'H':
+                            if (circle.hand == 'RIGHT') {
+                              x2 = -half; y2 = half; x3 = -size; y3 = 0, x4 = -half, y4 = -half;
+                            } else { x2 = -half; y2 = -half; x3 = -size; y3 = 0, x4 = -half, y4 = half; }
+                            break;
+                          case 'A': 
+                            if (circle.hand == 'RIGHT') {
+                              x2 = half; y2 = half; x3 = 0; y3 = size, x4 = -half, y4 = half;
+                            } else { x2 = -half; y2 = half; x3 = 0; y3 = size, x4 = half, y4 = half; }
+                            break;
+                          case 'C':
+                            if (circle.hand == 'RIGHT') {
+                              x2 = -half; y2 = -half; x3 = 0; y3 = -size, x4 = half, y4 = -half;
+                            } else { x2 = half; y2 = -half; x3 = 0; y3 = -size, x4 = -half, y4 = -half; }
+                            break;
+                        }
+                        switch (size.toString()) {
+                          case '125.00': duration = duration * 2; break;
+                          case '93.75': duration = duration * 1.5; break;
+                        }
 
-                      this.toolTimeline.add(TweenLite.to('.myAnimation', duration, {
-                        bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: x2, y: y2 }, { x: x3, y: y3 }, { x: x4, y: y4 }, { x: 0, y: 0 }] }
-                        , ease: Power0.easeNone, repeat: -1
-                      }));
+                        this.toolTimeline.add(TweenLite.to('.myAnimation', duration, {
+                          bezier: { curviness: 1.75, values: [{ x: 0, y: 0 }, { x: x2, y: y2 }, { x: x3, y: y3 }, { x: x4, y: y4 }, { x: 0, y: 0 }] }
+                          , ease: Power0.easeNone, repeat: -1
+                        }));
                       }
                     }
-                 }
+                  }
 
                   // NO CIRCLE -> IF ITS CORNER
-              } else if (basicExerciseId >= 246 && basicExerciseId <= 253) {
-                  console.log("round"+ basicExerciseId);
+                } else if (basicExerciseId >= 246 && basicExerciseId <= 253) {
                   switch (basicExerciseId.toString()) {
-                   //C-M M-C
-                   case '246': x2 = 20; y2 = 370;  break;
-                   case '247': x2 = 20; y2 = 370; x3 = 0; y3 = 340; break;
-                   //C-H H-C
-                   case '248': x2 = 105; y2 = 370; break;
-                   case '249': x2 = 105; y2 = 370; x3 = 125; y3 = 340; break;
-                   //A-F F-A
-                   case '250': 
-                   case '251': x2 = 20; y2 = 5; break;
-                   //A-K K-A
-                   case '252':
-                   case '253': x2 = 105; y2 = 5; break;
-                 }
+                    //C-M M-C
+                    case '246': x2 = 20; y2 = 370; break;
+                    case '247': x2 = 20; y2 = 370; x3 = 0; y3 = 340; break;
+                    //C-H H-C
+                    case '248': x2 = 105; y2 = 370; break;
+                    case '249': x2 = 105; y2 = 370; x3 = 125; y3 = 340; break;
+                    //A-F F-A
+                    case '250':
+                    case '251': x2 = 20; y2 = 5; break;
+                    //A-K K-A
+                    case '252':
+                    case '253': x2 = 105; y2 = 5; break;
+                  }
                   var values;
                   if (basicExerciseId.toString() == '247' || basicExerciseId.toString() == '249') {
                     values = [{ left: x_from, top: y_from }, { left: x3, top: y3 }, { left: x2, top: y2 }, { left: x_to, top: y_to }];
@@ -427,15 +283,24 @@ export class HomePage {
                     values = [{ left: x_from, top: y_from }, { left: x2, top: y2 }, { left: x_to, top: y_to }];
                   }
 
-                  this.toolTimeline.add(TweenLite.to('.myAnimation', 1, {
+                  this.toolTimeline.add(TweenLite.to('.myAnimation', duration, {
                     bezier: {
                       curviness: 1.5, values: values
                     }
                     , ease: Linear.easeNone, repeat: -1
                   }));
 
+                  //BACK right | BACK left | STOP
+                } else if (basicExerciseId.toString() == '320') {
+                  this.toolTimeline.add(TweenLite.to('.myAnimation', duration/2, { x: -30, y: 0, ease: Linear.easeNone }));
+                  this.toolTimeline.add(TweenLite.to('.myAnimation', duration/2, { x: 0, y: 0, ease: Linear.easeNone }));
+                } else if (basicExerciseId.toString() == '329') {
+                  this.toolTimeline.add(TweenLite.to('.myAnimation', duration/2, { x: 30, y: 0, ease: Linear.easeNone }));
+                  this.toolTimeline.add(TweenLite.to('.myAnimation', duration/2, { x: 0, y: 0, ease: Linear.easeNone }));
+                } else if (basicExerciseId.toString() == '244') {
+                  this.toolTimeline.add(TweenLite.to('.myAnimation',3, { x: 0, y: 0, ease: Linear.easeNone }));
+                } else {
                   // NO CIRCLE, NO CORNER, STRAIGHT LINE
-               } else {
                  this.toolTimeline.add(TweenLite.to('.myAnimation', duration, { left: x_to, top: y_to, ease: Linear.easeNone }));
                }
 
@@ -449,7 +314,6 @@ export class HomePage {
           }
         }
       }
-      console.log("stop confirmed, loop stopped");
     }
   }
  
@@ -506,7 +370,6 @@ export class HomePage {
 
     deleteTest(test) {
       Alert.deleteTestAlert(this.alertCtrl, "Click DELETE if you want to delete this dressage test", this.navCtrl, MenuPage, this.http, this.storage, this.dressageTest, this.toastCtrl);
-     // this.navCtrl.setRoot(MenuPage);
     }
 
     addComment() {

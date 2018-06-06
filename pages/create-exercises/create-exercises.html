@@ -68,14 +68,15 @@
         <ion-label class="black">Description</ion-label>
         <ion-textarea rows="4" type="text" [(ngModel)]="description" formControlName="description" [class.invalid]="!createExerciseForm.controls.description.valid && (createExerciseForm.controls.description.dirty || submitAttempt)"></ion-textarea>
       </ion-item>
-      <ion-item class="green" *ngIf="!createExerciseForm.controls.description.valid && createExerciseForm.controls.description.dirty || submitAttempt">
+      <ion-item no-lines class="green" *ngIf="!createExerciseForm.controls.description.valid && createExerciseForm.controls.description.dirty || submitAttempt">
         <p class="errorMessage">Description can be maximum 100 characters long</p>
       </ion-item>
-      <ion-item class="green">
-        <button ion-button round color="primaryGreen" class="btn" type="submit" [disabled]="!createExerciseForm.valid" name="confirm">Create next exercise</button>
+      <ion-item no-lines class="green">
+        <button ion-button round color="primaryGreen" class="btn" type="submit" [disabled]="!createExerciseForm.valid" name="confirm">Create exercise</button>
         <button ion-button round color="primaryGreen" class="btnCreate" type="button" (click)="create()" name="create">Create test</button>
       </ion-item>
     </form>
+      <button ion-button round outline small color="primaryGreen" id="btnShow" type="button" (click)="showLetters()" name="letters">{{textShow}}</button>
   </div>
 
   <!--<div class="listOfExercises">
@@ -87,6 +88,9 @@
       </ion-item-sliding>
     </ion-list>
   </div>-->
-
+  <div>
+    <br />
+    <img id="letters" src="assets/imgs/middenletters.png" />
+  </div>
 
 </ion-content>

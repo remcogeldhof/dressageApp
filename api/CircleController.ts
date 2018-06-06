@@ -1,5 +1,3 @@
-import { Http } from '@angular/http';
-import { Storage } from '@ionic/storage';
 import { Circle } from '../models/Circle';
 
 

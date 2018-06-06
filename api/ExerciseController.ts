@@ -1,11 +1,5 @@
-import { Http } from '@angular/http'; 
-import { Storage } from '@ionic/storage';
 import { Exercise } from '../models/Exercise';
 import { CreateExercisesPage } from '../pages/create-exercises/create-exercises';
-import { MenuPage } from '../pages/menu/menu';
-import { Loading } from '../Helper/Loading';
-import { Alert } from '../Helper/Alert';
-
 
 export class ExerciseController{
 
@@ -39,18 +33,12 @@ export class ExerciseController{
 
   public static createExercises(http, storage, toast) {
     for (var i = 0; i < CreateExercisesPage.exerciseList.length; i++) {
-      // console.log("log3: ", CreateExercisesPage.exerciseList[i].description);
-
       let body = JSON.stringify(CreateExercisesPage.exerciseList[i]);
-      console.log(body);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       http.post('http://10.3.50.51/api/exercise/create.php', body,
         headers).map(res => res.json()).subscribe(data => {
           console.log(data);
-        if (i == CreateExercisesPage.exerciseList.length) {
-          console.log("last");
-        }
         },
         (error: any) => {
           console.dir(error);

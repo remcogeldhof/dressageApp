@@ -1,7 +1,4 @@
-import { Http } from '@angular/http'; 
-import { Storage } from '@ionic/storage';
 import { BasicExercise } from '../models/BasicExercise';
-
 
 export class BasicExerciseController{
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { BackandService } from '@backand/angular2-sdk'
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Test } from '../../models/Test';
@@ -11,13 +10,6 @@ import { CommentController } from '../../api/CommentController';
 import { LocalStorage } from '../../Helper/LocalStorage';
 import { TestController } from '../../api/TestController';
 
-/**
- * Generated class for the MenuVlpPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-menu-vlp',
@@ -26,23 +18,20 @@ import { TestController } from '../../api/TestController';
 export class MenuVlpPage {
     public discipline: String;
     public country: String;
-
     public dressageTestList: Test[] = [];
     public testId: number;
     public testList: Array<Test>;
     first: boolean;
     user: User;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public backand: BackandService, public events: Events, private storage: Storage, private http:Http) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private storage: Storage, private http:Http) {
       this.testList = [];
       this.first = true;
       this.discipline = navParams.get("discipline");
       this.country = navParams.get("country");
       this.user = LocalStorage.currentUser;
-
       this.dressageTestList = TestController.testList;
       this.sortList();
-      
     }
 
     sortList() {
@@ -63,7 +52,6 @@ export class MenuVlpPage {
 
     addToList(item) {
       let p = new Test(item.testId, item.discipline, item.country, item.federation, item.testClass, item.name, item.userId);
-
       this.testList.push(p);
     }
   
@@ -71,13 +59,11 @@ export class MenuVlpPage {
       console.log('ionViewDidLoad MenuVlpPage');
     }
 
-
- public startProef(p: Test) {
-    //CommentController.loadCommentsByProefID(this.http, this.storage, p.testId);
-    this.navCtrl.push(HomePage, {
-    proef: p
-  });
-  }
+   public startProef(p: Test) {
+      this.navCtrl.push(HomePage, {
+      proef: p
+    });
+    }
 
 }
 

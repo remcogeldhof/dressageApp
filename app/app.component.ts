@@ -11,7 +11,6 @@ import { Storage } from '@ionic/storage';
 import { Http } from '@angular/http'; 
 import { Network } from '@ionic-native/network';
 import { ToastController } from 'ionic-angular';
-
 import 'rxjs/add/operator/map'
 import { Point } from '../models/Point';
 import { TestController } from '../api/TestController';
@@ -19,7 +18,6 @@ import { BasicExerciseController } from '../api/BasicExerciseController';
 import { PointController } from '../api/PointController';
 import { ExerciseController } from '../api/ExerciseController';
 import { CircleController } from '../api/CircleController';
-
 import { Toast } from '../Helper/Toast';
 import { LocalStorage } from '../Helper/LocalStorage';
 
@@ -40,27 +38,16 @@ export class MyApp{
       statusBar.styleDefault();
       splashScreen.hide();
        //connection backand
-      backand.init({
+    /*  backand.init({
         appName: 'dressageapplication',
         signUpToken: 'a64d94ba-f010-4fb1-8bfd-e8cdf1312e69',
         anonymousToken: '78403268-9e75-4970-8da5-c57421674d0f',
         runSocket: false,
         mobilePlatform: 'ionic'
-      });
+      });*/
 
       //load user from local storage and set in static variable
       LocalStorage.loadUserAndToken(this.storage);
-
-/*
-      //message when no connection
-      let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-        Toast.toastNotConnected(this.toastCtrl);
-      });
-
-      //message when connected again
-      let connectSubscription = this.network.onConnect().subscribe(() => {
-        Toast.toastConnected(this.toastCtrl);
-      });*/
 
       //load tests
       TestController.loadAllTests(this.http, this.storage);

@@ -1,7 +1,4 @@
-import { Http } from '@angular/http'; 
-import { Storage } from '@ionic/storage';
 import { Test } from '../models/Test';
-import { CreateExercisesPage } from '../pages/create-exercises/create-exercises';
 import { Loading } from '../Helper/Loading';
 import { Toast } from '../Helper/Toast';
 import { MenuPage } from '../pages/menu/menu';
@@ -36,7 +33,6 @@ export class TestController{
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     let body = JSON.stringify(dressageTest);
-    console.log(body);
     //localhost/dressageapi/dressagetest/create.php 10.3.50.51/api/dressageTest/create.php
     http.post('http://10.3.50.51/api/dressageTest/create.php', body,
       headers).map(res => res.json()).subscribe(data => {

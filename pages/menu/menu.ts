@@ -4,38 +4,27 @@ import { MenuVlpPage } from '../menu-vlp/menu-vlp';
 import { TranslateService } from '@ngx-translate/core';
 import * as $ from 'jquery'
 
-/**
- * Generated class for the MenuPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-menu',
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-
     private discipline: string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
         translate.setDefaultLang('en');
-        this.discipline = "All dressage tests";
-
-  }
+        this.discipline = "Dressage Buddy";
+    }
 
   openDressage() {
       this.switchCountry();
       this.discipline = "Dressage";
-     // $('.wrapper').css("background-image", "url(../assets/imgs/Dressage3.jpg)");  
 
   }
   openEventing() {
       this.switchCountry();
       this.discipline = "Eventing";
-     // $('.wrapper').css("background-image", "url(../assets/imgs/Eventing4.jpg)");  
   }
 
   openOwnTests() {
@@ -64,11 +53,10 @@ export class MenuPage {
   }
 
   switchDiscipline() {
-      this.discipline = "All dressage tests"
+      this.discipline = "Dressage Buddy"
     $(document).ready(function () {
       $("#countries").css('display', 'none');
       $("#disciplines").css('display', 'block');
-     // $('.wrapper').css("background-image", "url(../assets/imgs/geopat4.jpg)");  
     });
   }
 

@@ -1,11 +1,8 @@
-import { Http } from '@angular/http'; 
-import { Guuid } from '../models/Guuid';
 import { User } from '../models/User';
 import { Loading } from '../Helper/Loading';
 import { Toast } from '../Helper/Toast';
 import { LocalStorage } from '../Helper/LocalStorage';
 import { MenuPage } from '../pages/menu/menu';
-import { LoginPage } from '../pages/login/login';
 
 export class LoginController {
 

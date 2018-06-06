@@ -1,4 +1,3 @@
-import { Http } from '@angular/http'; 
 import { Storage } from '@ionic/storage';
 import { Point } from '../models/Point';
 
